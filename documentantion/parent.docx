@@ -63,3 +63,26 @@ Integration Summary
     • State Management: Redux is used to manage state and perform asynchronous actions such as fetching user and student data. The components dispatch actions to update the state and select necessary data from the Redux store.
       
     • UI Layout: The ParentDashboard manages the overall layout and structure, including the sidebar (ParentSideBar) for navigation and content display areas for each parent-related component.
+
+
+
++------------------------------------------------+
+|                ParentDashboard                 |
+|  +--------------+    +-----------------------+ |
+|  |  SideBar     |    |       Content         | |
+|  |              |    |                       | |
+|  | - ParentHomePage   | - ChildProfile       | |
+|  | - ParentProfile    | - ViewChildAttendance| |
+|  | - ChildProfile     | - ParentNotice       | |
+|  +--------------+    +-----------------------+ |
++------------------------------------------------+
+
++------------------------------------------------+
+|           (data flow on the front end)
+                    Redux Flow                   |
+|                                                |
+| +---------------------+  +-------------------+ |
+| |  studentHandle.js   |  |  userHandle.js    | |
+| | - getAllStudents    |  | - getUserDetails  | |
+| +---------------------+  +-------------------+ |
++------------------------------------------------+
