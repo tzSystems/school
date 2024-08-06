@@ -61,7 +61,7 @@ const ShowParents = () => {
     const actions = [
         {
             icon: <PersonAddAlt1Icon color="primary" />, name: 'Add New Parent',
-            action: () => navigate("/Admin/parents/choosestudent")
+            action: () => navigate("/Admin/addParent")
         },
         {
             icon: <PersonRemoveIcon color="error" />, name: 'Delete All Parents',

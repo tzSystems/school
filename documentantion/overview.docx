@@ -1,0 +1,79 @@
+
+School Management System Documentation
+
+Overview
+The School Management System is a comprehensive web application designed to streamline and enhance the management of educational institutions. The application offers various functionalities tailored to the needs of different user roles: Students, Teachers, Admins, and, in the future, Parents. This document provides an overview of the system architecture, current features, and planned enhancements.
+Architecture
+
+Frontend
+    • Framework: React.js
+    • Styling: Bootstrap
+    • Purpose: The frontend provides an intuitive and responsive user interface for interacting with the system.
+
+Backend
+    • Framework: Express.js
+    • Purpose: The backend handles routing, business logic, and database interactions.
+
+Database
+    • Type: MongoDB
+    • Purpose: The database stores all the data related to users, courses, attendance, grades, etc.
+
+Directory Structure
+The application is organized into several key directories:
+    1. Routes Directory:
+        ◦ Contains all route definitions for handling client requests.
+        ◦ Routes are divided based on user roles and functionalities.
+    2. Controllers Directory:
+        ◦ Receives and processes POST requests from the frontend.
+        ◦ Implements business logic and interacts with the models to fetch or update data.
+    3. Models Directory:
+        ◦ Defines the schemas for the data tables in MongoDB.
+        ◦ Each model corresponds to a different entity in the system (e.g., User, Class, Subject).
+    4. Index File:
+        ◦ The entry point of the application.
+        ◦ Initializes the server and connects to the database.
+
+User Roles
+1. Student
+    • Functionalities:
+        ◦ View personal information and academic records.
+        ◦ Access course materials and assignments.
+        ◦ Track attendance and grades.
+
+2. Teacher
+    • Functionalities:
+        ◦ Manage courses and assignments.
+        ◦ Record and update attendance and grades.
+        ◦ Communicate with students and parents (planned feature).
+        ◦ Send quizzes and learning materials online (planned enhancement).
+
+3. Admin
+    • Functionalities:
+        ◦ Manage user accounts (students, teachers, parents).
+        ◦ Oversee the entire academic and administrative operations.
+        ◦ Generate reports and analytics.
+
+4. Parent (New Feature)
+    • Functionalities:
+        ◦ Track the progress of their children.
+        ◦ View attendance and academic records.
+        ◦ Communicate with teachers and school administration.
+
+Planned Enhancements
+1. Parent Access
+    • Objective: Enable parents to log into the system and track their children's progress.
+    • Features:
+        ◦ View their child’s attendance, grades, and behavior reports.
+        ◦ Communicate with teachers and school administrators.
+
+2. Enhanced Teacher Functionalities
+    • Objective: Provide teachers with tools to deliver quizzes and learning materials online.
+    • Features:
+        ◦ Create and distribute quizzes and assignments.
+        ◦ Upload and share learning materials.
+        ◦ Track student performance and provide feedback.
+
+Conclusion
+The School Management System aims to provide a robust and user-friendly platform for managing educational institutions. With the planned enhancements, the system will offer even greater functionality, ensuring that all stakeholders (students, teachers, admins, and parents) have the tools they need to succeed. This document serves as a foundation for understanding the current state and future direction of the application.
+Contact
+For more information or assistance, please contact our development team at contact@systems255.com

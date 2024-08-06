@@ -1,0 +1,65 @@
+
+
+Parent Functionality Documentation
+
+The parent functionality includes several key components and Redux actions to manage and display information relevant to parents. This documentation provides a brief overview of these components, their functionality, and their integration into the system.
+Components
+    1. ParentHomePage
+        ◦ File: src/pages/parent/ParentHomePage.js
+        ◦ Description: Displays the parent's dashboard with total children and notices.
+        ◦ Integration:
+            ▪ Fetches user details and student list using Redux actions.
+            ▪ Displays the total number of children and relevant notices.
+              
+    2. ParentDashboard
+        ◦ File: src/pages/parent/ParentDashboard.js
+        ◦ Description: Main dashboard page for parents, routing to various sub-pages.
+        ◦ Integration:
+            ▪ Provides navigation through a sidebar to different parent-related pages (ParentHomePage, ParentProfile, ChildProfile, ViewChildAttendance, ParentNotice).
+            ▪ Manages the layout and drawer state for the parent dashboard.
+              
+    3. ParentSideBar
+        ◦ File: src/pages/parent/ParentSideBar.js
+        ◦ Description: Sidebar component for navigation within the parent dashboard.
+        ◦ Integration:
+            ▪ Used in ParentDashboard for navigating to different parent-related routes.
+              
+    4. ParentProfile
+        ◦ File: src/pages/parent/ParentProfile.js
+        ◦ Description: Displays and manages parent's profile information.
+        ◦ Integration:
+            ▪ Accessed via the parent dashboard sidebar.
+              
+    5. ChildProfile
+        ◦ File: src/pages/parent/ChildProfile.js
+        ◦ Description: Displays detailed profile information for a specific child.
+        ◦ Integration:
+            ▪ Accessed via the parent dashboard sidebar or routes.
+    6. ViewChildAttendance
+        ◦ File: src/pages/parent/ViewChildAttendance.js
+        ◦ Description: Allows parents to view their child's attendance records.
+        ◦ Integration:
+            ▪ Accessed via the parent dashboard sidebar.
+    7. ParentNotice
+        ◦ File: src/pages/parent/ParentNotice.js
+        ◦ Description: Displays notices relevant to the parent.
+        ◦ Integration:
+            ▪ Accessed via the parent dashboard sidebar.
+Redux Setup
+    1. Actions and Reducers
+        ◦ File: src/redux/studentRelated/studentHandle.js
+        ◦ Description: Manages student-related actions such as fetching all students, updating student fields, and removing stuff.
+        ◦ Integration:
+            ▪ Functions getAllStudents and getUserDetails are dispatched in ParentHomePage to fetch and manage data.
+            ▪ Action creators and reducers handle API requests and update the Redux store accordingly.
+    2. Selectors
+        ◦ File: src/redux/userRelated/userHandle.js
+        ◦ Description: Manages user-related actions such as fetching user details.
+        ◦ Integration:
+            ▪ Selector functions like getUserDetails are used in components to fetch and display user data.
+Integration Summary
+    • Routing: The ParentDashboard component handles routing for parent-related pages using react-router-dom. Each route points to a specific parent component, facilitating navigation within the parent dashboard.
+      
+    • State Management: Redux is used to manage state and perform asynchronous actions such as fetching user and student data. The components dispatch actions to update the state and select necessary data from the Redux store.
+      
+    • UI Layout: The ParentDashboard manages the overall layout and structure, including the sidebar (ParentSideBar) for navigation and content display areas for each parent-related component.
