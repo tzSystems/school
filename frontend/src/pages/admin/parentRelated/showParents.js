@@ -5,7 +5,7 @@ import { getAllParents } from '../../../redux/parentRelated/parentHandle';
 import {
     Paper, Table, TableBody, TableContainer,
     TableHead, TablePagination, IconButton,
-    Box
+    Box, Typography, Tooltip, CircularProgress
 } from '@mui/material';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
 import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
@@ -34,7 +34,7 @@ const ShowParents = () => {
 
     const deleteHandler = (deleteID) => {
         console.log(deleteID);
-        setMessage("Sorry the delete function has been disabled for now.");
+        setMessage("Sorry, the delete function has been disabled for now.");
         setShowPopup(true);
 
         // dispatch(deleteUser(deleteID, "Parents")).then(() => {
@@ -70,14 +70,25 @@ const ShowParents = () => {
     ];
 
     if (loading) {
-        return <div>Loading...</div>;
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <CircularProgress />
+            </Box>
+        );
     } else if (error) {
-        return <div>Error: {error.message}</div>;
+        return (
+            <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+                <Typography color="error">Error: {error.message}</Typography>
+            </Box>
+        );
     }
 
     return (
-        <Paper sx={{ width: '100%', overflow: 'hidden' }}>
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+        <Paper sx={{ width: '100%', overflow: 'hidden', padding: '20px' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '16px' }}>
+                <Typography variant="h5" component="div">
+                    Parents List
+                </Typography>
                 <GreenButton variant="contained" onClick={() => navigate("/Admin/parents/choosestudent")}>
                     Add Parent
                 </GreenButton>
@@ -102,28 +113,32 @@ const ShowParents = () => {
                     </TableHead>
                     <TableBody>
                         {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
-                                <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                    {columns.map((column) => {
-                                        const value = row[column.id];
-                                        return (
-                                            <StyledTableCell key={column.id} align={column.align}>
-                                                {column.format && typeof value === 'number' ? column.format(value) : value}
-                                            </StyledTableCell>
-                                        );
-                                    })}
-                                    <StyledTableCell align="center">
+                            <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                {columns.map((column) => {
+                                    const value = row[column.id];
+                                    return (
+                                        <StyledTableCell key={column.id} align={column.align}>
+                                            {column.format && typeof value === 'number' ? column.format(value) : value}
+                                        </StyledTableCell>
+                                    );
+                                })}
+                                <StyledTableCell align="center">
+                                    <Tooltip title="Delete Parent">
                                         <IconButton onClick={() => deleteHandler(row.id)}>
                                             <PersonRemoveIcon color="error" />
                                         </IconButton>
+                                    </Tooltip>
+                                    <Tooltip title="View Parent">
                                         <BlueButton
                                             variant="contained"
                                             onClick={() => navigate("/Admin/parents/parent/" + row.id)}
                                         >
                                             View
                                         </BlueButton>
-                                    </StyledTableCell>
-                                </StyledTableRow>
-                            ))}
+                                    </Tooltip>
+                                </StyledTableCell>
+                            </StyledTableRow>
+                        ))}
                     </TableBody>
                 </Table>
             </TableContainer>

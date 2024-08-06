@@ -1,10 +1,15 @@
-
-
 import React, { useEffect } from 'react';
-import { getParentDetails } from '../../../redux/parentRelated/parentHandle'; // Make sure to update the path according to your project structure
+import { getParentDetails } from '../../../redux/parentRelated/parentHandle';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Button, Container, Typography } from '@mui/material';
+import { 
+    Container, Typography, Card, CardContent, List, ListItem, 
+    ListItemText, ListItemIcon, CircularProgress, Box, Button 
+} from '@mui/material';
+import PersonIcon from '@mui/icons-material/Person';
+import EmailIcon from '@mui/icons-material/Email';
+import PhoneIcon from '@mui/icons-material/Phone';
+import ChildCareIcon from '@mui/icons-material/ChildCare';
 
 const ParentDetails = () => {
     const navigate = useNavigate();
@@ -13,7 +18,6 @@ const ParentDetails = () => {
     const { loading, parentDetails, error } = useSelector((state) => state.parent);
 
     const parentID = params.id;
-   // console.log('parent details is', parentDetails);
 
     useEffect(() => {
         dispatch(getParentDetails(parentID));
@@ -24,35 +28,65 @@ const ParentDetails = () => {
     }
 
     return (
-        <>
+        <Container maxWidth="sm" sx={{ mt: 4 }}>
             {loading ? (
-                <div>Loading...</div>
+                <Box sx={{ display: 'flex', justifyContent: 'center', mt: 4 }}>
+                    <CircularProgress />
+                </Box>
             ) : (
-                <Container>
-                    <Typography variant="h4" align="center" gutterBottom>
-                        Parent Details
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Parent Name: {parentDetails?.name}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Email: {parentDetails?.email}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Phone Number: {parentDetails?.phone}
-                    </Typography>
-                    <Typography variant="h6" gutterBottom>
-                        Children:
-                    </Typography>
-                    <ul>
-                        {parentDetails?.children?.map((child) => (
-                            <li key={child._id}>{child.name} - Class: {child.className}</li>
-                        ))}
-                    </ul>
-                    {/* Add any additional details you want to display */}
-                </Container>
+                <Card>
+                    <CardContent>
+                        <Typography variant="h4" align="center" gutterBottom>
+                            Parent Details
+                        </Typography>
+                        <List>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <PersonIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Parent Name" secondary={parentDetails?.name} />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <EmailIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Email" secondary={parentDetails?.email} />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <PhoneIcon />
+                                </ListItemIcon>
+                                <ListItemText primary="Phone Number" secondary={parentDetails?.phone} />
+                            </ListItem>
+                            <ListItem>
+                                <ListItemIcon>
+                                    <ChildCareIcon />
+                                </ListItemIcon>
+                                <ListItemText 
+                                    primary="Children" 
+                                    secondary={
+                                        parentDetails?.children?.length > 0 ? (
+                                            parentDetails.children.map((child) => (
+                                                <Typography key={child._id} variant="body2">
+                                                    {child.name} - Class: {child.className}
+                                                </Typography>
+                                            ))
+                                        ) : (
+                                            "No children"
+                                        )
+                                    } 
+                                />
+                            </ListItem>
+                        </List>
+                        <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
+                            <Button variant="contained" color="primary" onClick={() => navigate(-1)}>
+                                Back
+                            </Button>
+                        </Box>
+                    </CardContent>
+                </Card>
             )}
-        </>
+        </Container>
     );
 };
 
