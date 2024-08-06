@@ -1,0 +1,50 @@
+
+
+
+Teacher Dashboard Component Overview
+Summary:
+The Teacher Dashboard is a comprehensive interface that allows teachers to manage their profile, view and interact with student information, and handle class details and complaints. It includes navigation through various sections via a sidebar and provides access to specific student-related functionalities.
+
+Component Structure and Dependencies
+AppBar
+
+Purpose: Displays the title and the account menu.
+Dependencies: AccountMenu, IconButton (for opening/closing the sidebar)
+Drawer
+
+Purpose: Contains navigation links for the teacher to access different sections.
+Dependencies: TeacherSideBar (for listing links)
+Main Content Area
+
+Purpose: Renders different pages based on the route.
+Dependencies: Routes, Route (for navigation between pages)
+
+Graphical presentation
++---------------------------------------------------+
+|                  AppBar                          |
+| +---------------------------------------------+   |
+| |           Title and Account Menu            |   |
+| +---------------------------------------------+   |
++---------------------------------------------------+
+| +---------------------------------------------+   |
+| |                Drawer (Sidebar)              |   |
+| | +-----------+   +-------------+            |   |
+| | | Teacher   |   | Teacher     |            |   |
+| | | SideBar   |   | Navigation  |            |   |
+| | +-----------+   +-------------+            |   |
+| +---------------------------------------------+   |
++---------------------------------------------------+
+| +------------------------------------------------+
+| |                Main Content Area               |
+| | +-------------------+ +-----------------------+ |
+| | | Student           | | Teacher               | |
+| | | Attendance        | | Class Details         | |
+| | | Exam Marks        | | View Student          | |
+| | +-------------------+ +-----------------------+ |
+| | +-------------------+ +-----------------------+ |
+| | | Teacher           | | Logout                | |
+| | | Profile           | |                       | |
+| | | Complaints        | |                       | |
+| | +-------------------+ +-----------------------+ |
+| +------------------------------------------------+
++---------------------------------------------------+
