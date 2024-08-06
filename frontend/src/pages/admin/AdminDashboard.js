@@ -43,6 +43,7 @@ import ShowClasses from './classRelated/ShowClasses';
 import AccountMenu from '../../components/AccountMenu';
 
 import ShowParents from './parentRelated/showParents';
+import ParentDetails from './parentRelated/parentDetails';
 
 const AdminDashboard = () => {
     const [open, setOpen] = useState(false);
@@ -138,6 +139,7 @@ const AdminDashboard = () => {
 
                           {/* Parent */}
                           <Route path="/Admin/parents" element={<ShowParents />} />
+                         <Route path="/Admin/parents/parent/:id" element={<ParentDetails />} /> 
 
                         <Route path="/logout" element={<Logout />} />
                     </Routes>

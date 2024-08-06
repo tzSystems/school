@@ -1,19 +1,16 @@
-
-
-
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { getAllParents } from '../../../redux/parentRelated/parentHandle'; // Assuming this action exists
+import { getAllParents } from '../../../redux/parentRelated/parentHandle';
 import {
     Paper, Table, TableBody, TableContainer,
-    TableHead, TablePagination, Button, Box, IconButton,
+    TableHead, TablePagination, IconButton,
+    Box
 } from '@mui/material';
-import { deleteUser } from '../../../redux/userRelated/userHandle';
 import PersonRemoveIcon from '@mui/icons-material/PersonRemove';
+import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import { StyledTableCell, StyledTableRow } from '../../../components/styles';
 import { BlueButton, GreenButton } from '../../../components/buttonStyles';
-import PersonAddAlt1Icon from '@mui/icons-material/PersonAddAlt1';
 import SpeedDialTemplate from '../../../components/SpeedDialTemplate';
 import Popup from '../../../components/Popup';
 
@@ -23,37 +20,24 @@ const ShowParents = () => {
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    const { parentsList, loading, error, response } = useSelector((state) => state.parent);
+    const { parentsList, loading, error } = useSelector((state) => state.parent);
     const { currentUser } = useSelector((state) => state.user);
-
-    useEffect(() => {
-        dispatch(getAllParents(currentUser._id));
-    }, [currentUser._id, dispatch]);
 
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState("");
 
-    if (loading) {
-        return <div>Loading...</div>;
-    } else if (response) {
-        return (
-            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
-                <GreenButton variant="contained" onClick={() => navigate("/Admin/parents/choosestudent")}>
-                    Add Parent
-                </GreenButton>
-            </Box>
-        );
-    } else if (error) {
-        console.log(error);
-    }
+    useEffect(() => {
+        if (currentUser && currentUser._id) {
+            dispatch(getAllParents(currentUser._id));
+        }
+    }, [currentUser, dispatch]);
 
-    const deleteHandler = (deleteID, address) => {
+    const deleteHandler = (deleteID) => {
         console.log(deleteID);
-        console.log(address);
-        setMessage("Sorry the delete function has been disabled for now.")
+        setMessage("Sorry the delete function has been disabled for now.");
         setShowPopup(true);
 
-        // dispatch(deleteUser(deleteID, address)).then(() => {
+        // dispatch(deleteUser(deleteID, "Parents")).then(() => {
         //     dispatch(getAllParents(currentUser._id));
         // });
     };
@@ -64,14 +48,15 @@ const ShowParents = () => {
         { id: 'childName', label: 'Child Name', minWidth: 170 },
     ];
 
-    const rows = parentsList.map((parent) => {
+    // Ensure parentsList is defined before mapping
+    const rows = parentsList ? parentsList.map((parent) => {
         return {
             name: parent.name,
             email: parent.email,
-            childName: parent.child?.name || null,
+            childName: parent.children.map(child => child.name).join(', ') || 'N/A',
             id: parent._id,
         };
-    });
+    }) : [];
 
     const actions = [
         {
@@ -80,12 +65,23 @@ const ShowParents = () => {
         },
         {
             icon: <PersonRemoveIcon color="error" />, name: 'Delete All Parents',
-            action: () => deleteHandler(currentUser._id, "Parents")
+            action: () => deleteHandler(currentUser._id)
         },
     ];
 
+    if (loading) {
+        return <div>Loading...</div>;
+    } else if (error) {
+        return <div>Error: {error.message}</div>;
+    }
+
     return (
         <Paper sx={{ width: '100%', overflow: 'hidden' }}>
+            <Box sx={{ display: 'flex', justifyContent: 'flex-end', marginTop: '16px' }}>
+                <GreenButton variant="contained" onClick={() => navigate("/Admin/parents/choosestudent")}>
+                    Add Parent
+                </GreenButton>
+            </Box>
             <TableContainer>
                 <Table stickyHeader aria-label="sticky table">
                     <TableHead>
@@ -105,31 +101,29 @@ const ShowParents = () => {
                         </StyledTableRow>
                     </TableHead>
                     <TableBody>
-                        {rows
-                            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                            .map((row) => {
-                                return (
-                                    <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
-                                        {columns.map((column) => {
-                                            const value = row[column.id];
-                                            return (
-                                                <StyledTableCell key={column.id} align={column.align}>
-                                                    {column.format && typeof value === 'number' ? column.format(value) : value}
-                                                </StyledTableCell>
-                                            );
-                                        })}
-                                        <StyledTableCell align="center">
-                                            <IconButton onClick={() => deleteHandler(row.id, "Parent")}>
-                                                <PersonRemoveIcon color="error" />
-                                            </IconButton>
-                                            <BlueButton variant="contained"
-                                                onClick={() => navigate("/Admin/parents/parent/" + row.id)}>
-                                                View
-                                            </BlueButton>
-                                        </StyledTableCell>
-                                    </StyledTableRow>
-                                );
-                            })}
+                        {rows.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((row) => (
+                                <StyledTableRow hover role="checkbox" tabIndex={-1} key={row.id}>
+                                    {columns.map((column) => {
+                                        const value = row[column.id];
+                                        return (
+                                            <StyledTableCell key={column.id} align={column.align}>
+                                                {column.format && typeof value === 'number' ? column.format(value) : value}
+                                            </StyledTableCell>
+                                        );
+                                    })}
+                                    <StyledTableCell align="center">
+                                        <IconButton onClick={() => deleteHandler(row.id)}>
+                                            <PersonRemoveIcon color="error" />
+                                        </IconButton>
+                                        <BlueButton
+                                            variant="contained"
+                                            onClick={() => navigate("/Admin/parents/parent/" + row.id)}
+                                        >
+                                            View
+                                        </BlueButton>
+                                    </StyledTableCell>
+                                </StyledTableRow>
+                            ))}
                     </TableBody>
                 </Table>
             </TableContainer>
@@ -148,7 +142,7 @@ const ShowParents = () => {
 
             <SpeedDialTemplate actions={actions} />
             <Popup message={message} setShowPopup={setShowPopup} showPopup={showPopup} />
-        </Paper >
+        </Paper>
     );
 };
 

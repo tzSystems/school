@@ -1,5 +1,3 @@
-
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
@@ -11,17 +9,12 @@ const initialState = {
 };
 
 const parentSlice = createSlice({
-    name: 'student',
+    name: 'parent',
     initialState,
     reducers: {
         getRequest: (state) => {
             state.loading = true;
-        },
-        stuffDone: (state) => {
-            state.loading = false;
             state.error = null;
-            state.response = null;
-            state.statestatus = "added";
         },
         getSuccess: (state, action) => {
             state.parentsList = action.payload;
@@ -38,6 +31,12 @@ const parentSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
+        stuffDone: (state, action) => {
+            state.loading = false;
+            state.error = null;
+            state.response = null;
+            state.statestatus = "added";
+        },
         underStudentControl: (state) => {
             state.loading = false;
             state.response = null;
@@ -52,8 +51,8 @@ export const {
     getSuccess,
     getFailed,
     getError,
-    underStudentControl,
     stuffDone,
+    underStudentControl,
 } = parentSlice.actions;
 
 export const parentReducer = parentSlice.reducer;
