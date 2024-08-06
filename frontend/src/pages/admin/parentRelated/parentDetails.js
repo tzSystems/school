@@ -13,6 +13,7 @@ const ParentDetails = () => {
     const { loading, parentDetails, error } = useSelector((state) => state.parent);
 
     const parentID = params.id;
+   // console.log('parent details is', parentDetails);
 
     useEffect(() => {
         dispatch(getParentDetails(parentID));

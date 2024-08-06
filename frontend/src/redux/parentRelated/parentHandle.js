@@ -7,7 +7,7 @@ import {
     stuffDone,
 } from './parentSlice';
 
-export const getAllParents = (id) => async (dispatch) => {
+export const getAllParents = () => async (dispatch) => {
     dispatch(getRequest());
 
     try {

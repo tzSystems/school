@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     parentsList: [],
+    parentDetails: null,
     loading: false,
     error: null,
     response: null,
@@ -32,6 +33,7 @@ const parentSlice = createSlice({
             state.error = action.payload;
         },
         stuffDone: (state, action) => {
+            state.parentDetails = action.payload;
             state.loading = false;
             state.error = null;
             state.response = null;
