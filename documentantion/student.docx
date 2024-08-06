@@ -1,0 +1,77 @@
+
+
+Student Functionality Documentation
+Flow Diagram Simulation in Text
+To provide a clear understanding of the StudentDashboard component and its sub-components, 
+we can use a text-based approach to simulate a flow diagram. 
+This will help visualize the data flow and interactions between various parts of the system.
+
+Components and Routes
+Here is a breakdown of the main components and their routes in the StudentDashboard, 
+all routes within student dashboard for the fron end are defined here:
+
+StudentDashboard
+|
+|-- AppBar (header with toggle for drawer, title, and account menu)
+|   |
+|   |-- MenuIcon (button to open/close drawer)
+|   |-- Typography (title: "Student Dashboard")
+|   |-- AccountMenu (user account menu)
+|
+|-- Drawer (sidebar with navigation links)
+|   |
+|   |-- StudentSideBar (contains navigation links)
+|       |-- Link: "Home" -> /Student/dashboard
+|       |-- Link: "Profile" -> /Student/profile
+|       |-- Link: "Subjects" -> /Student/subjects
+|       |-- Link: "Attendance" -> /Student/attendance
+|       |-- Link: "Complain" -> /Student/complain
+|
+|-- Main Content (displays the selected route's component)
+|   |
+|   |-- Route: "/" -> StudentHomePage (default route)
+|   |-- Route: "*" -> Navigate to "/"
+|   |-- Route: "/Student/dashboard" -> StudentHomePage
+|   |-- Route: "/Student/profile" -> StudentProfile
+|   |-- Route: "/Student/subjects" -> StudentSubjects
+|   |-- Route: "/Student/attendance" -> ViewStdAttendance
+|   |-- Route: "/Student/complain" -> StudentComplain
+|   |-- Route: "/logout" -> Logout
+
+
+Detailed Components Description
+StudentDashboard
+
+File: src/pages/student/StudentDashboard.js
+Description: Main dashboard page for students, providing navigation to various student-related pages.
+Includes:
+AppBar for header
+Drawer for sidebar
+Main content area for routing
+AppBar
+
+Components:
+MenuIcon: Button to toggle the sidebar.
+Typography: Displays the title "Student Dashboard".
+AccountMenu: Dropdown menu for user account options.
+Drawer
+
+Components:
+Toolbar: Contains a button to close the sidebar.
+Divider: Separates sections in the sidebar.
+List: Contains navigation links (StudentSideBar).
+StudentSideBar
+
+Components:
+Link: Navigation links to various routes (e.g., Home, Profile, Subjects, Attendance, Complain).
+Main Content
+
+Routes:
+Route: "/" renders StudentHomePage (default route).
+Route: "*" redirects to "/" (default route).
+Route: "/Student/dashboard" renders StudentHomePage.
+Route: "/Student/profile" renders StudentProfile.
+Route: "/Student/subjects" renders StudentSubjects.
+Route: "/Student/attendance" renders ViewStdAttendance.
+Route: "/Student/complain" renders StudentComplain.
+Route: "/logout" renders Logout.
