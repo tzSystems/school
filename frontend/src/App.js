@@ -25,7 +25,7 @@ const App = () => {
           <Route path="/Adminlogin" element={<LoginPage role="Admin" />} />
           <Route path="/Studentlogin" element={<LoginPage role="Student" />} />
           <Route path="/Teacherlogin" element={<LoginPage role="Teacher" />} />
-          <Route path="/ParentLogin" element={<LoginPage role="Parent" />} />
+          <Route path="/Parentlogin" element={<LoginPage role="Parent" />} />
           <Route path="/Adminregister" element={<AdminRegisterPage />} />
 
           <Route path='*' element={<Navigate to="/" />} />

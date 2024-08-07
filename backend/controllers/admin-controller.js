@@ -94,7 +94,8 @@ const adminLogIn = async (req, res) => {
             res.send({ message: "User not found" });
         }
     } else {
-        res.send({ message: "Email and password are required" });
+        res.send({ message
+            : "Email and password are required" });
     }
 };
 

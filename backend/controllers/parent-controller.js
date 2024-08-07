@@ -38,15 +38,19 @@ const parentLogIn = async (req, res) => {
             const validated = await bcrypt.compare(req.body.password, parent.password);
             if (validated) {
                 parent.password = undefined;
+                console.log('user verified, now log in')
                 res.send(parent);
             } else {
                 res.send({ message: "Invalid password" });
             }
         } else {
+            console.log("parent not found");
             res.send({ message: "Parent not found" });
+
         }
     } catch (err) {
-        res.status(500).json(err);
+        console.log("error", err);
+        res.status(500).send({message:err});
     }
 };
 

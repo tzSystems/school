@@ -19,22 +19,27 @@ import {
 
 export const loginUser = (fields, role) => async (dispatch) => {
     dispatch(authRequest());
+    console.log('loginUser called with fields:', fields, 'and role:', role);
 
     try {
         const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/${role}Login`, fields, {
             headers: { 'Content-Type': 'application/json' },
         });
 
-        //console.log('route', `${process.env.REACT_APP_BASE_URL}/${role}Login`)
+        console.log('API Response:', result.data);
+
         if (result.data.role) {
             dispatch(authSuccess(result.data));
         } else {
+            console.log('authFailed dispatched with message:', result.data.message);
             dispatch(authFailed(result.data.message));
         }
     } catch (error) {
+        console.error('authError dispatched with error:', error);
         dispatch(authError(error));
     }
 };
+
 
 export const registerUser = (fields, role) => async (dispatch) => {
     dispatch(authRequest());
@@ -42,7 +47,7 @@ export const registerUser = (fields, role) => async (dispatch) => {
 
     try {
         const result = await axios.post(`${process.env.REACT_APP_BASE_URL}/${role}Reg`, fields, {
-            headers: { 'Content-Type': 'application/json' },
+            headers: {'Content-Type': 'application/json'},
         });
         if (result.data.schoolName) {
             dispatch(authSuccess(result.data));

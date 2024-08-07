@@ -9,6 +9,7 @@ import ChildIcon from "../../assets/students.svg";
 import { getAllStudents } from '../../redux/studentRelated/studentHandle';
 
 const ParentHomePage = () => {
+    console.log('we are in Parent Home Page')
     const dispatch = useDispatch();
 
     const { userDetails, currentUser, loading, response } = useSelector((state) => state.user);
@@ -17,9 +18,12 @@ const ParentHomePage = () => {
     const [children, setChildren] = useState([]);
 
     useEffect(() => {
-        dispatch(getUserDetails(currentUser._id, "Parent"));
-        dispatch(getAllStudents(currentUser._id));
-    }, [dispatch, currentUser._id]);
+        console.log('current user', currentUser)
+        if (currentUser && currentUser._id) {
+            dispatch(getUserDetails(currentUser._id, "Parent"));
+            dispatch(getAllStudents(currentUser._id));
+        }
+    }, [dispatch, currentUser]);
 
     const numberOfChildren = children && children.length;
 

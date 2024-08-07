@@ -103,6 +103,7 @@ const LoginPage = ({ role }) => {
 
     useEffect(() => {
         if (status === 'success' || currentUser !== null) {
+            console.log(`User logged in, current user ${currentUser.role}`)
             if (currentRole === 'Admin') {
                 navigate('/Admin/dashboard');
             }
@@ -115,6 +116,7 @@ const LoginPage = ({ role }) => {
             }
         }
         else if (status === 'failed') {
+            console.log('failed to navigate to dashboard, the status is', status, currentUser);
             setMessage(response)
             setShowPopup(true)
             setLoader(false)

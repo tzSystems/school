@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllNotices } from '../redux/noticeRelated/noticeHandle';
 import { Paper } from '@mui/material';
@@ -8,19 +8,25 @@ const SeeNotice = () => {
     const dispatch = useDispatch();
 
     const { currentUser, currentRole } = useSelector(state => state.user);
-    const { noticesList, loading, error, response } = useSelector((state) => state.notice);
+    const { noticesList, loading, error, response } = useSelector(state => state.notice);
 
     useEffect(() => {
-        if (currentRole === "Admin") {
-            dispatch(getAllNotices(currentUser._id, "Notice"));
+        if (currentUser && currentRole) {
+            if (currentRole === "Admin" || currentRole === "Parent") {
+                if (currentUser._id) {
+                    dispatch(getAllNotices(currentUser._id, "Notice"));
+                }
+            } else {
+                if (currentUser.school && currentUser.school._id) {
+                    dispatch(getAllNotices(currentUser.school._id, "Notice"));
+                }
+            }
         }
-        else {
-            dispatch(getAllNotices(currentUser.school._id, "Notice"));
-        }
-    }, [dispatch]);
+    }, [dispatch, currentUser, currentRole]);
 
     if (error) {
         console.log(error);
+        return <div>Error loading notices.</div>;
     }
 
     const noticeColumns = [
@@ -39,6 +45,7 @@ const SeeNotice = () => {
             id: notice._id,
         };
     });
+
     return (
         <div style={{ marginTop: '50px', marginRight: '20px' }}>
             {loading ? (
@@ -56,8 +63,7 @@ const SeeNotice = () => {
                 </>
             )}
         </div>
-
-    )
+    );
 }
 
-export default SeeNotice
+export default SeeNotice;
