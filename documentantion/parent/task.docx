@@ -84,17 +84,17 @@ Set up a system to generate performance reports for students.
 Implementation Timeline
 
 Week 1-2:
-Team Member 1: Complete UI design for parent dashboard and attendance/academic records components.
-Team Member 2: Complete UI design for quiz and assignment creation and learning materials upload interface.
+Team 1: Complete UI design for parent dashboard and attendance/academic records components.
+Team 2: Complete UI design for quiz and assignment creation and learning materials upload interface.
 
 
 Week 3-4:
-Team Member 1: Implement backend integration for fetching and displaying data.
-Team Member 2: Implement backend integration for quiz/assignment distribution and file management.
+Team 1: Implement backend integration for fetching and displaying data.
+Team 2: Implement backend integration for quiz/assignment distribution and file management.
 
 Week 5-6:
-Team Member 1: Finalize messaging interface and notification system.
-Team Member 2: Finalize performance tracking dashboard and feedback system.
+Team 1: Finalize messaging interface and notification system.
+Team 2: Finalize performance tracking dashboard and feedback system.
 
 Week 7-8:
 Testing and Bug Fixing: Both team members thoroughly test their features and fix any bugs.
