@@ -1,5 +1,13 @@
 const router = require('express').Router();
 
+const express = require('express');
+const bodyParser = require('body-parser');
+const app = express();
+const Student = require('../models/studentSchema.js');
+const Admin = require('../models/adminSchema.js');
+
+app.use(bodyParser.json());
+
 // Controllers
 const { adminRegister, adminLogIn, getAdminDetail } = require('../controllers/admin-controller.js');
 const { sclassCreate, sclassList, deleteSclass, deleteSclasses, getSclassDetail, getSclassStudents } = require('../controllers/class-controller.js');
@@ -32,6 +40,60 @@ router.put('/RemoveAllStudentsSubAtten/:id', clearAllStudentsAttendanceBySubject
 router.put('/RemoveAllStudentsAtten/:id', clearAllStudentsAttendance);
 router.put('/RemoveStudentSubAtten/:id', removeStudentAttendanceBySubject);
 router.put('/RemoveStudentAtten/:id', removeStudentAttendance);
+
+const fetchStudentNames = async (req, res) => {
+    const { name, schoolName } = req.body;
+    console.log(`Received request for name: ${name} and schoolName: ${schoolName}`);
+
+    try {
+        // Find the school by schoolName in the admin collection
+        const school = await Admin.findOne({ schoolName }).select('-password'); // Exclude password here
+        if (!school) {
+            return res.status(404).json({
+                message: 'School not found'
+            });
+        }
+
+        // Find students whose names start with the given name and belong to the specified school
+        const students = await Student.find({
+            name: { $regex: `^${name}`, $options: 'i' }, // Case-insensitive match
+            school: school._id
+        })
+        .select('-password') // Exclude password from student data
+        .populate({
+            path: 'sclassName',
+            select: '-password' // Exclude password from sclassName if applicable
+        })
+        .populate({
+            path: 'school',
+            select: '-password' // Exclude password from school data
+        })
+        .populate({
+            path: 'examResult.subName',
+            select: '-password' // Exclude password from examResult subName if applicable
+        })
+        .populate({
+            path: 'attendance.subName',
+            select: '-password' // Exclude password from attendance subName if applicable
+        });
+
+        res.status(200).json({
+            message: 'Students fetched successfully',
+            students
+        });
+    } catch (error) {
+        console.error(error);
+
+        res.status(500).json({
+            message: 'An error occurred while fetching students',
+            error: error.message
+        });
+    }
+};
+
+
+
+router.post('/Students', fetchStudentNames);
 
 // Teacher Routes
 router.post('/TeacherReg', teacherRegister);

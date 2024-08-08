@@ -89,9 +89,7 @@ const ShowParents = () => {
                 <Typography variant="h5" component="div">
                     Parents List
                 </Typography>
-                <GreenButton variant="contained" onClick={() => navigate("/Admin/parents/choosestudent")}>
-                    Add Parent
-                </GreenButton>
+             
             </Box>
             <TableContainer>
                 <Table stickyHeader aria-label="sticky table">
