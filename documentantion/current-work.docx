@@ -7,17 +7,7 @@
 |                              |   - Backend Integration                                | Week 3-4          | [ ]       |
 |                              |   - Data Display                                       |                   |           |
 |                              |     - Attendance Records Component                     |                   | [ ]       |
-|                              |     - Academic Records Component                       | Week 1-2          | [ ]       |
-|                              |     - Behavior Reports Component                       |                   | [ ]       |
-|                              | View Attendance and Academic Records                   |                   |           |
-|                              |   - Attendance Records Component                       | Week 1-2          | [ ]       |
-|                              |   - Academic Records Component                         | Week 1-2          | [ ]       |
-|                              | Communicate with Teachers and School Administration    |                   |           |
-|                              |   - Messaging Interface                                | Week 5-6          | [ ]       |
-|                              |   - Backend Integration                                | Week 3-4          | [ ]       |
-|                              |   - Notification System                                | Week 5-6          | [ ]       |
-+------------------------------+-------------------------------------------------------+-------------------+-----------+
-| Enhanced Teacher Functionalities (Team 2)                                             |                   |           |
+|                              |   Team 2)                                              |                   |           |
 |                              | Create and Distribute Quizzes and Assignments          |                   |           |
 |                              |   - Quiz and Assignment Creation Form                  | Week 1-2          | [ ]       |
 |                              |   - Distribution Mechanism                             | Week 3-4          | [ ]       |
@@ -31,7 +21,7 @@
 |                              |   - Feedback System                                    | Week 5-6          | [ ]       |
 |                              |   - Report Generation System                           | Week 5-6          | [ ]       |
 +------------------------------+-------------------------------------------------------+-------------------+-----------+
-| Implementation Timeline                                                               |                   |           |
+| Implementation Timeline      |                                                        |                   |           |
 |                              | Week 1-2                                               |                   |           |
 |                              |   - Team 1:                                            |                   |           |
 |                              |     - Complete UI design for parent dashboard and      |                   | [ ]       |
@@ -55,5 +45,15 @@
 |                              |       feedback system                                  |                   |           |
 |                              | Week 7-8                                               |                   |           |
 |                              |   - Testing and Bug Fixing (Both Team Members)         |                   | [ ]       |
-|                              |   - Integration (Both Team Members)                    |                   | [ ]       |
+|                              |   - Integration (Both Team Members)   - Academic Records Component                       | Week 1-2          | [ ]       |
+|                              |     - Behavior Reports Component                       |                   | [ ]       |
+|                              | View Attendance and Academic Records                   |                   |           |
+|                              |   - Attendance Records Component                       | Week 1-2          | [ ]       |
+|                              |   - Academic Records Component                         | Week 1-2          | [ ]       |
+|                              | Communicate with Teachers and School Administration    |                   |           |
+|                              |   - Messaging Interface                                | Week 5-6          | [ ]       |
+|                              |   - Backend Integration                                | Week 3-4          | [ ]       |
+|                              |   - Notification System                                | Week 5-6          | [ ]       |
++------------------------------+-------------------------------------------------------+-------------------+-----------+
+| Enhanced Teacher Functionalities (                   |                   | [ ]       |
 +------------------------------+-------------------------------------------------------+-------------------+-----------+

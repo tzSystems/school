@@ -1,5 +1,3 @@
-
-
 const mongoose = require('mongoose');
 
 const parentSchema = new mongoose.Schema({
@@ -27,6 +25,24 @@ const parentSchema = new mongoose.Schema({
     address: {
         type: String,
         required: true
+    },
+    // New fields
+    profilePicture: {
+        type: String, // URL or path to the profile picture
+        default: null
+    },
+    occupation: {
+        type: String,
+        default: null
+    },
+    dob: {
+        type: Date,
+        default: null
+    },
+    gender: {
+        type: String,
+        enum: ['Male', 'Female', 'Other'],
+        default: null
     },
     children: [{
         type: mongoose.Schema.Types.ObjectId,

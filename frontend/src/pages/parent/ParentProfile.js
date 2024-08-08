@@ -1,15 +1,22 @@
-
-
-import React from 'react'
+import React from 'react';
 import styled from 'styled-components';
-import { Card, CardContent, Typography, Grid, Box, Avatar, Container, Paper } from '@mui/material';
-import { useSelector } from 'react-redux';
+import { Card, CardContent, Typography, Grid, Box, Avatar, Container, Paper, Button } from '@mui/material';
+import { useDispatch, useSelector } from 'react-redux';
 
 const ParentProfile = () => {
+  const dispatch = useDispatch();
   const { currentUser, response, error } = useSelector((state) => state.user);
 
-  if (response) { console.log(response) }
-  else if (error) { console.log(error) }
+  if (response) { console.log(response); }
+  else if (error) { console.log(error); }
+
+  const handleFillDetails = () => {
+    // Function to handle filling missing details
+    // Replace this with actual dispatch or logic to update user details
+    console.log('Filling missing details...');
+    // Dispatch an action to update the details
+    // dispatch(updateParentDetails(updatedDetails));
+  };
 
   return (
     <>
@@ -41,49 +48,54 @@ const ParentProfile = () => {
         </StyledPaper>
         <Card>
           <CardContent>
-            <Typography variant="h6" gutterBottom>
+            <Typography variant="h6" gutterBottom align="center" fontWeight="bold">
               Personal Information
             </Typography>
-            <Grid container spacing={2}>
+            <Grid container spacing={2} justifyContent="center">
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" component="p">
-                  <strong>Date of Birth:</strong> {currentUser.dob}
+                <Typography variant="subtitle1" component="p"  fontWeight="">
+                  <strong>Date of Birth:</strong> {currentUser.dob || 'Not provided'}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" component="p">
-                  <strong>Gender:</strong> {currentUser.gender}
+                <Typography variant="subtitle1" component="p"  fontWeight="">
+                  <strong>Gender:</strong> {currentUser.gender || 'Not provided'}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" component="p">
+                <Typography variant="subtitle1" component="p" fontWeight="">
                   <strong>Email:</strong> {currentUser.email}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" component="p">
+                <Typography variant="subtitle1" component="p" fontWeight="">
                   <strong>Phone:</strong> {currentUser.phone}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" component="p">
-                  <strong>Address:</strong> {currentUser.address}
+                <Typography variant="subtitle1" component="p"  fontWeight="">
+                  <strong>Address:</strong> {currentUser.address || 'Not provided'}
                 </Typography>
               </Grid>
               <Grid item xs={12} sm={6}>
-                <Typography variant="subtitle1" component="p">
-                  <strong>Occupation:</strong> {currentUser.occupation}
+                <Typography variant="subtitle1" component="p" fontWeight="">
+                  <strong>Occupation:</strong> {currentUser.occupation || 'Not provided'}
                 </Typography>
               </Grid>
             </Grid>
+            <Box display="flex" justifyContent="center" mt={2}>
+              <Button variant="contained" color="primary" onClick={handleFillDetails}>
+                Fill Missing Details
+              </Button>
+            </Box>
           </CardContent>
         </Card>
       </Container>
     </>
-  )
-}
+  );
+};
 
-export default ParentProfile
+export default ParentProfile;
 
 const StyledPaper = styled(Paper)`
   padding: 20px;

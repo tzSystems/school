@@ -26,7 +26,7 @@ const ParentSideBar = () => {
                     <ListItemIcon>
                         <PersonOutlineIcon color={location.pathname.startsWith("/Parent/children") ? 'primary' : 'inherit'} />
                     </ListItemIcon>
-                    <ListItemText primary="Children" />
+                    <ListItemText primary="Student" />
                 </ListItemButton>
                 <ListItemButton component={Link} to="/Parent/attendance">
                     <ListItemIcon>
