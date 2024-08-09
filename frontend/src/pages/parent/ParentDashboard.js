@@ -52,7 +52,7 @@ const ParentDashboard = () => {
                             noWrap
                             sx={{ flexGrow: 1 }}
                         >
-                            Parent Dashboard
+                            Welcome to Parent Dashboard
                         </Typography>
                         <AccountMenu />
                     </Toolbar>
