@@ -1,0 +1,65 @@
+
+
+Documentation for the Task
+Objective:
+
+Implement language translation for the remaining 30 pages in the system.
+Current Implementation:
+
+The translation is handled using index-based arrays in a language configuration file (lang/homePage.js).
+
+Example format:
+
+{
+    "welcome": ["Welcome to", "Karibu Kwenye"],
+    "school_management": ["School Management", "Mfumo wa Kusimamia"],
+    "system": ["System", "Shughuli za Shule"]
+}
+You will find this in config/lang/homePage.js
+
+Steps for the Task:
+
+Review Existing Implementation:
+
+1. Review the lang/homePage.js file to understand how the translation is handled.
+Ensure consistency in the translation keys across different pages.
+Create Language Files:
+
+2. For each of the remaining pages, create a corresponding language file (lang/pageName.js).
+Populate the arrays with translations for both languages.
+Update React Components:
+
+3. Import the newly created language files into the corresponding components.
+Use the useSelector hook to get the current language code and apply translations using the index-based array.
+Ensure that all text content in the component is translated.
+Testing:
+
+4. After implementing the translations, test each page by switching between languages to ensure that all text is correctly translated.
+Look for any untranslated strings or errors.
+
+Code Review:
+Submit the updated files for a code review to ensure quality and consistency.
+
+Time Estimate
+Page Analysis (1 hour): Analyze the complexity of the pages and determine the average number of strings per page.
+Translation Setup per Page (1-2 hours per page): Depending on the complexity and number of strings, translating and testing each page could take 1-2 hours.
+
+Overall Time Estimate:
+For 30 pages, the total time could range from 30 to 60 hours.
+If working full-time (8 hours/day), it could take approximately 4 to 8 days to complete.
+
+Additional Considerations
+Team Member Skill Level: If the team member is experienced with the system, they may complete the task faster. If they need to familiarize themselves, additional time might be required.
+Complex Pages: Some pages may have more content, dynamic text, or require additional logic, which could extend the time needed.
+
+Delegation Summary
+Task:
+Complete the language translation for 30 pages in the system using the provided method.
+Estimated Time:
+
+4 to 8 days, depending on complexity and team member proficiency.
+Deliverables:
+
+Fully translated pages.
+Updated language configuration files.
+Tested and reviewed components

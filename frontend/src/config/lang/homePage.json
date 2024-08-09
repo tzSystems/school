@@ -1,0 +1,13 @@
+
+
+
+{   "welcome":["Welcome to","Karibu Kwenye"],
+    "school_management": ["School Management", "Mfumo wa Kusimamia"],
+    "system": ["System", "Shughuli za Shule"],
+    "body": [
+        "Streamline school management, class organization, and add students and faculty. Seamlessly track attendance, assess performance, and provide feedback. Access records, view marks, and communicate effortlessly.",
+        "Endesha shughuli za shule yako kiurahisi,kiuhakika na kwa ubora katika mfumo huu wa kielektroniki. Unda akaunti za wanafunzi, walimu , wazazi kwa pamoja uweze kufuatilia maendeleo ya mtoto, kutuma ripoti, matangazo vyote hapahapa"],
+    "login": ["Login","Ingia"],
+    "signUp": [ "Sign Up",  "Jisajili"],
+    "no_account": [ "Don't have account ?", "Je, hauna akaunti ?"]
+}

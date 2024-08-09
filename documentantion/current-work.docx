@@ -31,6 +31,13 @@
 |                              |   - Feedback System                                    | Week 5-6          | [ ]       |
 |                              |   - Report Generation System                           | Week 5-6          | [ ]       |
 +------------------------------+-------------------------------------------------------+-------------------+-----------+
+| Language Translation (Team 3)                                                         |                   |           |
+|                              | Implement Language Translation on 30 Pages             |                   |           |
+|                              |   - Review Existing Implementation                     | Week 1            | [ ]       |
+|                              |   - Create Language Files                              | Week 2-3          | [ ]       |
+|                              |   - Update React Components                            | Week 4-5          | [ ]       |
+|                              |   - Testing and Bug Fixing                             | Week 6            | [ ]       |
++------------------------------+-------------------------------------------------------+-------------------+-----------+
 | Implementation Timeline                                                               |                   |           |
 |                              | Week 1-2                                               |                   |           |
 |                              |   - Team 1:                                            |                   |           |
@@ -39,6 +46,9 @@
 |                              |   - Team 2:                                            |                   |           |
 |                              |     - Complete UI design for quiz and assignment       |                   | [ ]       |
 |                              |       creation and learning materials upload interface |                   |           |
+|                              |   - Team 3:                                            |                   |           |
+|                              |     - Review existing translation implementation and   |                   | [ ]       |
+|                              |       create language files for the first few pages    |                   |           |
 |                              | Week 3-4                                               |                   |           |
 |                              |   - Team 1:                                            |                   |           |
 |                              |     - Implement backend integration for fetching and   |                   | [ ]       |
@@ -46,6 +56,8 @@
 |                              |   - Team 2:                                            |                   |           |
 |                              |     - Implement backend integration for quiz/assignment|                   | [ ]       |
 |                              |       distribution and file management                 |                   |           |
+|                              |   - Team 3:                                            |                   |           |
+|                              |     - Continue creating and integrating language files |                   | [ ]       |
 |                              | Week 5-6                                               |                   |           |
 |                              |   - Team 1:                                            |                   |           |
 |                              |     - Finalize messaging interface and notification    |                   | [ ]       |
@@ -53,7 +65,10 @@
 |                              |   - Team 2:                                            |                   |           |
 |                              |     - Finalize performance tracking dashboard and      |                   | [ ]       |
 |                              |       feedback system                                  |                   |           |
+|                              |   - Team 3:                                            |                   |           |
+|                              |     - Finish testing and bug fixing for language       |                   | [ ]       |
+|                              |       translation                                      |                   |           |
 |                              | Week 7-8                                               |                   |           |
-|                              |   - Testing and Bug Fixing (Both Team Members)         |                   | [ ]       |
-|                              |   - Integration (Both Team Members)                    |                   | [ ]       |
+|                              |   - Testing and Bug Fixing (All Teams)                 |                   | [ ]       |
+|                              |   - Integration (All Teams)                            |                   | [ ]       |
 +------------------------------+-------------------------------------------------------+-------------------+-----------+

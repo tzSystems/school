@@ -2,34 +2,52 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { Container, Grid, Box, Button } from '@mui/material';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
 import Students from "../assets/students.svg";
 import { LightPurpleButton } from '../components/buttonStyles';
+import lang from "../config/lang/homePage"
+import { changeLang } from '../redux/langRelated/langHandle';
 
 const Homepage = () => {
+   const {
+          body,
+          login,
+          signUp,
+          system,
+          school_management,
+          no_account,
+          welcome} = lang;
+        const dispatch = useDispatch()
+        const { code } = useSelector(state => state.language);
+        const changeLanguage =() => {
+            dispatch(changeLang());
+        }
     return (
         <StyledContainer>
+           
             <Grid container spacing={0}>
                 <Grid item xs={12} md={6}>
+
                     <img src={Students} alt="students" style={{ width: '100%' }} />
+                    <button onClick={changeLanguage} className="btn btn-primary btn-xs">Change language</button>
                 </Grid>
                 <Grid item xs={12} md={6}>
+                   
                     <StyledPaper elevation={3}>
                         <StyledTitle>
-                            Welcome to
+                            {welcome[code]}
                             <br />
-                            School Management
+                            {school_management[code]}
                             <br />
-                            System
+                            {system[code]}
                         </StyledTitle>
                         <StyledText>
-                            Streamline school management, class organization, and add students and faculty.
-                            Seamlessly track attendance, assess performance, and provide feedback.
-                            Access records, view marks, and communicate effortlessly.
+                            {body[code]}
                         </StyledText>
                         <StyledBox>
                             <StyledLink to="/choose">
                                 <LightPurpleButton variant="contained" fullWidth>
-                                    Login
+                                    {login[code]}
                                 </LightPurpleButton>
                             </StyledLink>
                          {/*   <StyledLink to="/chooseasguest">
@@ -40,14 +58,15 @@ const Homepage = () => {
                                 </Button>
                             </StyledLink> */}
                             <StyledText>
-                                Don't have an account?{' '}
+                                {no_account[code]}{' '}
                                 <Link to="/Adminregister" style={{color:"#550080"}}>
-                                    Sign up
+                                {signUp[code]}
                                 </Link>
                             </StyledText>
                         </StyledBox>
                     </StyledPaper>
                 </Grid>
+                
             </Grid>
         </StyledContainer>
     );

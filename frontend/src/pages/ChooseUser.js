@@ -13,12 +13,24 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/userRelated/userHandle';
 import Popup from '../components/Popup';
+import lang from "../config/lang/chooseRole"
 
 const ChooseUser = ({ visitor }) => {
+  const {
+    admin,
+    student,
+    teacher,
+    parent,
+    login_as_student,
+    login_as_parent,
+    login_as_teacher,
+   
+  } = lang
   const dispatch = useDispatch()
   const navigate = useNavigate()
   const password = "zxc"
-
+  
+  const { code } = useSelector(state => state.language);
   const { status, currentUser, currentRole } = useSelector(state => state.user);
 
   const [loader, setLoader] = useState(false)
@@ -96,7 +108,7 @@ const ChooseUser = ({ visitor }) => {
                   <AccountCircle fontSize="large" />
                 </Box>
                 <StyledTypography>Admin</StyledTypography>
-                Login as an administrator to access the dashboard to manage app data.
+                 {admin[code]}
               </StyledPaper>
             </div>
           </Grid>
@@ -106,8 +118,8 @@ const ChooseUser = ({ visitor }) => {
                 <Box mb={2}>
                   <School fontSize="large" />
                 </Box>
-                <StyledTypography>Student</StyledTypography>
-                Login as a student to explore course materials and assignments.
+                <StyledTypography>{student[code]}</StyledTypography>
+                {login_as_student[code]}
               </div>
             </StyledPaper>
           </Grid>
@@ -117,8 +129,8 @@ const ChooseUser = ({ visitor }) => {
                 <Box mb={2}>
                   <Group fontSize="large" />
                 </Box>
-                <StyledTypography>Teacher</StyledTypography>
-                Login as a teacher to create courses, assignments, and track student progress.
+                <StyledTypography>{teacher[code]}</StyledTypography>
+                {login_as_teacher[code]}
               </div>
             </StyledPaper>
           </Grid>
@@ -128,8 +140,8 @@ const ChooseUser = ({ visitor }) => {
                 <Box mb={2}>
                   <FamilyRestroom fontSize="large" />
                 </Box>
-                <StyledTypography>Parent</StyledTypography>
-                Login as a parent to monitor your child's progress and communicate with teachers.
+                <StyledTypography>{parent[code]}</StyledTypography>
+                {login_as_parent[code]}
               </div>
             </StyledPaper>
           </Grid>

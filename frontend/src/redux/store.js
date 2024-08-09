@@ -7,6 +7,7 @@ import { teacherReducer } from './teacherRelated/teacherSlice';
 import { complainReducer } from './complainRelated/complainSlice';
 import { parentReducer } from './parentRelated/parentSlice';
 import { studentSearchReducer } from './studentRelated/studentSearchSlice';
+import { langReducer } from './langRelated/langSlice';
 
 const store = configureStore({
     reducer: {
@@ -18,6 +19,7 @@ const store = configureStore({
         studentSearch: studentSearchReducer,
         sclass: sclassReducer,
         parent: parentReducer,
+        language: langReducer,
     },
 });
 

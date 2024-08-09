@@ -1,0 +1,20 @@
+
+
+
+
+
+{  
+     "admin":[" Login as an administrator to access the dashboard to manage app data.","Login kama Admin wa shule ili uweze kuingia kwenye dashbodi ya shule"],
+    "student": ["Student", "Mwanafunzi"],
+    "teacher": ["Teacher", "Mwalimu"],
+    "parent": ["Parent or Guardian", "Mzazi au Mlezi"],
+    "login_as_student": [
+          " Login as a student to explore course materials and assignments.", 
+          "Ingia kama mwanafunzi ili uweze kuona materials, kozi , matokeo na mengineyo"],
+    "login_as_teacher": [
+          "Login as a teacher to create courses, assignments, and track student progress.", 
+          "Ingia kama mwalimu ili uweze kuandaa kozi, mazoezi na kufuatilia maendeleo ya mwanafunzi"],
+    "login_as_parent": [
+          " Login as a parent to monitor your child's progress and communicate with teachers.", 
+          "Ingia kama mzazi/mlezi ili uweze kufuatilia maendeleo ya mtoto wako, kuwasiliana na walimu na uongozi"]
+}
