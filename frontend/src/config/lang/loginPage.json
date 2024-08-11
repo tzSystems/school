@@ -1,0 +1,125 @@
+
+
+{
+    "role_login": [
+      "{role} Login",
+      "{role} Ingia",
+      "Connexion {role}",
+      "Inicio de sesión {role}",
+      "{role} Banye",
+      "{role} Wọle",
+      "{role} Ngena",
+      "{role} Ngena"
+    ],
+    "welcome_message": [
+      "Welcome back! Please enter your details",
+      "Karibu tena! Tafadhali ingiza maelezo yako",
+      "Bon retour! Veuillez entrer vos coordonnées",
+      "¡Bienvenido de nuevo! Por favor ingrese sus detalles",
+      "Nnọọ na azụ! Biko tinye nkọwa gị",
+      "Kaabo lẹẹkansi! Jọwọ tẹ alaye rẹ sii",
+      "Siyakwamukela futhi! Sicela ufake imininingwane yakho",
+      "Wamkelekile kwakhona! Nceda ufake iinkcukacha zakho"
+    ],
+    "enter_roll_number": [
+      "Enter your Roll Number",
+      "Ingiza Nambari yako ya Roll",
+      "Entrez votre numéro de matricule",
+      "Ingrese su número de registro",
+      "Tinye nọmba gị nke Roll",
+      "Tẹ nọmba rẹ ti Roll",
+      "Faka inombolo yakho yokugijima",
+      "Faka inombolo yakho yokugijima"
+    ],
+    "enter_name": [
+      "Enter your name",
+      "Ingiza jina lako",
+      "Entrez votre nom",
+      "Ingrese su nombre",
+      "Tinye aha gị",
+      "Tẹ orukọ rẹ sii",
+      "Faka igama lakho",
+      "Faka igama lakho"
+    ],
+    "enter_email": [
+      "Enter your email",
+      "Ingiza barua pepe yako",
+      "Entrez votre e-mail",
+      "Ingrese su correo electrónico",
+      "Tinye email gị",
+      "Tẹ imeeli rẹ sii",
+      "Faka i-imeyili yakho",
+      "Faka i-imeyili yakho"
+    ],
+    "password": [
+      "Password",
+      "Nenosiri",
+      "Mot de passe",
+      "Contraseña",
+      "Paswọdu",
+      "Ọrọigbaniwọle",
+      "Iphasiwedi",
+      "Iphasiwedi"
+    ],
+    "remember_me": [
+      "Remember me",
+      "Nikumbuke",
+      "Souviens-toi de moi",
+      "Recuérdame",
+      "Cheta m",
+      "Ranti mi",
+      "Ngikhumbule",
+      "Ndikhumbule"
+    ],
+    "forgot_password": [
+      "Forgot password?",
+      "Umesahau nenosiri?",
+      "Mot de passe oublié?",
+      "¿Olvidaste tu contraseña?",
+      "Cheta paswọdu?",
+      "Ṣe o gbagbe ọrọ igbaniwọle?",
+      "Ukhohlwe iphasiwedi?",
+      "Ulibale iphasiwedi?"
+    ],
+    "signUp": [
+        "Sign Up",
+        "Jisajili",
+        "Inscription",
+        "Regístrate",
+        "Debanye aha",
+        "Forukọsilẹ",
+        "Bhalisela",
+        "Bhalisela"
+      ],
+      "no_account": [
+        "Don't have account?",
+        "Je, hauna akaunti?",
+        "Vous n'avez pas de compte?",
+        "¿No tienes cuenta?",
+        "Enweghị akaụntụ?",
+        "Ṣe o ko ni akọọlẹ?",
+        "Awunayo i-akhawunti?",
+        "Awunayo i-akhawunti?"
+      ],
+      "password_required": [
+        "Password is required",
+        "Nenosiri ni lazima",
+        "Le mot de passe est requis",
+        "La contraseña es requerida",
+        "Paswọdu bụ ihe dị mkpa",
+        "Ọrọigbaniwọle dị mkpa",
+        "Iphasiwedi iyadingeka",
+        "Iphasiwedi iyafuneka"
+      ],
+      "email_required": [
+        "Email is required",
+        "Barua pepe ni muhimu",
+        "L'email est requis",
+        "El correo electrónico es requerido",
+        "Email dị mkpa",
+        "Imeeli jẹ dandan",
+        "I-imeyili iyadingeka",
+        "I-imeyili iyafuneka"
+      ]
+  }
+  

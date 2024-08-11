@@ -9,19 +9,36 @@ import { LightPurpleButton } from '../components/buttonStyles';
 import styled from 'styled-components';
 import { loginUser } from '../redux/userRelated/userHandle';
 import Popup from '../components/Popup';
+import lang from "../config/lang/loginPage"; // Update import to new file
 
 const defaultTheme = createTheme();
 
 const LoginPage = ({ role }) => {
 
-    const dispatch = useDispatch()
-    const navigate = useNavigate()
+    const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const { status, currentUser, response, error, currentRole } = useSelector(state => state.user);
+    const { code } = useSelector(state => state.language);
 
-    const [toggle, setToggle] = useState(false)
-    const [guestLoader, setGuestLoader] = useState(false)
-    const [loader, setLoader] = useState(false)
+    const {
+        role_login,
+        welcome_message,
+        enter_roll_number,
+        enter_name,
+        enter_email,
+        password,
+        remember_me,
+        forgot_password,
+        no_account,
+        signUp,
+        password_required,
+        email_required
+    } = lang;
+
+    const [toggle, setToggle] = useState(false);
+    const [guestLoader, setGuestLoader] = useState(false);
+    const [loader, setLoader] = useState(false);
     const [showPopup, setShowPopup] = useState(false);
     const [message, setMessage] = useState("");
 
@@ -36,30 +53,30 @@ const LoginPage = ({ role }) => {
         if (role === "Student") {
             const rollNum = event.target.rollNumber.value;
             const studentName = event.target.studentName.value;
-            const password = event.target.password.value;
+            const passwordValue = event.target.password.value;
 
-            if (!rollNum || !studentName || !password) {
+            if (!rollNum || !studentName || !passwordValue) {
                 if (!rollNum) setRollNumberError(true);
                 if (!studentName) setStudentNameError(true);
-                if (!password) setPasswordError(true);
+                if (!passwordValue) setPasswordError(true);
                 return;
             }
-            const fields = { rollNum, studentName, password }
-            setLoader(true)
-            dispatch(loginUser(fields, role))
+            const fields = { rollNum, studentName, password: passwordValue };
+            setLoader(true);
+            dispatch(loginUser(fields, role));
         } else {
-            const email = event.target.email.value;
-            const password = event.target.password.value;
+            const emailValue = event.target.email.value;
+            const passwordValue = event.target.password.value;
 
-            if (!email || !password) {
-                if (!email) setEmailError(true);
-                if (!password) setPasswordError(true);
+            if (!emailValue || !passwordValue) {
+                if (!emailValue) setEmailError(true);
+                if (!passwordValue) setPasswordError(true);
                 return;
             }
 
-            const fields = { email, password }
-            setLoader(true)
-            dispatch(loginUser(fields, role))
+            const fields = { email: emailValue, password: passwordValue };
+            setLoader(true);
+            dispatch(loginUser(fields, role));
         }
     };
 
@@ -72,60 +89,33 @@ const LoginPage = ({ role }) => {
     };
 
     const guestModeHandler = () => {
-        const password = "zxc"
+        const passwordValue = "zxc";
 
-        if (role === "Admin") {
-            const email = "yogendra@12"
-            const fields = { email, password }
-            setGuestLoader(true)
-            dispatch(loginUser(fields, role))
-        }
-        else if (role === "Student") {
-            const rollNum = "1"
-            const studentName = "Dipesh Awasthi"
-            const fields = { rollNum, studentName, password }
-            setGuestLoader(true)
-            dispatch(loginUser(fields, role))
-        }
-        else if (role === "Teacher") {
-            const email = "tony@12"
-            const fields = { email, password }
-            setGuestLoader(true)
-            dispatch(loginUser(fields, role))
-        }
-        else if (role === "Parent") {
-            const email = "parent@12"
-            const fields = { email, password }
-            setGuestLoader(true)
-            dispatch(loginUser(fields, role))
-        }
-    }
+        const guestData = {
+            Admin: { email: "yogendra@12", password: passwordValue },
+            Student: { rollNum: "1", studentName: "Dipesh Awasthi", password: passwordValue },
+            Teacher: { email: "tony@12", password: passwordValue },
+            Parent: { email: "parent@12", password: passwordValue },
+        };
+
+        setGuestLoader(true);
+        dispatch(loginUser(guestData[role], role));
+    };
 
     useEffect(() => {
         if (status === 'success' || currentUser !== null) {
-            console.log(`User logged in, current user ${currentUser.role}`)
-            if (currentRole === 'Admin') {
-                navigate('/Admin/dashboard');
-            }
-            else if (currentRole === 'Student') {
-                navigate('/Student/dashboard');
-            } else if (currentRole === 'Teacher') {
-                navigate('/Teacher/dashboard');
-            } else if (currentRole === 'Parent') {
-                navigate('/Parent/dashboard');
-            }
-        }
-        else if (status === 'failed') {
-            console.log('failed to navigate to dashboard, the status is', status, currentUser);
-            setMessage(response)
-            setShowPopup(true)
-            setLoader(false)
-        }
-        else if (status === 'error') {
-            setMessage("Network Error")
-            setShowPopup(true)
-            setLoader(false)
-            setGuestLoader(false)
+            console.log(`User logged in, current user ${currentUser.role}`);
+            navigate(`/${currentRole}/dashboard`);
+        } else if (status === 'failed') {
+            console.log('Failed to navigate to dashboard, status:', status, currentUser);
+            setMessage(response);
+            setShowPopup(true);
+            setLoader(false);
+        } else if (status === 'error') {
+            setMessage("Network Error");
+            setShowPopup(true);
+            setLoader(false);
+            setGuestLoader(false);
         }
     }, [status, currentRole, navigate, error, response, currentUser]);
 
@@ -144,10 +134,10 @@ const LoginPage = ({ role }) => {
                         }}
                     >
                         <Typography variant="h4" sx={{ mb: 2, color: "#2c2143" }}>
-                            {role} Login
+                            {role_login[code].replace('{role}', role)}
                         </Typography>
                         <Typography variant="h7">
-                            Welcome back! Please enter your details
+                            {welcome_message[code]}
                         </Typography>
                         <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 2 }}>
                             {role === "Student" ? (
@@ -157,7 +147,7 @@ const LoginPage = ({ role }) => {
                                         required
                                         fullWidth
                                         id="rollNumber"
-                                        label="Enter your Roll Number"
+                                        label={enter_roll_number[code]}
                                         name="rollNumber"
                                         autoComplete="off"
                                         type="number"
@@ -171,7 +161,7 @@ const LoginPage = ({ role }) => {
                                         required
                                         fullWidth
                                         id="studentName"
-                                        label="Enter your name"
+                                        label={enter_name[code]}
                                         name="studentName"
                                         autoComplete="name"
                                         autoFocus
@@ -186,12 +176,12 @@ const LoginPage = ({ role }) => {
                                     required
                                     fullWidth
                                     id="email"
-                                    label="Enter your email"
+                                    label={enter_email[code]}
                                     name="email"
                                     autoComplete="email"
                                     autoFocus
                                     error={emailError}
-                                    helperText={emailError && 'Email is required'}
+                                    helperText={emailError && `${email_required[code]}`}
                                     onChange={handleInputChange}
                                 />
                             )}
@@ -200,22 +190,18 @@ const LoginPage = ({ role }) => {
                                 required
                                 fullWidth
                                 name="password"
-                                label="Password"
+                                label={password[code]}
                                 type={toggle ? 'text' : 'password'}
                                 id="password"
                                 autoComplete="current-password"
                                 error={passwordError}
-                                helperText={passwordError && 'Password is required'}
+                                helperText={passwordError && `${password_required[code]}`}
                                 onChange={handleInputChange}
                                 InputProps={{
                                     endAdornment: (
                                         <InputAdornment position="end">
                                             <IconButton onClick={() => setToggle(!toggle)}>
-                                                {toggle ? (
-                                                    <Visibility />
-                                                ) : (
-                                                    <VisibilityOff />
-                                                )}
+                                                {toggle ? <Visibility /> : <VisibilityOff />}
                                             </IconButton>
                                         </InputAdornment>
                                     ),
@@ -224,10 +210,10 @@ const LoginPage = ({ role }) => {
                             <Grid container sx={{ display: "flex", justifyContent: "space-between" }}>
                                 <FormControlLabel
                                     control={<Checkbox value="remember" color="primary" />}
-                                    label="Remember me"
+                                    label={remember_me[code]}
                                 />
-                                <StyledLink href="#">
-                                    Forgot password?
+                                <StyledLink to="#">
+                                    {forgot_password[code]}
                                 </StyledLink>
                             </Grid>
                             <LightPurpleButton
@@ -236,19 +222,17 @@ const LoginPage = ({ role }) => {
                                 variant="contained"
                                 sx={{ mt: 3 }}
                             >
-                                {loader ?
-                                    <CircularProgress size={24} color="inherit" />
-                                    : "Login"}
+                                {loader ? <CircularProgress size={24} color="inherit" /> : role_login[code].replace('{role}', '')}
                             </LightPurpleButton>
                         
                             {role === "Admin" &&
                                 <Grid container>
                                     <Grid>
-                                        Don't have an account?
+                                       {no_account[code]}
                                     </Grid>
                                     <Grid item sx={{ ml: 2 }}>
                                         <StyledLink to="/Adminregister">
-                                            Sign up
+                                            {signUp[code]}
                                         </StyledLink>
                                     </Grid>
                                 </Grid>
@@ -283,7 +267,7 @@ const LoginPage = ({ role }) => {
     );
 }
 
-export default LoginPage
+export default LoginPage;
 
 const StyledLink = styled(Link)`
   margin-top: 9px;
