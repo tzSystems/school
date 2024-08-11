@@ -1,74 +1,74 @@
-+------------------------------+-------------------------------------------------------+-------------------+-----------+
-|         Task Category        |                     Task Description                   |      Timeline     | Completed |
-+------------------------------+-------------------------------------------------------+-------------------+-----------+
-| Parent Functionalities (Team 1)                                                       |                   |           |
-|                              | Track the Progress of Children                         |                   |           |
-|                              |   - Create User Interface                              | Week 1-2          | [ ]       |
-|                              |   - Backend Integration                                | Week 3-4          | [ ]       |
-|                              |   - Data Display                                       |                   |           |
-|                              |     - Attendance Records Component                     |                   | [ ]       |
-|                              |     - Academic Records Component                       | Week 1-2          | [ ]       |
-|                              |     - Behavior Reports Component                       |                   | [ ]       |
-|                              | View Attendance and Academic Records                   |                   |           |
-|                              |   - Attendance Records Component                       | Week 1-2          | [ ]       |
-|                              |   - Academic Records Component                         | Week 1-2          | [ ]       |
-|                              | Communicate with Teachers and School Administration    |                   |           |
-|                              |   - Messaging Interface                                | Week 5-6          | [ ]       |
-|                              |   - Backend Integration                                | Week 3-4          | [ ]       |
-|                              |   - Notification System                                | Week 5-6          | [ ]       |
-+------------------------------+-------------------------------------------------------+-------------------+-----------+
-| Enhanced Teacher Functionalities (Team 2)                                             |                   |           |
-|                              | Create and Distribute Quizzes and Assignments          |                   |           |
-|                              |   - Quiz and Assignment Creation Form                  | Week 1-2          | [ ]       |
-|                              |   - Distribution Mechanism                             | Week 3-4          | [ ]       |
-|                              |   - Grading System                                     | Week 3-4          | [ ]       |
-|                              | Upload and Share Learning Materials                    |                   |           |
-|                              |   - Upload Interface                                   | Week 1-2          | [ ]       |
-|                              |   - File Management                                    | Week 3-4          | [ ]       |
-|                              |   - Sharing Mechanism                                  | Week 3-4          | [ ]       |
-|                              | Track Student Performance and Provide Feedback         |                   |           |
-|                              |   - Performance Tracking Dashboard                     | Week 5-6          | [ ]       |
-|                              |   - Feedback System                                    | Week 5-6          | [ ]       |
-|                              |   - Report Generation System                           | Week 5-6          | [ ]       |
-+------------------------------+-------------------------------------------------------+-------------------+-----------+
-| Language Translation (Team 3)                                                         |                   |           |
-|                              | Implement Language Translation on 30 Pages             |                   |           |
-|                              |   - Review Existing Implementation                     | Week 1            | [ ]       |
-|                              |   - Create Language Files                              | Week 2-3          | [ ]       |
-|                              |   - Update React Components                            | Week 4-5          | [ ]       |
-|                              |   - Testing and Bug Fixing                             | Week 6            | [ ]       |
-+------------------------------+-------------------------------------------------------+-------------------+-----------+
-| Implementation Timeline                                                               |                   |           |
-|                              | Week 1-2                                               |                   |           |
-|                              |   - Team 1:                                            |                   |           |
-|                              |     - Complete UI design for parent dashboard and      |                   | [ ]       |
-|                              |       attendance/academic records components           |                   |           |
-|                              |   - Team 2:                                            |                   |           |
-|                              |     - Complete UI design for quiz and assignment       |                   | [ ]       |
-|                              |       creation and learning materials upload interface |                   |           |
-|                              |   - Team 3:                                            |                   |           |
-|                              |     - Review existing translation implementation and   |                   | [ ]       |
-|                              |       create language files for the first few pages    |                   |           |
-|                              | Week 3-4                                               |                   |           |
-|                              |   - Team 1:                                            |                   |           |
-|                              |     - Implement backend integration for fetching and   |                   | [ ]       |
-|                              |       displaying data                                  |                   |           |
-|                              |   - Team 2:                                            |                   |           |
-|                              |     - Implement backend integration for quiz/assignment|                   | [ ]       |
-|                              |       distribution and file management                 |                   |           |
-|                              |   - Team 3:                                            |                   |           |
-|                              |     - Continue creating and integrating language files |                   | [ ]       |
-|                              | Week 5-6                                               |                   |           |
-|                              |   - Team 1:                                            |                   |           |
-|                              |     - Finalize messaging interface and notification    |                   | [ ]       |
-|                              |       system                                           |                   |           |
-|                              |   - Team 2:                                            |                   |           |
-|                              |     - Finalize performance tracking dashboard and      |                   | [ ]       |
-|                              |       feedback system                                  |                   |           |
-|                              |   - Team 3:                                            |                   |           |
-|                              |     - Finish testing and bug fixing for language       |                   | [ ]       |
-|                              |       translation                                      |                   |           |
-|                              | Week 7-8                                               |                   |           |
-|                              |   - Testing and Bug Fixing (All Teams)                 |                   | [ ]       |
-|                              |   - Integration (All Teams)                            |                   | [ ]       |
-+------------------------------+-------------------------------------------------------+-------------------+-----------+
++------------------------------+-------------------------------------------------------+-------------------+-----------+---------------------------+
+|         Task Category        |                     Task Description                   |      Timeline     | Completed |        Comments           |
++------------------------------+-------------------------------------------------------+-------------------+-----------+---------------------------+
+| Parent Functionalities (Team 1)                                                       |                   |           |                           |
+|                              | Track the Progress of Children                         |                   |           |                           |
+|                              |   - Create User Interface                              | Week 1-2          | [ ]       |                           |
+|                              |   - Backend Integration                                | Week 3-4          | [ ]       |                           |
+|                              |   - Data Display                                       |                   |           |                           |
+|                              |     - Attendance Records Component                     |                   | [ ]       |                           |
+|                              |     - Academic Records Component                       | Week 1-2          | [ ]       |                           |
+|                              |     - Behavior Reports Component                       |                   | [ ]       |                           |
+|                              | View Attendance and Academic Records                   |                   |           |                           |
+|                              |   - Attendance Records Component                       | Week 1-2          | [ ]       |                           |
+|                              |   - Academic Records Component                         | Week 1-2          | [ ]       |                           |
+|                              | Communicate with Teachers and School Administration    |                   |           |                           |
+|                              |   - Messaging Interface                                | Week 5-6          | [ ]       |                           |
+|                              |   - Backend Integration                                | Week 3-4          | [ ]       |                           |
+|                              |   - Notification System                                | Week 5-6          | [ ]       |                           |
++------------------------------+-------------------------------------------------------+-------------------+-----------+---------------------------+
+| Enhanced Teacher Functionalities (Team 2)                                             |                   |           |                           |
+|                              | Create and Distribute Quizzes and Assignments          |                   |           |                           |
+|                              |   - Quiz and Assignment Creation Form                  | Week 1-2          | [ ]       |                           |
+|                              |   - Distribution Mechanism                             | Week 3-4          | [ ]       |                           |
+|                              |   - Grading System                                     | Week 3-4          | [ ]       |                           |
+|                              | Upload and Share Learning Materials                    |                   |           |                           |
+|                              |   - Upload Interface                                   | Week 1-2          | [ ]       |                           |
+|                              |   - File Management                                    | Week 3-4          | [ ]       |                           |
+|                              |   - Sharing Mechanism                                  | Week 3-4          | [ ]       |                           |
+|                              | Track Student Performance and Provide Feedback         |                   |           |                           |
+|                              |   - Performance Tracking Dashboard                     | Week 5-6          | [ ]       |                           |
+|                              |   - Feedback System                                    | Week 5-6          | [ ]       |                           |
+|                              |   - Report Generation System                           | Week 5-6          | [ ]       |                           |
++------------------------------+-------------------------------------------------------+-------------------+-----------+---------------------------+
+| Language Translation (Ajmal)                                                         |                   |           |                           |
+|                              | Implement Language Translation on 30 Pages             |                   |           |                           |
+|                              |   - Review Existing Implementation                     | Week 1            | [ ]       |                           |
+|                              |   - Create Language Files                              | Week 2-3          | [ ]       |                           |
+|                              |   - Update React Components                            | Week 4-5          | [ ]       |                           |
+|                              |   - Testing and Bug Fixing                             | Week 6            | [ ]       |                           |
++------------------------------+-------------------------------------------------------+-------------------+-----------+---------------------------+
+| Implementation Timeline                                                               |                   |           |                           |
+|                              | Week 1-2                                               |                   |           |                           |
+|                              |   - Team 1:                                            |                   |           |                           |
+|                              |     - Complete UI design for parent dashboard and      |                   | [ ]       |                           |
+|                              |       attendance/academic records components           |                   |           |                           |
+|                              |   - Team 2:                                            |                   |           |                           |
+|                              |     - Complete UI design for quiz and assignment       |                   | [ ]       |                           |
+|                              |       creation and learning materials upload interface |                   |           |                           |
+|                              |   - Team 3:                                            |                   |           |                           |
+|                              |     - Review existing translation implementation and   |                   | [ ]       |                           |
+|                              |       create language files for the first few pages    |                   |           |                           |
+|                              | Week 3-4                                               |                   |           |                           |
+|                              |   - Team 1:                                            |                   |           |                           |
+|                              |     - Implement backend integration for fetching and   |                   | [ ]       |                           |
+|                              |       displaying data                                  |                   |           |                           |
+|                              |   - Team 2:                                            |                   |           |                           |
+|                              |     - Implement backend integration for quiz/assignment|                   | [ ]       |                           |
+|                              |       distribution and file management                 |                   |           |                           |
+|                              |   - Team 3:                                            |                   |           |                           |
+|                              |     - Continue creating and integrating language files |                   | [ ]       |                           |
+|                              | Week 5-6                                               |                   |           |                           |
+|                              |   - Team 1:                                            |                   |           |                           |
+|                              |     - Finalize messaging interface and notification    |                   | [ ]       |                           |
+|                              |       system                                           |                   |           |                           |
+|                              |   - Team 2:                                            |                   |           |                           |
+|                              |     - Finalize performance tracking dashboard and      |                   | [ ]       |                           |
+|                              |       feedback system                                  |                   |           |                           |
+|                              |   - Team 3:                                            |                   |           |                           |
+|                              |     - Finish testing and bug fixing for language       |                   | [ ]       |                           |
+|                              |       translation                                      |                   |           |                           |
+|                              | Week 7-8                                               |                   |           |                           |
+|                              |   - Testing and Bug Fixing (All Teams)                 |                   | [ ]       |                           |
+|                              |   - Integration (All Teams)                            |                   | [ ]       |                           |
++------------------------------+-------------------------------------------------------+-------------------+-----------+---------------------------+

@@ -1,20 +1,14 @@
-
-
-
-import axios from 'axios';
 import {
     getRequest,
-    getSuccess,
-    getFailed,
     getError,
     setLang
 } from './langSlice';
 
-export const changeLang = () => (dispatch) => {
+export const changeLang = (languageCode) => (dispatch) => {
     dispatch(getRequest());
 
     try {
-        dispatch(setLang())
+        dispatch(setLang(languageCode));
     } catch (error) {
         dispatch(getError(error));
     }

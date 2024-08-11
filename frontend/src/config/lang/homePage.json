@@ -1,13 +1,73 @@
-
-
-
-{   "welcome":["Welcome to","Karibu Kwenye"],
-    "school_management": ["School Management", "Mfumo wa Kusimamia"],
-    "system": ["System", "Shughuli za Shule"],
+{
+    "welcome": [
+      "Welcome to",
+      "Karibu Kwenye",
+      "Bienvenue à",
+      "Bienvenido a",
+      "Nabata na",
+      "Kaabọ si",
+      "Siyakwamukela ku",
+      "Wamkela kwi"
+    ],
+    "school_management": [
+      "School Management",
+      "Mfumo wa Kusimamia",
+      "Gestion scolaire",
+      "Gestión escolar",
+      "NjikwaỤmụakwụkwọ",
+      "Isakoso Ile-iwe",
+      "Ukuphathwa kwesikole",
+      "Ukuphathwa kwesikole"
+    ],
+    "system": [
+      "System",
+      "Shughuli za Shule",
+      "Système",
+      "Sistema",
+      "Sistem",
+      "Ẹ̀rọ",
+      "Uhlelo",
+      "Inkqubo"
+    ],
     "body": [
-        "Streamline school management, class organization, and add students and faculty. Seamlessly track attendance, assess performance, and provide feedback. Access records, view marks, and communicate effortlessly.",
-        "Endesha shughuli za shule yako kiurahisi,kiuhakika na kwa ubora katika mfumo huu wa kielektroniki. Unda akaunti za wanafunzi, walimu , wazazi kwa pamoja uweze kufuatilia maendeleo ya mtoto, kutuma ripoti, matangazo vyote hapahapa"],
-    "login": ["Login","Ingia"],
-    "signUp": [ "Sign Up",  "Jisajili"],
-    "no_account": [ "Don't have account ?", "Je, hauna akaunti ?"]
-}
+      "Streamline school management, class organization, and add students and faculty. Seamlessly track attendance, assess performance, and provide feedback. Access records, view marks, and communicate effortlessly.",
+      "Endesha shughuli za shule yako kiurahisi, kiuhakika na kwa ubora katika mfumo huu wa kielektroniki. Unda akaunti za wanafunzi, walimu, wazazi kwa pamoja uweze kufuatilia maendeleo ya mtoto, kutuma ripoti, matangazo vyote hapahapa.",
+      "Rationalisez la gestion de l'école, l'organisation des classes et ajoutez des étudiants et du personnel. Suivez facilement l'assiduité, évaluez les performances et fournissez des commentaires. Accédez aux dossiers, visualisez les notes et communiquez sans effort.",
+      "Simplifica la gestión escolar, la organización de clases y agrega estudiantes y profesores. Sigue sin problemas la asistencia, evalúa el rendimiento y proporciona retroalimentación. Accede a los registros, visualiza las calificaciones y comunica sin esfuerzo.",
+      "Mee ka njikwa ụmụakwụkwọ dị mfe, nhazi klas, na tinye ụmụ akwụkwọ na ndị nkụzi. Soro ọnụnọ, nyochaa arụmọrụ, na-enye nzaghachi. Nyere ndekọ, lee akara, ma kpọtụrụ ọnụnọ.",
+      "Ṣe atunṣe iṣakoso ile-iwe, iṣeto kilasi, ati afikun awọn akẹkọ ati awọn olukọ. Ṣe atẹle iwọle ni rọọrun, ṣe ayẹwo iṣẹ, ati pese esi. wọle si awọn igbasilẹ, wo awọn ami, ati sọṣọ ni irọrun.",
+      "Nika impatho yesikole, ukuhlelwa kwamakilasi, ungeze abafundi nothisha. Qapha ukungabi bikho, hlola ukusebenza, bese unikeza impendulo. Finyelela amarekhodi, buka amamaki, futhi uxhumane kalula.",
+      "Hlela ukuphathwa kwesikole, ukuhlela izifundo, kunye nokongeza abafundi kunye nabasebenzi. Landela indawo ngokugqibeleleyo, hlola ukusebenza, kwaye unikezele ngengxelo. Fikelela kwiirekhodi, jonga amamaki, kwaye uxhumane ngokulula."
+    ],
+    "login": [
+      "Login",
+      "Ingia",
+      "Connexion",
+      "Iniciar sesión",
+      "Banye",
+      "Wọle",
+      "Ngena",
+      "Ngena"
+    ],
+    "signUp": [
+      "Sign Up",
+      "Jisajili",
+      "Inscription",
+      "Regístrate",
+      "Debanye aha",
+      "Forukọsilẹ",
+      "Bhalisela",
+      "Bhalisela"
+    ],
+    "no_account": [
+      "Don't have account?",
+      "Je, hauna akaunti?",
+      "Vous n'avez pas de compte?",
+      "¿No tienes cuenta?",
+      "Enweghị akaụntụ?",
+      "Ṣe o ko ni akọọlẹ?",
+      "Awunayo i-akhawunti?",
+      "Awunayo i-akhawunti?"
+    ]
+  }
+  

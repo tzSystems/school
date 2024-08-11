@@ -1,9 +1,7 @@
-
-
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-    code:0,
+    code: 0, // Default to English
     loading: false,
     error: null,
     response: null,
@@ -31,8 +29,8 @@ const langSlice = createSlice({
             state.loading = false;
             state.error = action.payload;
         },
-        setLang: (state, action) =>{
-            state.code = state.code === 0 ? 1:0;
+        setLang: (state, action) => {
+            state.code = action.payload;
             state.loading = false;
             state.error = null;
             state.response = null;

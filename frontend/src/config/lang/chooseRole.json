@@ -1,20 +1,72 @@
-
-
-
-
-
-{  
-     "admin":[" Login as an administrator to access the dashboard to manage app data.","Login kama Admin wa shule ili uweze kuingia kwenye dashbodi ya shule"],
-    "student": ["Student", "Mwanafunzi"],
-    "teacher": ["Teacher", "Mwalimu"],
-    "parent": ["Parent or Guardian", "Mzazi au Mlezi"],
-    "login_as_student": [
-          " Login as a student to explore course materials and assignments.", 
-          "Ingia kama mwanafunzi ili uweze kuona materials, kozi , matokeo na mengineyo"],
-    "login_as_teacher": [
-          "Login as a teacher to create courses, assignments, and track student progress.", 
-          "Ingia kama mwalimu ili uweze kuandaa kozi, mazoezi na kufuatilia maendeleo ya mwanafunzi"],
-    "login_as_parent": [
-          " Login as a parent to monitor your child's progress and communicate with teachers.", 
-          "Ingia kama mzazi/mlezi ili uweze kufuatilia maendeleo ya mtoto wako, kuwasiliana na walimu na uongozi"]
+{
+  "login_as_admin": [
+    "Login as an administrator to access the dashboard to manage app data.",
+    "Login kama Admin wa shule ili uweze kuingia kwenye dashbodi ya shule",
+    "Connectez-vous en tant qu'administrateur pour accéder au tableau de bord afin de gérer les données de l'application.",
+    "Inicie sesión como administrador para acceder al panel y gestionar los datos de la aplicación.",
+    "Banye dị ka onye nchịkwa iji nweta dashboard iji jikwaa data ngwa.",
+    "Wọle gẹgẹ bi alakoso lati wọle si dasibodi lati ṣakoso data ohun elo.",
+    "Ngena njenge-Administrator ukuze ufinyelele i-dashboard ukuze uphathe idatha ye-app.",
+    "Ngena njengomphathiswa ukufikelela ku-dashboard ukuphatha idatha yesicelo."
+  ],
+  "student": [
+    "Student",
+    "Mwanafunzi",
+    "Étudiant",
+    "Estudiante",
+    "Ụmụakwụkwọ",
+    "Akẹkọ",
+    "Umfundi",
+    "Umfundi"
+  ],
+  "teacher": [
+    "Teacher",
+    "Mwalimu",
+    "Enseignant",
+    "Profesor",
+    "Nkuzi",
+    "Olukọ",
+    "Ut öğretmen",
+    "Teacher"
+  ],
+  "parent": [
+    "Parent or Guardian",
+    "Mzazi au Mlezi",
+    "Parent ou Gardien",
+    "Padre o Tutor",
+    "Nne ma ọ bụ nna",
+    "Ẹ̀bi tabi Alakoso",
+    "Umzali noma Umphathiswa",
+    "Umzali okanye Umphathiswa"
+  ],
+  "login_as_student": [
+    "Login as a student to explore course materials and assignments.",
+    "Ingia kama mwanafunzi ili uweze kuona materials, kozi , matokeo na mengineyo",
+    "Connectez-vous en tant qu'étudiant pour explorer les matériaux de cours et les devoirs.",
+    "Inicia sesión como estudiante para explorar materiales de curso y tareas.",
+    "Banye dị ka onye ụmụ akwụkwọ iji nyochaa ihe ọmụmụ na ọrụ.",
+    "Wọle gẹgẹbi akẹkọ lati ṣawari awọn ohun elo kilasi ati awọn iṣẹ-ṣiṣe.",
+    "Ngena njengomfundi ukuze uhlolisise izinsiza zezifundo nezabelo.",
+    "Ngena njengomfundi ukuze uphenye izinto zokufunda kunye nemisebenzi."
+  ],
+  "login_as_teacher": [
+    "Login as a teacher to create courses, assignments, and track student progress.",
+    "Ingia kama mwalimu ili uweze kuandaa kozi, mazoezi na kufuatilia maendeleo ya mwanafunzi",
+    "Connectez-vous en tant qu'enseignant pour créer des cours, des devoirs et suivre les progrès des élèves.",
+    "Inicia sesión como profesor para crear cursos, tareas y rastrear el progreso de los estudiantes.",
+    "Banye dị ka onye nkuzi iji mepụta ọmụmụ, ọrụ, na nyochaa mmepe ụmụ akwụkwọ.",
+    "Wọle gẹgẹbi olukọ lati ṣẹda awọn kilasi, awọn iṣẹ-ṣiṣe, ati tọpinpin ilọsiwaju akẹkọ.",
+    "Ngena njengothisha ukuze udale izifundo, izabelo, futhi ulandele ilerandi yomfundi.",
+    "Ngena njengomfundisi ukuze udale izifundo, izabelo, kwaye ulandele inkqubela phambili yomfundi."
+  ],
+  "login_as_parent": [
+    "Login as a parent to monitor your child's progress and communicate with teachers.",
+    "Ingia kama mzazi/mlezi ili uweze kufuatilia maendeleo ya mtoto wako, kuwasiliana na walimu na uongozi",
+    "Connectez-vous en tant que parent pour suivre les progrès de votre enfant et communiquer avec les enseignants.",
+    "Inicia sesión como padre para monitorear el progreso de tu hijo y comunicarte con los profesores.",
+    "Banye dị ka nne ma ọ bụ nna iji nyochaa mmepe nke nwa gị ma kpọtụrụ ndị nkuzi.",
+    "Wọle gẹgẹ bi obi tabi alakoso lati tọpinpin ilọsiwaju ọmọ rẹ ati lati ba awọn olukọ sọrọ.",
+    "Ngena njengomzali ukuze uqaphele ilerandi yezingane zakho futhi uxhumane nothisha.",
+    "Ngena njengomzali ukuze uqaphele inkqubela phambili yomntwana wakho kwaye uxhumane nothisha."
+  ]
 }

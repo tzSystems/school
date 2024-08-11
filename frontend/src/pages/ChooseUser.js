@@ -13,88 +13,101 @@ import styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../redux/userRelated/userHandle';
 import Popup from '../components/Popup';
-import lang from "../config/lang/chooseRole"
+import lang from "../config/lang/chooseRole"; // Update import to new file
 
 const ChooseUser = ({ visitor }) => {
   const {
-    admin,
+
     student,
     teacher,
     parent,
+    login_as_admin,
     login_as_student,
-    login_as_parent,
     login_as_teacher,
-   
-  } = lang
-  const dispatch = useDispatch()
-  const navigate = useNavigate()
-  const password = "zxc"
-  
-  const { code } = useSelector(state => state.language);
+    login_as_parent,
+  } = lang;
+  console.log('student', student)
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+  const password = "zxc";
+
+  const { code } = useSelector(state => state.language); // Language code
   const { status, currentUser, currentRole } = useSelector(state => state.user);
 
-  const [loader, setLoader] = useState(false)
+  const [loader, setLoader] = useState(false);
   const [showPopup, setShowPopup] = useState(false);
   const [message, setMessage] = useState("");
 
   const navigateHandler = (user) => {
-    if (user === "Admin") {
-      if (visitor === "guest") {
-        const email = "yogendra@12"
-        const fields = { email, password }
-        setLoader(true)
-        dispatch(loginUser(fields, user))
-      } else {
-        navigate('/Adminlogin');
-      }
-    } else if (user === "Student") {
-      if (visitor === "guest") {
-        const rollNum = "1"
-        const studentName = "Dipesh Awasthi"
-        const fields = { rollNum, studentName, password }
-        setLoader(true)
-        dispatch(loginUser(fields, user))
-      } else {
-        navigate('/Studentlogin');
-      }
-    } else if (user === "Teacher") {
-      if (visitor === "guest") {
-        const email = "tony@12"
-        const fields = { email, password }
-        setLoader(true)
-        dispatch(loginUser(fields, user))
-      } else {
-        navigate('/Teacherlogin');
-      }
-    } else if (user === "Parent") {
-      if (visitor === "guest") {
-        const email = "parent@12"
-        const fields = { email, password }
-        setLoader(true)
-        dispatch(loginUser(fields, user))
-      } else {
-        navigate('/Parentlogin');
-      }
+    const fields = { password };
+
+    switch (user) {
+      case "Admin":
+        if (visitor === "guest") {
+          fields.email = "yogendra@12";
+          setLoader(true);
+          dispatch(loginUser(fields, user));
+        } else {
+          navigate('/Adminlogin');
+        }
+        break;
+      case "Student":
+        if (visitor === "guest") {
+          fields.rollNum = "1";
+          fields.studentName = "Dipesh Awasthi";
+          setLoader(true);
+          dispatch(loginUser(fields, user));
+        } else {
+          navigate('/Studentlogin');
+        }
+        break;
+      case "Teacher":
+        if (visitor === "guest") {
+          fields.email = "tony@12";
+          setLoader(true);
+          dispatch(loginUser(fields, user));
+        } else {
+          navigate('/Teacherlogin');
+        }
+        break;
+      case "Parent":
+        if (visitor === "guest") {
+          fields.email = "parent@12";
+          setLoader(true);
+          dispatch(loginUser(fields, user));
+        } else {
+          navigate('/Parentlogin');
+        }
+        break;
+      default:
+        break;
     }
-  }
+  };
 
   useEffect(() => {
     if (status === 'success' || currentUser !== null) {
-      if (currentRole === 'Admin') {
-        navigate('/Admin/dashboard');
-      } else if (currentRole === 'Student') {
-        navigate('/Student/dashboard');
-      } else if (currentRole === 'Teacher') {
-        navigate('/Teacher/dashboard');
-      } else if (currentRole === 'Parent') {
-        navigate('/Parent/dashboard');
+      switch (currentRole) {
+        case 'Admin':
+          navigate('/Admin/dashboard');
+          break;
+        case 'Student':
+          navigate('/Student/dashboard');
+          break;
+        case 'Teacher':
+          navigate('/Teacher/dashboard');
+          break;
+        case 'Parent':
+          navigate('/Parent/dashboard');
+          break;
+        default:
+          break;
       }
     } else if (status === 'error') {
-      setLoader(false)
-      setMessage("Network Error")
-      setShowPopup(true)
+      setLoader(false);
+      setMessage("Network Error");
+      setShowPopup(true);
     }
-    
   }, [status, currentRole, navigate, currentUser]);
 
   return (
@@ -108,7 +121,7 @@ const ChooseUser = ({ visitor }) => {
                   <AccountCircle fontSize="large" />
                 </Box>
                 <StyledTypography>Admin</StyledTypography>
-                 {admin[code]}
+                {login_as_admin[code]} {/* Adjusted key name */}
               </StyledPaper>
             </div>
           </Grid>
@@ -173,12 +186,12 @@ const StyledPaper = styled(Paper)`
   padding: 20px;
   text-align: center;
   background-color: #1f1f38;
-  color:rgba(255, 255, 255, 0.6);
-  cursor:pointer;
+  color: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
 
   &:hover {
     background-color: #2c2c6c;
-    color:white;
+    color: white;
   }
 `;
 
