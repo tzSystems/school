@@ -163,7 +163,7 @@ const StyledTitle = styled.h1`
 `;
 
 const StyledText = styled.p`
-  color: #E0E0E0;
+  color: #ffffff;
   margin-top: 20px;
   margin-bottom: 20px;
   text-align: center;
