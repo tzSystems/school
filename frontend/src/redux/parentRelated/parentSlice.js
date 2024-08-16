@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     parentsList: [],
     parentDetails: null,
+    childList: [],
     loading: false,
     error: null,
     response: null,
@@ -44,7 +45,14 @@ const parentSlice = createSlice({
             state.response = null;
             state.error = null;
             state.statestatus = "idle";
-        }
+        },
+        gotChild: (state, action) =>{
+            state.childList = state.childList.push(action.payload);
+            state.loading = false;
+            state.error = null;
+            state.response = null;
+
+        },
     },
 });
 
@@ -54,6 +62,7 @@ export const {
     getFailed,
     getError,
     stuffDone,
+    gotChild,
     underStudentControl,
 } = parentSlice.actions;
 

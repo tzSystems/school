@@ -75,7 +75,7 @@ const ParentDashboard = () => {
                         <Route path="*" element={<Navigate to="/" />} />
                         <Route path="/Parent/dashboard" element={<ParentHomePage />} />
                         <Route path="/Parent/profile" element={<ParentProfile />} />
-                        <Route path="/Parent/child/:id" element={<ChildProfile />} />
+                        <Route path="/Parent/children" element={<ChildProfile />} />
                         <Route path="/Parent/attendance" element={<ViewChildAttendance />} />
                         <Route path="/Parent/notices" element={<ParentNotice />} />
                         <Route path="/logout" element={<Logout />} />

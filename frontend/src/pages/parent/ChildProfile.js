@@ -1,48 +1,87 @@
-
-
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Card, CardContent, Typography, Grid, Box, Avatar, Container, Paper } from '@mui/material';
+import { Card, CardContent, Typography, Grid, Box, Avatar, Container, Paper, CircularProgress } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
+import { fetchChild } from '../../redux/parentRelated/parentHandle';
 
-const ParentChildProfile = () => {
+const ChildProfile = () => {
   const dispatch = useDispatch();
   const [selectedChild, setSelectedChild] = useState(null);
-  
-  const { userDetails, currentUser, loading, response, error } = useSelector((state) => state.user);
+  const [childrenDetails, setChildrenDetails] = useState([]);
+  const [loadingChildren, setLoadingChildren] = useState(false);
+
+  const { currentUser, loading, response, error } = useSelector((state) => state.user);
 
   useEffect(() => {
-    dispatch(getUserDetails(currentUser._id, "Parent"));
-  }, [dispatch, currentUser._id]);
-
+    if (currentUser && currentUser._id) {
+      dispatch(getUserDetails(currentUser._id, "Parent"));
+  
+      if (currentUser.children && currentUser.children.length > 0) {
+        setLoadingChildren(true);
+        const fetchChildrenDetails = async () => {
+          for (const childId of currentUser.children) {
+            try {
+              const res = await dispatch(fetchChild(childId));
+              if (res && res.payload) {
+                setChildrenDetails(prevDetails => {
+                  if (!prevDetails.some(child => child._id === res.payload._id)) {
+                    return [...prevDetails, res.payload];
+                  }
+                  return prevDetails;
+                });
+              }
+            } catch (err) {
+              console.error('Failed to fetch child details:', err);
+            }
+          }
+          setLoadingChildren(false);
+        };
+        fetchChildrenDetails();
+      }
+    }
+  }, [dispatch, currentUser]);
+  
   const handleChildChange = (event) => {
     const selectedId = event.target.value;
-    const child = userDetails.children.find(student => student._id === selectedId);
+    const child = childrenDetails.find(student => student._id === selectedId);
     setSelectedChild(child);
   };
+  
+  // Rendering part
+  
+  
 
-  if (response) { console.log(response) }
-  else if (error) { console.log(error) }
+  useEffect(() => {
+    if (response) {
+      console.log(response);
+    } else if (error) {
+      console.log(error);
+    }
+  }, [response, error]);
 
   return (
-    <>
-      <Container maxWidth="md">
-        <Box sx={{ marginBottom: 2 }}>
-          <Typography variant="h6" component="div" gutterBottom>
-            Select Child
-          </Typography>
-          <select onChange={handleChildChange} value={selectedChild ? selectedChild._id : ''}>
-            <option value="" disabled>Select Child</option>
-            {userDetails?.children?.map((student) => (
-              <option key={student._id} value={student._id}>
-                {student.name}
-              </option>
-            ))}
-          </select>
-        </Box>
+    <Container maxWidth="md">
+      <Box sx={{ marginBottom: 2 }}>
+        <Typography variant="h6" component="div" gutterBottom>
+          Select Child
+        </Typography>
+        <select onChange={handleChildChange} value={selectedChild ? selectedChild._id : ''}>
+          <option value="" disabled>Select Child</option>
+          {childrenDetails.map((student) => (
+            <option key={student._id} value={student._id}>
+              {student.name}
+            </option>
+          ))}
+        </select>
+      </Box>
 
-        {selectedChild && (
+      {loadingChildren ? (
+        <Box display="flex" justifyContent="center" sx={{ marginBottom: 2 }}>
+          <CircularProgress />
+        </Box>
+      ) : selectedChild && (
+        <>
           <StyledPaper elevation={3}>
             <Grid container spacing={2}>
               <Grid item xs={12}>
@@ -82,9 +121,7 @@ const ParentChildProfile = () => {
               </Grid>
             </Grid>
           </StyledPaper>
-        )}
 
-        {selectedChild && (
           <Card>
             <CardContent>
               <Typography variant="h6" gutterBottom>
@@ -124,13 +161,13 @@ const ParentChildProfile = () => {
               </Grid>
             </CardContent>
           </Card>
-        )}
-      </Container>
-    </>
-  )
-}
+        </>
+      )}
+    </Container>
+  );
+};
 
-export default ParentChildProfile;
+export default ChildProfile;
 
 const StyledPaper = styled(Paper)`
   padding: 20px;

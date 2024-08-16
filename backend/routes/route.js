@@ -16,7 +16,7 @@ const { noticeCreate, noticeList, deleteNotices, deleteNotice, updateNotice } = 
 const { studentRegister, studentLogIn, getStudents, getStudentDetail, deleteStudents, deleteStudent, updateStudent, studentAttendance, deleteStudentsByClass, updateExamResult, clearAllStudentsAttendanceBySubject, clearAllStudentsAttendance, removeStudentAttendanceBySubject, removeStudentAttendance } = require('../controllers/student-controller.js');
 const { subjectCreate, classSubjects, deleteSubjectsByClass, getSubjectDetail, deleteSubject, freeSubjectList, allSubjects, deleteSubjects } = require('../controllers/subject-controller.js');
 const { teacherRegister, teacherLogIn, getTeachers, getTeacherDetail, deleteTeachers, deleteTeachersByClass, deleteTeacher, updateTeacherSubject, teacherAttendance } = require('../controllers/teacher-controller.js');
-const { parentRegister, parentLogIn, getParents, getParentDetail, getChildrenForParent } = require('../controllers/parent-controller.js'); // Import parent controller functions
+const { parentRegister,getChild, parentLogIn, getParents, getParentDetail, getChildrenForParent } = require('../controllers/parent-controller.js'); // Import parent controller functions
 
 // Admin Routes
 router.post('/AdminReg', adminRegister);
@@ -142,6 +142,6 @@ router.post('/ParentReg', parentRegister);  // Ensure parentRegister is defined 
 router.post('/ParentLogin', parentLogIn);   // Ensure parentLogIn is defined in parent-controller.js
 router.get('/Parents', getParents);     // Ensure getParents is defined in parent-controller.js
 router.get('/Parent/:id', getParentDetail); // Ensure getParentDetail is defined in parent-controller.js
-router.get('/ParentStudent/:id', getChildrenForParent); // Ensure getChildrenForParent is defined in parent-controller.js
+router.get('/Parent/Student/:id', getChild); // Ensure getChildrenForParent is defined in parent-controller.js
 
 module.exports = router;

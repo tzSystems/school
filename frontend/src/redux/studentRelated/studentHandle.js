@@ -1,17 +1,14 @@
-
-
-
 import axios from 'axios';
 import {
     getRequest,
     getSuccess,
     getFailed,
     getError,
-    stuffDone
+    stuffDone,
+    
 } from './studentSlice';
 
-
-
+// Existing getAllStudents function
 export const getAllStudents = (id) => async (dispatch) => {
     dispatch(getRequest());
 
@@ -25,8 +22,9 @@ export const getAllStudents = (id) => async (dispatch) => {
     } catch (error) {
         dispatch(getError(error));
     }
-}
+};
 
+// Existing updateStudentFields function
 export const updateStudentFields = (id, fields, address) => async (dispatch) => {
     dispatch(getRequest());
 
@@ -42,8 +40,9 @@ export const updateStudentFields = (id, fields, address) => async (dispatch) => 
     } catch (error) {
         dispatch(getError(error));
     }
-}
+};
 
+// Existing removeStuff function
 export const removeStuff = (id, address) => async (dispatch) => {
     dispatch(getRequest());
 
@@ -57,29 +56,25 @@ export const removeStuff = (id, address) => async (dispatch) => {
     } catch (error) {
         dispatch(getError(error));
     }
-}
+};
 
-// New fetchStudentNames function
-
-
-
+// Existing fetchStudentNames function
 export const fetchStudentNames = (name, schoolName) => async (dispatch) => {
-    dispatch(getRequest()); // Dispatch action to indicate request started
+    dispatch(getRequest()); 
 
     try {
-        // Make the API request
-        const url = `${process.env.REACT_APP_BASE_URL}/Students`; // Verify this URL
+        const url = `${process.env.REACT_APP_BASE_URL}/Students`; 
         const result = await axios.post(url, { name, schoolName });
         console.log('data', result.data.students)
-        // Check if the response contains a success message and dispatch accordingly
-        if (result.data && result.data.students) { // Adjust if your API response structure is different
-            dispatch(getSuccess(result.data.students)); // Dispatch success with student data
+        
+        if (result.data && result.data.students) { 
+            dispatch(getSuccess(result.data.students)); 
         } else {
-            dispatch(getFailed(result.data.message || 'No students found')); // Dispatch failure if no students are found
+            dispatch(getFailed(result.data.message || 'No students found')); 
         }
     } catch (error) {
-        // Handle errors and dispatch error action
         dispatch(getError(error.message || 'An error occurred'));
     }
 };
+
 

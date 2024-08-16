@@ -41,12 +41,13 @@ const parentSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-        enum: ['Male', 'Female', 'Other'],
+       // enum: ['Male', 'Female', 'Other'],
         default: null
     },
     children: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'student'
+        ref: 'student',
+        default: []
     }]
 });
 

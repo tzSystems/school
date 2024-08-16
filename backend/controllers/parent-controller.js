@@ -4,28 +4,38 @@ const bcrypt = require('bcrypt');
 const Parent = require('../models/parentSchema.js');
 const Student = require('../models/studentSchema.js');
 const Subject = require('../models/subjectSchema.js');
+const { getStudentDetail } = require('./student-controller.js');
 
 // Parent Registration
 const parentRegister = async (req, res) => {
     try {
+        console.log('received object',req.body)
         const salt = await bcrypt.genSalt(10);
         const hashedPass = await bcrypt.hash(req.body.password, salt);
-
+       
+        console.log('it reaches here', hashedPass)
+       
         const existingParent = await Parent.findOne({ email: req.body.email });
 
         if (existingParent) {
             res.send({ message: 'Email already exists' });
         } else {
+            console.log('it reaches here, it will now create a new object for a parent')
             const parent = new Parent({
                 ...req.body,
+                children: [req.body.childId],
                 password: hashedPass
             });
 
+            console.log('it reaches here, new parent created succesfully', parent)
+
             let result = await parent.save();
+            console.log('it reaches here, new parent saved successfully')
             result.password = undefined;
             res.send(result);
         }
     } catch (err) {
+        console.log('error', err);
         res.status(500).json(err);
     }
 };
@@ -70,7 +80,8 @@ const getParents = async (req, res) => {
         res.status(500).json(err);
     }
 };
-
+const getChild = getStudentDetail
+console.log('getDChild', getChild)
 // Get Parent Detail
 const getParentDetail = async (req, res) => {
     try {
@@ -180,4 +191,5 @@ module.exports = {
     addChildToParent,
     removeChildFromParent,
     getChildrenForParent,
+    getChild
 };

@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     studentsList: [],
+    childList: [],
     loading: false,
     error: null,
     response: null,
@@ -27,6 +28,7 @@ const studentSlice = createSlice({
             state.error = null;
             state.response = null;
         },
+        
         getFailed: (state, action) => {
             state.response = action.payload;
             state.loading = false;
@@ -52,6 +54,7 @@ export const {
     getError,
     underStudentControl,
     stuffDone,
+    
 } = studentSlice.actions;
 
 export const studentReducer = studentSlice.reducer;

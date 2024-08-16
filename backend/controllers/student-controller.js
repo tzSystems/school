@@ -75,13 +75,15 @@ const getStudents = async (req, res) => {
 };
 
 const getStudentDetail = async (req, res) => {
-    try {
+    try {  console.log('opened getStudentDetail');
+        console.log('parameters id', req.params.id) 
         let student = await Student.findById(req.params.id)
             .populate("school", "schoolName")
             .populate("sclassName", "sclassName")
             .populate("examResult.subName", "subName")
             .populate("attendance.subName", "subName sessions");
         if (student) {
+            console.log('we got student', student)
             student.password = undefined;
             res.send(student);
         }
