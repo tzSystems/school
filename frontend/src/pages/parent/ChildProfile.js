@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
-import { Card, CardContent, Typography, Grid, Box, Avatar, Container, Paper, CircularProgress } from '@mui/material';
+import { Container, Typography, Box, Avatar, Paper, CircularProgress, Tabs, Tab, Grid } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUserDetails } from '../../redux/userRelated/userHandle';
 import { fetchChild } from '../../redux/parentRelated/parentHandle';
@@ -10,13 +10,13 @@ const ChildProfile = () => {
   const [selectedChild, setSelectedChild] = useState(null);
   const [childrenDetails, setChildrenDetails] = useState([]);
   const [loadingChildren, setLoadingChildren] = useState(false);
+  const [tabValue, setTabValue] = useState(0);
 
-  const { currentUser, loading, response, error } = useSelector((state) => state.user);
+  const { currentUser } = useSelector((state) => state.user);
 
   useEffect(() => {
     if (currentUser && currentUser._id) {
       dispatch(getUserDetails(currentUser._id, "Parent"));
-  
       if (currentUser.children && currentUser.children.length > 0) {
         setLoadingChildren(true);
         const fetchChildrenDetails = async () => {
@@ -41,24 +41,16 @@ const ChildProfile = () => {
       }
     }
   }, [dispatch, currentUser]);
-  
+
   const handleChildChange = (event) => {
     const selectedId = event.target.value;
     const child = childrenDetails.find(student => student._id === selectedId);
     setSelectedChild(child);
   };
-  
-  // Rendering part
-  
-  
 
-  useEffect(() => {
-    if (response) {
-      console.log(response);
-    } else if (error) {
-      console.log(error);
-    }
-  }, [response, error]);
+  const handleTabChange = (event, newValue) => {
+    setTabValue(newValue);
+  };
 
   return (
     <Container maxWidth="md">
@@ -122,45 +114,54 @@ const ChildProfile = () => {
             </Grid>
           </StyledPaper>
 
-          <Card>
-            <CardContent>
-              <Typography variant="h6" gutterBottom>
-                Personal Information
-              </Typography>
-              <Grid container spacing={2}>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1" component="p">
-                    <strong>Date of Birth:</strong> {selectedChild.dateOfBirth || "N/A"}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1" component="p">
-                    <strong>Gender:</strong> {selectedChild.gender || "N/A"}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1" component="p">
-                    <strong>Email:</strong> {selectedChild.email || "N/A"}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1" component="p">
-                    <strong>Phone:</strong> {selectedChild.phone || "N/A"}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1" component="p">
-                    <strong>Address:</strong> {selectedChild.address || "N/A"}
-                  </Typography>
-                </Grid>
-                <Grid item xs={12} sm={6}>
-                  <Typography variant="subtitle1" component="p">
-                    <strong>Emergency Contact:</strong> {selectedChild.emergencyContact || "N/A"}
-                  </Typography>
-                </Grid>
-              </Grid>
-            </CardContent>
-          </Card>
+          <Tabs value={tabValue} onChange={handleTabChange} centered>
+            <Tab label="Attendance" />
+            <Tab label="Quizzes & Exercises" />
+            <Tab label="Results" />
+            <Tab label="Notice" />
+          </Tabs>
+
+          <TabPanel value={tabValue} index={0}>
+            {/* Attendance Tab */}
+            {selectedChild.attendance && selectedChild.attendance.length > 0 ? (
+              <ul>
+                {selectedChild.attendance.map((record) => (
+                  <li key={record._id}>
+                    {record.subName?.subName}: {record.status} on {new Date(record.date).toLocaleDateString()}
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Typography>No attendance records found.</Typography>
+            )}
+          </TabPanel>
+
+          <TabPanel value={tabValue} index={1}>
+            {/* Quizzes & Exercises Tab */}
+            {/* Render quizzes and exercises data here */}
+            <Typography>No quizzes or exercises data available.</Typography>
+          </TabPanel>
+
+          <TabPanel value={tabValue} index={2}>
+            {/* Results Tab */}
+            {selectedChild.examResult && selectedChild.examResult.length > 0 ? (
+              <ul>
+                {selectedChild.examResult.map((result) => (
+                  <li key={result._id}>
+                    {result.subjectName}: {result.score}%
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <Typography>No results found.</Typography>
+            )}
+          </TabPanel>
+
+          <TabPanel value={tabValue} index={3}>
+            {/* Notice Tab */}
+            {/* Render notices here */}
+            <Typography>No notices available.</Typography>
+          </TabPanel>
         </>
       )}
     </Container>
@@ -168,6 +169,26 @@ const ChildProfile = () => {
 };
 
 export default ChildProfile;
+
+const TabPanel = (props) => {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`tabpanel-${index}`}
+      aria-labelledby={`tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          {children}
+        </Box>
+      )}
+    </div>
+  );
+};
 
 const StyledPaper = styled(Paper)`
   padding: 20px;

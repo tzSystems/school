@@ -19,6 +19,8 @@ import ViewChildAttendance from './ViewChildAttendance';
 import ParentNotice from './ParentNotice';
 import Logout from '../Logout';
 import AccountMenu from '../../components/AccountMenu';
+import MessageMenu from '../../components/MessageMenu';
+import NotificationMenu from '../../components/NotificationMenu';
 import { AppBar, Drawer } from '../../components/styles';
 
 const ParentDashboard = () => {
@@ -54,6 +56,8 @@ const ParentDashboard = () => {
                         >
                             Welcome to Parent Dashboard
                         </Typography>
+                        <NotificationMenu />
+                        <MessageMenu />
                         <AccountMenu />
                     </Toolbar>
                 </AppBar>
