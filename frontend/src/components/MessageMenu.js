@@ -1,18 +1,24 @@
-
-
 import React, { useState } from 'react';
 import { Box, Badge, Menu, MenuItem, IconButton, Tooltip } from '@mui/material';
 import MailIcon from '@mui/icons-material/Mail';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 
 const MessageMenu = () => {
     const [anchorEl, setAnchorEl] = useState(null);
     const open = Boolean(anchorEl);
+    const navigate = useNavigate(); // Initialize useNavigate
 
     const handleClick = (event) => {
         setAnchorEl(event.currentTarget);
     };
+
     const handleClose = () => {
         setAnchorEl(null);
+    };
+
+    const handleMenuItemClick = (path) => {
+        navigate(path); // Navigate to the specified path
+        handleClose(); // Close the menu
     };
 
     return (
@@ -20,39 +26,23 @@ const MessageMenu = () => {
             <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
                 <Tooltip title="Messages">
                     <IconButton
-                        onClick={handleClick}
+                        onClick={() => handleMenuItemClick('/chatlist')}
                         size="small"
                         sx={{ ml: 2 }}
                         aria-controls={open ? 'message-menu' : undefined}
                         aria-haspopup="true"
                         aria-expanded={open ? 'true' : undefined}
                     >
-                        <Badge badgeContent={4} color="secondary">
+                        <Badge badgeContent={4} color="secondary" >
                             <MailIcon />
                         </Badge>
                     </IconButton>
                 </Tooltip>
             </Box>
-            <Menu
-                anchorEl={anchorEl}
-                id="message-menu"
-                open={open}
-                onClose={handleClose}
-                PaperProps={{
-                    elevation: 0,
-                    sx: styles.styledPaper,
-                }}
-                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
-                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
-            >
-                <MenuItem onClick={handleClose}>Message 1</MenuItem>
-                <MenuItem onClick={handleClose}>Message 2</MenuItem>
-                <MenuItem onClick={handleClose}>Message 3</MenuItem>
-                <MenuItem onClick={handleClose}>Message 4</MenuItem>
-            </Menu>
+            
         </>
     );
-}
+};
 
 export default MessageMenu;
 
@@ -74,4 +64,4 @@ const styles = {
             zIndex: 0,
         },
     }
-}
+};

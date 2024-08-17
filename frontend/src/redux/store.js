@@ -8,6 +8,8 @@ import { complainReducer } from './complainRelated/complainSlice';
 import { parentReducer } from './parentRelated/parentSlice';
 import { studentSearchReducer } from './studentRelated/studentSearchSlice';
 import { langReducer } from './langRelated/langSlice';
+import { messageReducer } from './messageRelated/messageSlice';
+import { chatListReducer } from './chatlistRelated/chatlistSlice';
 
 const store = configureStore({
     reducer: {
@@ -20,6 +22,8 @@ const store = configureStore({
         sclass: sclassReducer,
         parent: parentReducer,
         language: langReducer,
+        messages: messageReducer,
+        chatList: chatListReducer,
     },
 });
 

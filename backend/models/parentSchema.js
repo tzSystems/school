@@ -41,13 +41,56 @@ const parentSchema = new mongoose.Schema({
     },
     gender: {
         type: String,
-       // enum: ['Male', 'Female', 'Other'],
+        // enum: ['Male', 'Female', 'Other'],
         default: null
     },
     children: [{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'student',
         default: []
+    }],
+    // New columns for messages and notifications
+    messages: [{
+        senderId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User', // Reference to the user who sent the message
+            required: true
+        },
+        sender: {
+            type: String,
+            required: true
+        },
+        content: {
+            type: String,
+            required: true
+        },
+        timestamp: {
+            type: Date,
+            default: Date.now
+        }
+    }],
+    notifications: [{
+        senderId: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'User', // Reference to the user who sent the notification
+            required: true
+        },
+        title: {
+            type: String,
+            required: true
+        },
+        content: {
+            type: String,
+            required: true
+        },
+        timestamp: {
+            type: Date,
+            default: Date.now
+        },
+        read: {
+            type: Boolean,
+            default: false
+        }
     }]
 });
 

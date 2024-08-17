@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { getParentDetails } from '../../../redux/parentRelated/parentHandle';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
@@ -10,8 +10,11 @@ import PersonIcon from '@mui/icons-material/Person';
 import EmailIcon from '@mui/icons-material/Email';
 import PhoneIcon from '@mui/icons-material/Phone';
 import ChildCareIcon from '@mui/icons-material/ChildCare';
+import ChatIcon from '@mui/icons-material/Chat';
+import ChatViewer from '../../../components/ChatViewer';
 
 const ParentDetails = () => {
+    const [isChatOpen, setIsChatOpen] = useState(false);
     const navigate = useNavigate();
     const params = useParams();
     const dispatch = useDispatch();
@@ -79,12 +82,49 @@ const ParentDetails = () => {
                             </ListItem>
                         </List>
                         <Box sx={{ display: 'flex', justifyContent: 'center', mt: 3 }}>
-                            <Button variant="contained" color="primary" onClick={() => navigate(-1)}>
+                            <Button 
+                                variant="contained" 
+                                color="primary" 
+                                onClick={() => navigate(-1)}
+                                sx={{ mr: 2 }}
+                            >
                                 Back
+                            </Button>
+                            <Button 
+                                variant="contained" 
+                                color="secondary" 
+                                onClick={() => setIsChatOpen(true)}
+                                startIcon={<ChatIcon />}
+                            >
+                                Message
                             </Button>
                         </Box>
                     </CardContent>
                 </Card>
+            )}
+
+            {isChatOpen && parentDetails && (
+                <Box
+                    sx={{
+                        position: 'fixed',
+                        top: '50%',
+                        left: '50%',
+                        transform: 'translate(-50%, -50%)',
+                        zIndex: 1300, // Ensures it's above other content
+                        width: '90%',
+                        maxWidth: '500px',
+                        bgcolor: 'background.paper',
+                        boxShadow: 24,
+                        p: 4,
+                        borderRadius: 2
+                    }}
+                >
+                    <ChatViewer 
+                        recipientName={parentDetails.name} 
+                        recipientId={parentDetails._id} 
+                        recipientRole='Parent'
+                    />
+                </Box>
             )}
         </Container>
     );

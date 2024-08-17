@@ -10,6 +10,8 @@ import ParentDashboard from './pages/parent/ParentDashboard';
 import LoginPage from './pages/LoginPage';
 import AdminRegisterPage from './pages/admin/AdminRegisterPage';
 import ChooseUser from './pages/ChooseUser';
+import ChatListViewer from './pages/chatlist/ChatListViewer';
+
 
 const App = () => {
   const { currentRole } = useSelector(state => state.user);
@@ -27,6 +29,7 @@ const App = () => {
           <Route path="/Teacherlogin" element={<LoginPage role="Teacher" />} />
           <Route path="/Parentlogin" element={<LoginPage role="Parent" />} />
           <Route path="/Adminregister" element={<AdminRegisterPage />} />
+         
 
           <Route path='*' element={<Navigate to="/" />} />
         </Routes>}

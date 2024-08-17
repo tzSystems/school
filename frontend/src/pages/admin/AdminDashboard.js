@@ -41,10 +41,13 @@ import AddClass from './classRelated/AddClass';
 import ClassDetails from './classRelated/ClassDetails';
 import ShowClasses from './classRelated/ShowClasses';
 import AccountMenu from '../../components/AccountMenu';
+import MessageMenu from '../../components/MessageMenu';
+import NotificationMenu from '../../components/NotificationMenu';
 
 import ShowParents from './parentRelated/showParents';
 import ParentDetails from './parentRelated/parentDetails';
 import AddParent from './parentRelated/addParent';
+import ChatListViewer from '../chatlist/ChatListViewer';
 
 const AdminDashboard = () => {
     const [open, setOpen] = useState(false);
@@ -79,6 +82,8 @@ const AdminDashboard = () => {
                         >
                             Admin Dashboard
                         </Typography>
+                        <NotificationMenu />
+                        <MessageMenu />
                         <AccountMenu />
                     </Toolbar>
                 </AppBar>
@@ -142,6 +147,8 @@ const AdminDashboard = () => {
                           <Route path="/Admin/parents" element={<ShowParents />} />
                          <Route path="/Admin/parents/parent/:id" element={<ParentDetails />} /> 
                          <Route path="/Admin/addParent" element={<AddParent />} />
+
+                         <Route path="/Chatlist" element={<ChatListViewer />} />
 
                         <Route path="/logout" element={<Logout />} />
                     </Routes>

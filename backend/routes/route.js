@@ -1,5 +1,4 @@
 const router = require('express').Router();
-
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
@@ -16,7 +15,29 @@ const { noticeCreate, noticeList, deleteNotices, deleteNotice, updateNotice } = 
 const { studentRegister, studentLogIn, getStudents, getStudentDetail, deleteStudents, deleteStudent, updateStudent, studentAttendance, deleteStudentsByClass, updateExamResult, clearAllStudentsAttendanceBySubject, clearAllStudentsAttendance, removeStudentAttendanceBySubject, removeStudentAttendance } = require('../controllers/student-controller.js');
 const { subjectCreate, classSubjects, deleteSubjectsByClass, getSubjectDetail, deleteSubject, freeSubjectList, allSubjects, deleteSubjects } = require('../controllers/subject-controller.js');
 const { teacherRegister, teacherLogIn, getTeachers, getTeacherDetail, deleteTeachers, deleteTeachersByClass, deleteTeacher, updateTeacherSubject, teacherAttendance } = require('../controllers/teacher-controller.js');
-const { parentRegister,getChild, parentLogIn, getParents, getParentDetail, getChildrenForParent } = require('../controllers/parent-controller.js'); // Import parent controller functions
+const { parentRegister, getChild, parentLogIn, getParents, getParentDetail, getChildrenForParent } = require('../controllers/parent-controller.js'); // Import parent controller functions
+const { sendMessage, getMessagesBySenderAndRecipient, deleteMessage, getMessagesByUserId } = require('../controllers/message-controller.js'); // Import message controller functions
+
+// Controllers for chat list operations
+const { 
+    createChatList,
+    getChatListsForUser,
+    updateLastMessage,
+    markMessagesAsRead,
+    deleteChatList
+} = require('../controllers/chatlist-controller.js');
+
+// Fetch chat lists for a user
+router.get('/chatlists/:userId/:role', getChatListsForUser);
+
+// Create a new chat list
+router.post('/chatlists', createChatList);
+
+// Update the last message in a chat list
+router.put('/chatlists/:chatListId', updateLastMessage);
+
+// Mark messages as read in a chat list
+router.put('/chatlists/:chatListId/read', markMessagesAsRead);
 
 // Admin Routes
 router.post('/AdminReg', adminRegister);
@@ -46,35 +67,33 @@ const fetchStudentNames = async (req, res) => {
     console.log(`Received request for name: ${name} and schoolName: ${schoolName}`);
 
     try {
-        // Find the school by schoolName in the admin collection
-        const school = await Admin.findOne({ schoolName }).select('-password'); // Exclude password here
+        const school = await Admin.findOne({ schoolName }).select('-password'); 
         if (!school) {
             return res.status(404).json({
                 message: 'School not found'
             });
         }
 
-        // Find students whose names start with the given name and belong to the specified school
         const students = await Student.find({
-            name: { $regex: `^${name}`, $options: 'i' }, // Case-insensitive match
+            name: { $regex: `^${name}`, $options: 'i' },
             school: school._id
         })
-        .select('-password') // Exclude password from student data
+        .select('-password')
         .populate({
             path: 'sclassName',
-            select: '-password' // Exclude password from sclassName if applicable
+            select: '-password' 
         })
         .populate({
             path: 'school',
-            select: '-password' // Exclude password from school data
+            select: '-password'
         })
         .populate({
             path: 'examResult.subName',
-            select: '-password' // Exclude password from examResult subName if applicable
+            select: '-password'
         })
         .populate({
             path: 'attendance.subName',
-            select: '-password' // Exclude password from attendance subName if applicable
+            select: '-password'
         });
 
         res.status(200).json({
@@ -90,8 +109,6 @@ const fetchStudentNames = async (req, res) => {
         });
     }
 };
-
-
 
 router.post('/Students', fetchStudentNames);
 
@@ -138,10 +155,22 @@ router.delete('/Subjects/:id', deleteSubjects);
 router.delete('/SubjectsClass/:id', deleteSubjectsByClass);
 
 // Parent Routes
-router.post('/ParentReg', parentRegister);  // Ensure parentRegister is defined in parent-controller.js
-router.post('/ParentLogin', parentLogIn);   // Ensure parentLogIn is defined in parent-controller.js
-router.get('/Parents', getParents);     // Ensure getParents is defined in parent-controller.js
-router.get('/Parent/:id', getParentDetail); // Ensure getParentDetail is defined in parent-controller.js
-router.get('/Parent/Student/:id', getChild); // Ensure getChildrenForParent is defined in parent-controller.js
+router.post('/ParentReg', parentRegister);
+router.post('/ParentLogin', parentLogIn);
+router.get('/Parents', getParents);
+router.get('/Parent/:id', getParentDetail);
+router.get('/Parent/Student/:id', getChild);
+
+// Route to send a message
+router.post('/send', sendMessage);
+
+// Route to get all messages between a specific sender and recipient
+router.get('/Messages/:senderId/:recipientId', getMessagesBySenderAndRecipient);
+
+// Route to get all messages associated with a specific user ID (sender or recipient)
+router.get('/user/:userId', getMessagesByUserId);
+
+// Route to delete a message
+router.delete('/delete/:messageId', deleteMessage);
 
 module.exports = router;
