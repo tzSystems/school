@@ -8,28 +8,29 @@ const createChatList = async (req, res) => {
 
         // Ensure participants are provided and valid
         if (!participants || participants.length !== 2) {
-            return res.status(400).json({ error: 'Two participants are required to create a chat list.' });
+            return res.status(400).json({ error: 'Two participants are required to create or update a chat list.' });
         }
 
-        // Check if a chat list between these participants already exists
+        // Find or create a chat list between these participants
         const existingChatList = await ChatList.findOne({
             participants: { $all: participants.map(participant => ({ userId: participant.userId, role: participant.role })) }
         });
 
         if (existingChatList) {
-            return res.status(409).json({ error: 'Chat list between these participants already exists.' });
+            // Chat list already exists, return it or update it if needed
+            return res.status(200).json(existingChatList);
+        } else {
+            // Create a new chat list
+            const newChatList = new ChatList({ participants });
+            await newChatList.save();
+            return res.status(201).json(newChatList);
         }
-
-        // Create a new chat list
-        const newChatList = new ChatList({ participants });
-        await newChatList.save();
-
-        res.status(201).json(newChatList);
     } catch (err) {
-        console.error('Error creating chat list:', err);
+        console.error('Error creating or updating chat list:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 
 const getChatListsForUser = async (req, res) => {

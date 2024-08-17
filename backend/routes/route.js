@@ -162,7 +162,7 @@ router.get('/Parent/:id', getParentDetail);
 router.get('/Parent/Student/:id', getChild);
 
 // Route to send a message
-router.post('/send', sendMessage);
+router.post('/MessageSend', sendMessage);
 
 // Route to get all messages between a specific sender and recipient
 router.get('/Messages/:senderId/:recipientId', getMessagesBySenderAndRecipient);

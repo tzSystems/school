@@ -58,28 +58,43 @@ const getMessagesBySenderAndRecipient = async (req, res) => {
     }
 };
 
-// Send a message
 const sendMessage = async (req, res) => {
     try {
         const { senderId, recipientId, content, role } = req.body;
 
+        // Log the received data
+        console.log('Received request to send message');
+        console.log('Sender ID:', senderId);
+        console.log('Recipient ID:', recipientId);
+        console.log('Content:', content);
+        console.log('Role:', role);
+
+        // Validate ObjectIds
         if (!mongoose.Types.ObjectId.isValid(senderId) || !mongoose.Types.ObjectId.isValid(recipientId)) {
+            console.error('Invalid sender or recipient ID');
             return res.status(400).json({ error: 'Invalid sender or recipient ID' });
         }
 
+        // Create and save the message
         const message = new Message({
             senderId,
             recipientId,
             content,
-            role // Save the role
+            role
         });
 
+        console.log('Message object created:', message);
+
         const savedMessage = await message.save();
+        console.log('Message saved successfully:', savedMessage);
+
         res.status(200).json(savedMessage);
     } catch (err) {
-        res.status(500).json({ error: 'Failed to send message', details: err });
+        console.error('Error occurred while saving message:', err);
+        res.status(500).json({ error: 'Failed to send message', details: err.message || err });
     }
 };
+
 
 // Get all messages associated with a specific user ID (sender or recipient)
 const getMessagesByUserId = async (req, res) => {

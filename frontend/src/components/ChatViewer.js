@@ -4,29 +4,44 @@ import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage, fetchMessagesBySenderAndRecipient } from '../redux/messageRelated/messageHandle';
+import { createChatList } from '../redux/chatlistRelated/chatlistHandle';
 
 const ChatViewer = ({ recipientName, recipientId, recipientRole }) => {
     const [message, setMessage] = useState('');
     const dispatch = useDispatch();
-    const messages = useSelector((state) => state.messages.messages); // Assuming your slice is `messages`
+    const messages = useSelector((state) => state.messages.messages);
     const loading = useSelector((state) => state.messages.loading);
     const error = useSelector((state) => state.messages.error);
     const { currentUser } = useSelector((state) => state.user);
     const senderId = currentUser._id;
     const senderRole = currentUser.role;
+    console.log('sender role', senderRole);
+    const role = senderRole
 
     useEffect(() => {
         if (recipientId) {
-            dispatch(fetchMessagesBySenderAndRecipient({ recipientId, senderId, senderRole}));
+            dispatch(fetchMessagesBySenderAndRecipient({ recipientId, senderId, senderRole }));
         }
-    }, [dispatch, recipientId, senderId, recipientRole, senderRole]);
+    }, [dispatch, recipientId, senderId, senderRole]);
 
     const handleSend = () => {
         if (message.trim() && recipientId) {
-            dispatch(sendMessage({ recipientId, content: message.trim(), senderId, recipientRole,senderRole }));
-            setMessage('');
+            dispatch(sendMessage({ recipientId, content: message.trim(), senderId, recipientRole, role }))
+                .then((result) => {
+                    if (result && result.type === 'sendMessage/fulfilled') {
+                        // Message was successfully sent, now create or update the chat list
+                        dispatch(createChatList({ participants: [{ userId: senderId, role: senderRole }, { userId: recipientId, role: recipientRole }] }));
+                        setMessage(''); // Clear the input field
+                    } else {
+                        console.error('Failed to send message:', result);
+                    }
+                })
+                .catch((error) => {
+                    console.error('Error sending message or creating chat list:', error);
+                });
         }
     };
+    
 
     return (
         <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
