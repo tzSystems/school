@@ -52,7 +52,7 @@ const ChatListViewer = () => {
                                             variant="body2"
                                             color="text.primary"
                                         >
-                                            {chat.lastMessage.sender?.name || 'Bari Kaneno'}:
+                                            {chat.lastMessage.sender?.name || 'You'}:
                                         </Typography>
                                         {` ${chat.lastMessage.content}`}
                                     </>
