@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useEffect } from 'react';
 import { Box, Typography, IconButton, TextField, InputAdornment, Paper, Avatar } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
@@ -7,7 +7,7 @@ import { sendMessage, fetchMessagesBySenderAndRecipient } from '../redux/message
 import { createChatList } from '../redux/chatlistRelated/chatlistHandle';
 
 const ChatViewer = ({ recipientName, recipientId, recipientRole }) => {
-    const [message, setMessage] = useState('');
+    const messageRef = useRef(''); // Using useRef instead of useState
     const dispatch = useDispatch();
     const messages = useSelector((state) => state.messages.messages);
     const loading = useSelector((state) => state.messages.loading);
@@ -16,7 +16,7 @@ const ChatViewer = ({ recipientName, recipientId, recipientRole }) => {
     const senderId = currentUser._id;
     const senderRole = currentUser.role;
     console.log('sender role', senderRole);
-    const role = senderRole
+    const role = senderRole;
 
     useEffect(() => {
         if (recipientId) {
@@ -25,13 +25,13 @@ const ChatViewer = ({ recipientName, recipientId, recipientRole }) => {
     }, [dispatch, recipientId, senderId, senderRole]);
 
     const handleSend = () => {
-        if (message.trim() && recipientId) {
-            dispatch(sendMessage({ recipientId, content: message.trim(), senderId, recipientRole, role }))
+        const message = messageRef.current.value.trim();
+        if (message && recipientId) {
+            dispatch(sendMessage({ recipientId, content: message, senderId, recipientRole, role }))
                 .then((result) => {
                     if (result && result.type === 'sendMessage/fulfilled') {
-                        // Message was successfully sent, now create or update the chat list
                         dispatch(createChatList({ participants: [{ userId: senderId, role: senderRole }, { userId: recipientId, role: recipientRole }] }));
-                        setMessage(''); // Clear the input field
+                        messageRef.current.value = ''; // Clear the input field
                     } else {
                         console.error('Failed to send message:', result);
                     }
@@ -41,7 +41,6 @@ const ChatViewer = ({ recipientName, recipientId, recipientRole }) => {
                 });
         }
     };
-    
 
     return (
         <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column' }}>
@@ -99,8 +98,7 @@ const ChatViewer = ({ recipientName, recipientId, recipientRole }) => {
                     variant="outlined"
                     fullWidth
                     placeholder="Type a message..."
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
+                    inputRef={messageRef} // Use the useRef here
                     onKeyPress={(e) => e.key === 'Enter' && handleSend()}
                     InputProps={{
                         endAdornment: (

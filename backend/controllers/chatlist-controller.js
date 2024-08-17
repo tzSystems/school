@@ -36,7 +36,7 @@ const createChatList = async (req, res) => {
 const getChatListsForUser = async (req, res) => {
     try {
         const { userId, role } = req.params;
-        console.log('userId', userId);
+        console.log('userId getChatlistFor User', userId);
         console.log('role', role);
 
         // Find all chat lists where the user is a participant
@@ -44,6 +44,8 @@ const getChatListsForUser = async (req, res) => {
             participants: { $elemMatch: { userId, role } }
         });
 
+        console.log('it reaches here')
+        console.log('chatList',chatLists)
         res.status(200).json(chatLists);
     } catch (err) {
         console.error('Error fetching chat lists:', err);

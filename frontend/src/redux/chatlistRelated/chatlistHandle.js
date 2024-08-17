@@ -24,7 +24,9 @@ export const createChatList = createAsyncThunk(
     'chatList/createChatList',
     async ({ participants }, { rejectWithValue }) => {
         try {
+            console.log('sending request to create chat list')
             const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/chatlists`, { participants });
+            console.log('chatlist created successfully',response.data)
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
