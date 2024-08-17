@@ -48,6 +48,7 @@ import ShowParents from './parentRelated/showParents';
 import ParentDetails from './parentRelated/parentDetails';
 import AddParent from './parentRelated/addParent';
 import ChatListViewer from '../chatlist/ChatListViewer';
+import ChatViewerPage from '../chatlist/ChatViewerPage';
 
 const AdminDashboard = () => {
     const [open, setOpen] = useState(false);
@@ -149,6 +150,7 @@ const AdminDashboard = () => {
                          <Route path="/Admin/addParent" element={<AddParent />} />
 
                          <Route path="/Chatlist" element={<ChatListViewer />} />
+                         <Route path="/chatviewer/:recipientId/:recipientName/:recipientRole" element={<ChatViewerPage />} />
 
                         <Route path="/logout" element={<Logout />} />
                     </Routes>

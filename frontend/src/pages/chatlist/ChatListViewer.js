@@ -2,14 +2,17 @@ import React, { useEffect } from 'react';
 import { Box, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchChatListsForUser } from '../../redux/chatlistRelated/chatlistHandle'; // Import the action to fetch chat lists
+import { useNavigate } from 'react-router-dom';
 
 const ChatListViewer = () => {
     const dispatch = useDispatch();
+    const navigate = useNavigate(); // Use useNavigate for programmatic navigation
     const { chatLists, loading, error } = useSelector(state => state.chatList); // Access chat lists from the Redux state
     const { currentUser } = useSelector(state => state.user); // Access current user from the Redux state
 
     const userId = currentUser._id;
     const role = currentUser.role;
+    
 
     useEffect(() => {
         if (userId && role) {
@@ -22,6 +25,11 @@ const ChatListViewer = () => {
                 });
         }
     }, [dispatch, userId, role]);
+
+    const handleChatClick = (chat) => {
+        // Navigate to the ChatViewerPage with relevant parameters
+        navigate(`/Chatlist/${chat.recipient?._id}/${chat.recipient?.name}/${chat.recipient?.role}`);
+    };
 
     return (
         <Box sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}>
@@ -38,7 +46,12 @@ const ChatListViewer = () => {
             ) : (
                 <List sx={{ overflowY: 'auto', height: 'calc(100% - 64px)' }}> {/* Adjust height for the header */}
                     {chatLists.map(chat => (
-                        <ListItem key={chat._id} button alignItems="flex-start">
+                        <ListItem
+                            key={chat._id}
+                            button
+                            alignItems="flex-start"
+                            onClick={() => handleChatClick(chat)} // Add onClick handler
+                        >
                             <ListItemAvatar>
                                 <Avatar alt={chat.recipient?.name || 'Anonymous'} src={chat.recipient?.avatarUrl || ''} />
                             </ListItemAvatar>

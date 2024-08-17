@@ -11,6 +11,7 @@ import LoginPage from './pages/LoginPage';
 import AdminRegisterPage from './pages/admin/AdminRegisterPage';
 import ChooseUser from './pages/ChooseUser';
 import ChatListViewer from './pages/chatlist/ChatListViewer';
+import ChatViewerPage from './pages/chatlist/ChatViewerPage';
 
 
 const App = () => {
@@ -29,6 +30,8 @@ const App = () => {
           <Route path="/Teacherlogin" element={<LoginPage role="Teacher" />} />
           <Route path="/Parentlogin" element={<LoginPage role="Parent" />} />
           <Route path="/Adminregister" element={<AdminRegisterPage />} />
+          
+
          
 
           <Route path='*' element={<Navigate to="/" />} />
