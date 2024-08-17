@@ -150,7 +150,7 @@ const AdminDashboard = () => {
                          <Route path="/Admin/addParent" element={<AddParent />} />
 
                          <Route path="/Chatlist" element={<ChatListViewer />} />
-                         <Route path="/chatviewer/:recipientId/:recipientName/:recipientRole" element={<ChatViewerPage />} />
+                         <Route path="/chatlist/:recipientId/:recipientName/:recipientRole" element={<ChatViewerPage />} />
 
                         <Route path="/logout" element={<Logout />} />
                     </Routes>

@@ -7,6 +7,10 @@ const chatListSchema = new mongoose.Schema({
                 type: mongoose.Schema.Types.ObjectId,
                 required: true,
             },
+            name: {
+                type: String,
+                required: true,
+            },
             role: {
                 type: String,
                 required: true,
@@ -20,6 +24,10 @@ const chatListSchema = new mongoose.Schema({
         },
         senderId: {
             type: mongoose.Schema.Types.ObjectId,
+            required: false,
+        },
+        senderName: {
+            type: String,
             required: false,
         },
         senderRole: {

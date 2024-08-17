@@ -1,6 +1,3 @@
-
-
-
 import React, { useRef, useEffect } from 'react';
 import { Box, Typography, IconButton, TextField, InputAdornment, Paper, Avatar } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
@@ -20,8 +17,6 @@ const ChatViewerPage = () => {
     const { currentUser } = useSelector((state) => state.user);
     const senderId = currentUser._id;
     const senderRole = currentUser.role;
-
-    console.log('useParams',useParams())
 
     useEffect(() => {
         if (recipientId) {
@@ -76,20 +71,23 @@ const ChatViewerPage = () => {
                 {loading ? (
                     <Typography variant="body2">Loading...</Typography>
                 ) : error ? (
-                    <Typography variant="body2" color="error">{error}</Typography>
+                    <Typography variant="body2" color="error">
+                        {typeof error === 'string' ? error : JSON.stringify(error)}
+                    </Typography>
                 ) : (
-                    messages.map((msg, index) => (
+                    messages.slice().reverse().map((msg, index) => (
                         <Box
                             key={index}
                             sx={{
                                 alignSelf: msg.senderId === senderId ? 'flex-end' : 'flex-start',
                                 maxWidth: '70%',
-                                bgcolor: msg.senderId === senderId ? 'primary.light' : 'grey.300',
+                                bgcolor: msg.senderId === senderId ? 'primary.main' : 'grey.300',
                                 color: msg.senderId === senderId ? 'primary.contrastText' : 'text.primary',
                                 padding: 1.5,
                                 borderRadius: 2,
                                 borderTopLeftRadius: msg.senderId === senderId ? 2 : 0,
                                 borderTopRightRadius: msg.senderId === senderId ? 0 : 2,
+                                boxShadow: 1,
                             }}
                         >
                             <Typography variant="body2">

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { Box, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchChatListsForUser } from '../../redux/chatlistRelated/chatlistHandle'; // Import the action to fetch chat lists
 import { useNavigate } from 'react-router-dom';
+import { fetchChatListsForUser } from '../../redux/chatlistRelated/chatlistHandle'; // Import the action to fetch chat lists
 
 const ChatListViewer = () => {
     const dispatch = useDispatch();
@@ -12,8 +12,7 @@ const ChatListViewer = () => {
 
     const userId = currentUser._id;
     const role = currentUser.role;
-    
-
+   
     useEffect(() => {
         if (userId && role) {
             dispatch(fetchChatListsForUser({ userId, role }))
@@ -27,8 +26,11 @@ const ChatListViewer = () => {
     }, [dispatch, userId, role]);
 
     const handleChatClick = (chat) => {
-        // Navigate to the ChatViewerPage with relevant parameters
-        navigate(`/Chatlist/${chat.recipient?._id}/${chat.recipient?.name}/${chat.recipient?.role}`);
+        // Extract recipient details, assuming the recipient is the other participant
+        const recipient = chat.participants.find(participant => participant.userId !== currentUser._id);
+
+        // Navigate to the ChatViewerPage with recipient details in the URL
+        navigate(`/chatlist/${recipient.userId}/${recipient.name}/${recipient.role}`);
     };
 
     return (
