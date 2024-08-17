@@ -4,32 +4,35 @@ const ChatList = require('../models/chatListSchema.js');
 
 const createChatList = async (req, res) => {
     try {
-        const { participants } = req.body;
+        const { participants, firstMessage } = req.body;
 
-        // Ensure participants are provided and valid
-        if (!participants || participants.length !== 2) {
-            return res.status(400).json({ error: 'Two participants are required to create or update a chat list.' });
+        console.log('participants n backend', participants)
+            console.log('firstMessage in chatlist creator', firstMessage);
+
+        // Ensure required fields are provided
+        if (!participants || !firstMessage || !firstMessage.content || !firstMessage.senderId || !firstMessage.senderRole) {
+            return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        // Find or create a chat list between these participants
-        const existingChatList = await ChatList.findOne({
-            participants: { $all: participants.map(participant => ({ userId: participant.userId, role: participant.role })) }
+        // Create a new ChatList with the first message as the lastMessage
+        const chatList = new ChatList({
+            participants,
+            lastMessage: {
+                content: firstMessage.content,
+                senderId: firstMessage.senderId,
+                senderRole: firstMessage.senderRole,
+                timestamp: new Date(), // Use the current date/time
+            },
         });
 
-        if (existingChatList) {
-            // Chat list already exists, return it or update it if needed
-            return res.status(200).json(existingChatList);
-        } else {
-            // Create a new chat list
-            const newChatList = new ChatList({ participants });
-            await newChatList.save();
-            return res.status(201).json(newChatList);
-        }
+        const savedChatList = await chatList.save();
+        res.status(200).json(savedChatList);
     } catch (err) {
-        console.error('Error creating or updating chat list:', err);
+        console.error('Error creating chat list:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
 
 
 

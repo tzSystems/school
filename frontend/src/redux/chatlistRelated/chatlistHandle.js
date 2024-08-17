@@ -22,17 +22,18 @@ export const fetchChatListsForUser = createAsyncThunk(
 // Async thunk to create a new chat list
 export const createChatList = createAsyncThunk(
     'chatList/createChatList',
-    async ({ participants }, { rejectWithValue }) => {
-        try {
-            console.log('sending request to create chat list')
-            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/chatlists`, { participants });
-            console.log('chatlist created successfully',response.data)
+    async ({ participants, firstMessage }, { rejectWithValue }) => {
+        try { 
+            console.log('participants', participants)
+            console.log('firstMessage', firstMessage);
+            const response = await axios.post(`${process.env.REACT_APP_BASE_URL}/chatlists`, { participants, firstMessage });
             return response.data;
         } catch (error) {
             return rejectWithValue(error.response.data);
         }
     }
 );
+
 
 // Async thunk to update the last message in a chat list
 export const updateLastMessage = createAsyncThunk(

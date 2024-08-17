@@ -1,43 +1,36 @@
-
-
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const ChatListSchema = new Schema({
-    participants: [{
-        userId: {
-            type: Schema.Types.ObjectId,
-            required: true
+const chatListSchema = new mongoose.Schema({
+    participants: [
+        {
+            userId: {
+                type: mongoose.Schema.Types.ObjectId,
+                required: true,
+            },
+            role: {
+                type: String,
+                required: true,
+            },
         },
-        role: {
-            type: String,
-            enum: ['Parent', 'Admin', 'Student', 'Teacher'],
-            required: true
-        }
-    }],
+    ],
     lastMessage: {
+        content: {
+            type: String,
+            required: false,
+        },
         senderId: {
-            type: Schema.Types.ObjectId,
-            required: true
+            type: mongoose.Schema.Types.ObjectId,
+            required: false,
         },
         senderRole: {
             type: String,
-            enum: ['Parent', 'Admin', 'Student', 'Teacher'],
-            required: true
-        },
-        content: {
-            type: String,
-            required: true
+            required: false,
         },
         timestamp: {
             type: Date,
-            default: Date.now
-        }
+            default: Date.now,
+        },
     },
-    unreadCount: {
-        type: Number,
-        default: 0
-    }
 });
 
-module.exports = mongoose.model('ChatList', ChatListSchema);
+module.exports = mongoose.model('ChatList', chatListSchema);

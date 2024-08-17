@@ -29,8 +29,10 @@ const ChatViewer = ({ recipientName, recipientId, recipientRole }) => {
         if (message && recipientId) {
             dispatch(sendMessage({ recipientId, content: message, senderId, recipientRole, role }))
                 .then((result) => {
-                    if (result && result.type === 'sendMessage/fulfilled') {
-                        dispatch(createChatList({ participants: [{ userId: senderId, role: senderRole }, { userId: recipientId, role: recipientRole }] }));
+                    console.log('it opened here', result)
+                    if (result && result.data) {
+                        dispatch(createChatList({ participants: [{ userId: senderId, role: senderRole }, { userId: recipientId, role: recipientRole }], 
+                            firstMessage:{content:message, senderId:senderId, senderRole:senderRole}}));
                         messageRef.current.value = ''; // Clear the input field
                     } else {
                         console.error('Failed to send message:', result);

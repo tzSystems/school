@@ -21,6 +21,7 @@ export const sendMessage = ({ recipientId, content, senderId, role }) => async (
         });
         if (result.data) {
             dispatch(sendMessageSuccess(result.data));
+            return result
         }
     } catch (error) {
         dispatch(sendMessageFailed(error.message || 'An error occurred while sending the message'));
