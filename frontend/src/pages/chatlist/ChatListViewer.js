@@ -42,7 +42,7 @@ const ChatListViewer = () => {
         const recipient = chat.participants.find(participant => participant.userId !== currentUser._id);
         
         console.log('recipient id in chatListViewer', recipient)
-        navigate(`/chatlist/${recipient._id}/${recipient.name}/${recipient.role}`);
+        navigate(`/chatlist/${recipient.userId}/${recipient.name}/${recipient.role}`);
     };
 
     const handleAddClick = (event) => {
