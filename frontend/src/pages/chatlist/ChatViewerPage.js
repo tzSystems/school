@@ -9,7 +9,7 @@ import { createChatList } from '../../redux/chatlistRelated/chatlistHandle';
 import { useParams, useNavigate } from 'react-router-dom';
 
 const ChatViewerPage = () => {
-    const messageRef = useRef('');
+    const messageRef = useRef(null);
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { recipientId, recipientName, recipientRole } = useParams();
@@ -29,7 +29,7 @@ const ChatViewerPage = () => {
     const handleSend = () => {
         const message = messageRef.current.value.trim();
         if (message && recipientId) {
-            dispatch(sendMessage({ recipientId, content: message, senderId, recipientRole, role: senderRole, name:recipientName }))
+            dispatch(sendMessage({ recipientId, content: message, senderId, recipientRole, role: senderRole, name: recipientName }))
                 .then((result) => {
                     if (result && result.data) {
                         dispatch(createChatList({
@@ -53,7 +53,7 @@ const ChatViewerPage = () => {
     return (
         <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', bgcolor: 'background.default' }}>
             {/* Header with Back Button, Avatar, and Name */}
-            <Paper elevation={3} sx={{ padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', bgcolor: 'grey.100' }}>
+            <Paper elevation={3} sx={{ padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', bgcolor: 'grey.100', position: 'sticky', top: 0, zIndex: 1000 }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
                     <IconButton onClick={() => navigate(-1)} sx={{ marginRight: 2 }}>
                         <ArrowBackIcon />
@@ -77,14 +77,13 @@ const ChatViewerPage = () => {
                     flexDirection: 'column',
                     bgcolor: 'background.paper',
                     gap: 1,
-                    borderBottom: '1px solid #e0e0e0',
                 }}
             >
                 {loading ? (
                     <Typography variant="body2">Loading...</Typography>
                 ) : error ? (
                     <Typography variant="body2" color="error">
-                        {typeof error === 'string' ? error : JSON.stringify(error)}
+                        {typeof error === 'string' ? error : JSON.stringify(error, null, 2)}
                     </Typography>
                 ) : (
                     messages.slice().reverse().map((msg, index) => (
@@ -114,7 +113,7 @@ const ChatViewerPage = () => {
             </Box>
 
             {/* Input Bar */}
-            <Box sx={{ padding: 2, display: 'flex', alignItems: 'center', borderTop: '1px solid #e0e0e0', bgcolor: 'background.default' }}>
+            <Box sx={{ padding: 2, display: 'flex', alignItems: 'center', borderTop: '1px solid #e0e0e0', bgcolor: 'background.default', position: 'sticky', bottom: 0, zIndex: 1000 }}>
                 <TextField
                     variant="outlined"
                     fullWidth

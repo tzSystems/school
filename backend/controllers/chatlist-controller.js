@@ -6,32 +6,64 @@ const createChatList = async (req, res) => {
     try {
         const { participants, firstMessage } = req.body;
 
-        console.log('participants n backend', participants)
-            console.log('firstMessage in chatlist creator', firstMessage);
+        console.log('participants in backend', participants);
+        console.log('firstMessage in chatlist creator', firstMessage);
 
         // Ensure required fields are provided
         if (!participants || !firstMessage || !firstMessage.content || !firstMessage.senderId || !firstMessage.senderRole) {
             return res.status(400).json({ error: 'Missing required fields' });
         }
 
-        // Create a new ChatList with the first message as the lastMessage
-        const chatList = new ChatList({
-            participants,
-            lastMessage: {
+        // Extract the sender and receiver details
+        const [sender, receiver] = participants;
+        const senderId = sender.userId;
+        const receiverId = receiver.userId;
+        const senderRole = sender.role;
+        const receiverRole = receiver.role;
+
+        // Check if a chat list with these exact participants already exists
+        let chatList = await ChatList.findOne({
+            participants: {
+                $all: [
+                    { $elemMatch: { userId: senderId, role: senderRole } },
+                    { $elemMatch: { userId: receiverId, role: receiverRole } }
+                ]
+            }
+        });
+
+        if (!chatList) {
+            // Create a new ChatList with the first message as the lastMessage
+            chatList = new ChatList({
+                participants,
+                lastMessage: {
+                    content: firstMessage.content,
+                    senderId: firstMessage.senderId,
+                    senderRole: firstMessage.senderRole,
+                    timestamp: new Date(), // Use the current date/time
+                },
+            });
+
+            await chatList.save();
+        } else {
+            // Update the existing chat list with the new message
+            chatList.lastMessage = {
                 content: firstMessage.content,
                 senderId: firstMessage.senderId,
                 senderRole: firstMessage.senderRole,
                 timestamp: new Date(), // Use the current date/time
-            },
-        });
+            };
 
-        const savedChatList = await chatList.save();
-        res.status(200).json(savedChatList);
+            await chatList.save();
+        }
+
+        res.status(200).json(chatList);
     } catch (err) {
-        console.error('Error creating chat list:', err);
+        console.error('Error creating or updating chat list:', err);
         res.status(500).json({ error: 'Internal server error' });
     }
 };
+
+
 
 
 

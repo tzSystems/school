@@ -39,9 +39,10 @@ const ChatListViewer = () => {
     }, [dispatch, userId, role]);
 
     const handleChatClick = (chat) => {
-        console.log('selected role in chatListViewer', selectedRole)
         const recipient = chat.participants.find(participant => participant.userId !== currentUser._id);
-        navigate(`/chatlist/${recipient._id}/${recipient.name}/${selectedRole}`);
+        
+        console.log('recipient id in chatListViewer', recipient)
+        navigate(`/chatlist/${recipient._id}/${recipient.name}/${recipient.role}`);
     };
 
     const handleAddClick = (event) => {

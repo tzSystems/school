@@ -22,6 +22,8 @@ import AccountMenu from '../../components/AccountMenu';
 import MessageMenu from '../../components/MessageMenu';
 import NotificationMenu from '../../components/NotificationMenu';
 import { AppBar, Drawer } from '../../components/styles';
+import ChatViewerPage from '../chatlist/ChatViewerPage';
+import ChatListViewer from '../chatlist/ChatListViewer';
 
 const ParentDashboard = () => {
     const [open, setOpen] = useState(true);
@@ -83,6 +85,9 @@ const ParentDashboard = () => {
                         <Route path="/Parent/attendance" element={<ViewChildAttendance />} />
                         <Route path="/Parent/notices" element={<ParentNotice />} />
                         <Route path="/logout" element={<Logout />} />
+                        
+                        <Route path="/Chatlist" element={<ChatListViewer />} />
+                        <Route path="/chatlist/:recipientId/:recipientName/:recipientRole" element={<ChatViewerPage />} />
                     </Routes>
                 </Box>
             </Box>
