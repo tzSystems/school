@@ -10,6 +10,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 
 const ChatViewerPage = () => {
     const messageRef = useRef(null);
+    const chatEndRef = useRef(null); // Ref for the end of the chat
     const dispatch = useDispatch();
     const navigate = useNavigate();
     const { recipientId, recipientName, recipientRole } = useParams();
@@ -25,6 +26,11 @@ const ChatViewerPage = () => {
             dispatch(fetchMessagesBySenderAndRecipient({ recipientId, senderId, senderRole }));
         }
     }, [dispatch, recipientId, senderId, senderRole]);
+
+    useEffect(() => {
+        // Scroll to the bottom when messages are updated
+        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+    }, [messages]);
 
     const handleSend = () => {
         const message = messageRef.current.value.trim();
@@ -86,29 +92,50 @@ const ChatViewerPage = () => {
                         {typeof error === 'string' ? error : JSON.stringify(error, null, 2)}
                     </Typography>
                 ) : (
-                    messages.slice().reverse().map((msg, index) => (
-                        <Box
-                            key={index}
-                            sx={{
-                                alignSelf: msg.senderId === senderId ? 'flex-end' : 'flex-start',
-                                maxWidth: '70%',
-                                bgcolor: msg.senderId === senderId ? 'primary.main' : 'grey.300',
-                                color: msg.senderId === senderId ? 'primary.contrastText' : 'text.primary',
-                                padding: 1.5,
-                                borderRadius: 2,
-                                borderTopLeftRadius: msg.senderId === senderId ? 2 : 0,
-                                borderTopRightRadius: msg.senderId === senderId ? 0 : 2,
-                                boxShadow: 1,
-                            }}
-                        >
-                            <Typography variant="body2">
-                                {msg.content}
-                            </Typography>
-                            <Typography variant="caption" sx={{ display: 'block', textAlign: 'right', marginTop: 0.5 }}>
-                                {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                            </Typography>
-                        </Box>
-                    ))
+                    <>
+                        {messages.map((msg, index) => (
+                            <Box
+                                key={index}
+                                sx={{
+                                    display: 'flex',
+                                    alignItems: 'flex-end',
+                                    flexDirection: msg.senderId === senderId ? 'row-reverse' : 'row',
+                                    gap: 1,
+                                    mb: 1,
+                                }}
+                            >
+                                {/* Avatar for the recipient */}
+                                {msg.senderId !== senderId && (
+                                    <Avatar alt={recipientName} src="/static/images/avatar/2.jpg" sx={{ alignSelf: 'flex-start' }} />
+                                )}
+
+                                <Box
+                                    sx={{
+                                        display: 'flex',
+                                        flexDirection: 'column',
+                                        alignItems: msg.senderId === senderId ? 'flex-end' : 'flex-start',
+                                        maxWidth: '70%',
+                                        bgcolor: msg.senderId === senderId ? 'primary.main' : 'grey.300',
+                                        color: msg.senderId === senderId ? 'primary.contrastText' : 'text.primary',
+                                        padding: 1.5,
+                                        borderRadius: 2,
+                                        borderTopLeftRadius: msg.senderId === senderId ? 2 : 0,
+                                        borderTopRightRadius: msg.senderId === senderId ? 0 : 2,
+                                        boxShadow: 1,
+                                    }}
+                                >
+                                    <Typography variant="body2">
+                                        {msg.content}
+                                    </Typography>
+                                    <Typography variant="caption" sx={{ display: 'block', textAlign: 'right', marginTop: 0.5 }}>
+                                        {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                                    </Typography>
+                                </Box>
+                            </Box>
+                        ))}
+                        {/* Reference element to scroll to the bottom */}
+                        <div ref={chatEndRef} />
+                    </>
                 )}
             </Box>
 
