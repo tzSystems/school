@@ -1,21 +1,17 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Typography, IconButton, TextField, InputAdornment, Paper, Avatar, Tooltip, MenuItem, Select, FormControl, InputLabel } from '@mui/material';
+import { Box, Typography, IconButton, TextField, InputAdornment, Paper, Avatar } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import AttachFileIcon from '@mui/icons-material/AttachFile';
-import AddIcon from '@mui/icons-material/Add';
-import SearchIcon from '@mui/icons-material/Search';
-import SortIcon from '@mui/icons-material/Sort';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage, fetchMessagesBySenderAndRecipient } from '../../redux/messageRelated/messageHandle';
 import { createChatList } from '../../redux/chatlistRelated/chatlistHandle';
-import { useParams } from 'react-router-dom';
-import { getAllParents } from '../../redux/parentRelated/parentHandle';
+import { useParams, useNavigate } from 'react-router-dom';
 
 const ChatViewerPage = () => {
-    const [showSearch, setShowSearch] = useState(false);
-    const [selectedRole, setSelectedRole] = useState('');
     const messageRef = useRef('');
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     const { recipientId, recipientName, recipientRole } = useParams();
     const messages = useSelector((state) => state.messages.messages);
     const loading = useSelector((state) => state.messages.loading);
@@ -33,13 +29,13 @@ const ChatViewerPage = () => {
     const handleSend = () => {
         const message = messageRef.current.value.trim();
         if (message && recipientId) {
-            dispatch(sendMessage({ recipientId, content: message, senderId, recipientRole, role: senderRole }))
+            dispatch(sendMessage({ recipientId, content: message, senderId, recipientRole, role: senderRole, name:recipientName }))
                 .then((result) => {
                     if (result && result.data) {
                         dispatch(createChatList({
                             participants: [
-                                { userId: senderId, role: senderRole },
-                                { userId: recipientId, role: recipientRole }
+                                { userId: senderId, role: senderRole, name: currentUser.name },
+                                { userId: recipientId, role: recipientRole, name: recipientName }
                             ],
                             firstMessage: { content: message, senderId: senderId, senderRole: senderRole }
                         }));
@@ -56,61 +52,18 @@ const ChatViewerPage = () => {
 
     return (
         <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', bgcolor: 'background.default' }}>
-            {/* Header with Recipient's Name and Action Buttons */}
+            {/* Header with Back Button, Avatar, and Name */}
             <Paper elevation={3} sx={{ padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', bgcolor: 'grey.100' }}>
                 <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Avatar alt={recipientName} src="/static/images/avatar/1.jpg" sx={{ marginRight: 2 }} />
-                    <Typography variant="h6" sx={{ fontWeight: 600 }}>
+                    <IconButton onClick={() => navigate(-1)} sx={{ marginRight: 2 }}>
+                        <ArrowBackIcon />
+                    </IconButton>
+                </Box>
+                <Box sx={{ display: 'flex', alignItems: 'center' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 600, marginRight: 2 }}>
                         {recipientName}
                     </Typography>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    {/* Dropdown for role selection */}
-                    <FormControl sx={{ minWidth: 120 }}>
-                        <InputLabel id="role-select-label">Role</InputLabel>
-                        <Select
-                            labelId="role-select-label"
-                            value={selectedRole}
-                            label="Role"
-                            onChange={(e) => setSelectedRole(e.target.value)}
-                        >
-                            <MenuItem value="Parents">Parents</MenuItem>
-                            <MenuItem value="Teachers">Teachers</MenuItem>
-                            <MenuItem value="Students">Students</MenuItem>
-                        </Select>
-                    </FormControl>
-
-                    {/* Search button and input field */}
-                    <Tooltip title="Search">
-                        <IconButton
-                            onClick={() => setShowSearch(!showSearch)}
-                            sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', '&:hover': { bgcolor: 'primary.dark' } }}
-                        >
-                            <SearchIcon />
-                        </IconButton>
-                    </Tooltip>
-                    {showSearch && (
-                        <TextField
-                            variant="outlined"
-                            size="small"
-                            placeholder="Search..."
-                            sx={{ marginLeft: 1, bgcolor: 'background.paper', borderRadius: 1 }}
-                        />
-                    )}
-
-                    {/* Sort button */}
-                    <Tooltip title="Sort">
-                        <IconButton sx={{ bgcolor: 'secondary.main', color: 'secondary.contrastText', '&:hover': { bgcolor: 'secondary.dark' } }}>
-                            <SortIcon />
-                        </IconButton>
-                    </Tooltip>
-
-                    {/* Add button */}
-                    <Tooltip title="Add New Chat">
-                        <IconButton sx={{ bgcolor: 'success.main', color: 'success.contrastText', '&:hover': { bgcolor: 'success.dark' } }}>
-                            <AddIcon />
-                        </IconButton>
-                    </Tooltip>
+                    <Avatar alt={recipientName} src="/static/images/avatar/1.jpg" />
                 </Box>
             </Paper>
 

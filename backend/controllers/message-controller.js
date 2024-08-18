@@ -60,7 +60,7 @@ const getMessagesBySenderAndRecipient = async (req, res) => {
 
 const sendMessage = async (req, res) => {
     try {
-        const { senderId, recipientId, content, role } = req.body;
+        const { senderId, recipientId, content, role,name } = req.body;
 
         // Log the received data
         console.log('Received request to send message');
@@ -80,7 +80,8 @@ const sendMessage = async (req, res) => {
             senderId,
             recipientId,
             content,
-            role
+            role,
+            name
         });
 
         console.log('Message object created:', message);

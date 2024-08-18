@@ -21,7 +21,7 @@ const ChatListViewer = () => {
     const role = currentUser.role;
 
     const [showSearch, setShowSearch] = useState(false);
-    const [selectedRole, setSelectedRole] = useState('Parents');
+    const [selectedRole, setSelectedRole] = useState('Parent');
     const [showDropdown, setShowDropdown] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
     const [names, setNames] = useState([]);
@@ -39,8 +39,9 @@ const ChatListViewer = () => {
     }, [dispatch, userId, role]);
 
     const handleChatClick = (chat) => {
+        console.log('selected role in chatListViewer', selectedRole)
         const recipient = chat.participants.find(participant => participant.userId !== currentUser._id);
-        navigate(`/chatlist/${recipient.userId}/${recipient.name}/${recipient.role}`);
+        navigate(`/chatlist/${recipient._id}/${recipient.name}/${selectedRole}`);
     };
 
     const handleAddClick = (event) => {
@@ -48,19 +49,19 @@ const ChatListViewer = () => {
         setShowDropdown(!showDropdown);
 
         // Fetch names based on the selected role
-        if (selectedRole === 'Parents') {
+        if (selectedRole === 'Parent') {
             dispatch(getAllParents(userId))
                 .then(response => {
                     setNames(response.map(parent => ({ id: parent._id, name: parent.name, role: 'Parent' })));
                 })
                 .catch(err => console.error('Error fetching parents:', err));
-        } else if (selectedRole === 'Teachers') {
+        } else if (selectedRole === 'Teacher') {
             dispatch(getAllTeachers(userId))
                 .then(response => {
                     setNames(response.map(teacher => ({ id: teacher._id, name: teacher.name, role: 'Teacher' })));
                 })
                 .catch(err => console.error('Error fetching teachers:', err));
-        } else if (selectedRole === 'Students') {
+        } else if (selectedRole === 'Student') {
             dispatch(getAllStudents(userId))
                 .then(response => {
                     setNames(response.map(student => ({ id: student._id, name: student.name, role: 'Student' })));
@@ -73,7 +74,7 @@ const ChatListViewer = () => {
         const { id: recipientId, name, role: recipientRole } = selectedName;
 
         // Log recipient and current user details
-        console.log('Recipient Role:', recipientRole);
+        console.log('Recipient Role in chat list viewer:', recipientRole);
         console.log('Recipient ID:', recipientId);
         console.log('Current User Role:', role);
         console.log('Current User ID:', userId);
@@ -102,9 +103,9 @@ const ChatListViewer = () => {
                             label="Role"
                             onChange={(e) => setSelectedRole(e.target.value)}
                         >
-                            <MenuItem value="Parents">Parents</MenuItem>
-                            <MenuItem value="Teachers">Teachers</MenuItem>
-                            <MenuItem value="Students">Students</MenuItem>
+                            <MenuItem value="Parent">Parents</MenuItem>
+                            <MenuItem value="Teacher">Teachers</MenuItem>
+                            <MenuItem value="Student">Students</MenuItem>
                         </Select>
                     </FormControl>
 
