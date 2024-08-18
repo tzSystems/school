@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Box, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, Paper, IconButton, TextField, Tooltip, FormControl, InputLabel, Select, MenuItem, Menu } from '@mui/material';
+import { Box, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, Paper, IconButton, TextField, Tooltip, FormControl, InputLabel, Select, MenuItem, Menu, Chip } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { fetchChatListsForUser } from '../../redux/chatlistRelated/chatlistHandle';
@@ -49,7 +49,6 @@ const ChatListViewer = () => {
         setAnchorEl(event.currentTarget);
         setShowDropdown(!showDropdown);
 
-        // Fetch names based on the selected role
         if (selectedRole === 'Parent') {
             dispatch(getAllParents(userId))
                 .then(response => {
@@ -74,13 +73,11 @@ const ChatListViewer = () => {
     const handleNameSelect = (selectedName) => {
         const { id: recipientId, name, role: recipientRole } = selectedName;
 
-        // Log recipient and current user details
         console.log('Recipient Role in chat list viewer:', recipientRole);
         console.log('Recipient ID:', recipientId);
         console.log('Current User Role:', role);
         console.log('Current User ID:', userId);
 
-        // Navigate to chatlist page
         navigate(`/chatlist/${recipientId}/${name}/${recipientRole}`);
 
         setShowDropdown(false);
@@ -89,13 +86,11 @@ const ChatListViewer = () => {
 
     return (
         <Box sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}>
-            {/* Header with Role Dropdown, Search, Sort, and Add */}
             <Paper elevation={3} sx={{ padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', bgcolor: 'grey.100' }}>
                 <Typography variant="h5" sx={{ fontWeight: 600 }}>
                     Chats
                 </Typography>
                 <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
-                    {/* Dropdown for role selection */}
                     <FormControl sx={{ minWidth: 120 }}>
                         <InputLabel id="role-select-label">Role</InputLabel>
                         <Select
@@ -110,7 +105,6 @@ const ChatListViewer = () => {
                         </Select>
                     </FormControl>
 
-                    {/* Search button and input field */}
                     <Tooltip title="Search">
                         <IconButton
                             onClick={() => setShowSearch(!showSearch)}
@@ -128,14 +122,12 @@ const ChatListViewer = () => {
                         />
                     )}
 
-                    {/* Sort button */}
                     <Tooltip title="Sort">
                         <IconButton sx={{ bgcolor: 'secondary.main', color: 'secondary.contrastText', '&:hover': { bgcolor: 'secondary.dark' } }}>
                             <SortIcon />
                         </IconButton>
                     </Tooltip>
 
-                    {/* Add button */}
                     <Tooltip title="Add New Chat">
                         <IconButton
                             onClick={handleAddClick}
@@ -145,7 +137,6 @@ const ChatListViewer = () => {
                         </IconButton>
                     </Tooltip>
 
-                    {/* Dropdown menu */}
                     <Menu
                         anchorEl={anchorEl}
                         open={showDropdown}
@@ -166,13 +157,12 @@ const ChatListViewer = () => {
                 </Box>
             </Paper>
 
-            {/* Conditionally render based on loading and error states */}
             {loading ? (
                 <Typography variant="body1" sx={{ padding: 2 }}>Loading chats...</Typography>
             ) : error ? (
                 <Typography variant="body1" color="error" sx={{ padding: 2 }}>{error}</Typography>
             ) : (
-                <List sx={{ overflowY: 'auto', height: 'calc(100% - 64px)' }}> {/* Adjust height for the header */}
+                <List sx={{ overflowY: 'auto', height: 'calc(100% - 64px)' }}>
                     {chatLists.map(chat => (
                         <ListItem
                             key={chat._id}
@@ -184,7 +174,16 @@ const ChatListViewer = () => {
                                 <Avatar alt={chat.recipient?.name || 'Anonymous'} src={chat.recipient?.avatarUrl || ''} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={chat.participants[1]?.name || 'Anonymous'}
+                                primary={
+                                    <>
+                                        {chat.participants[1]?.name || 'Anonymous'}
+                                        <Chip
+                                            label={chat.participants[1]?.role || 'Unknown'}
+                                            size="small"
+                                            sx={{ ml: 1, bgcolor: 'grey.300', borderRadius: '12px' }}
+                                        />
+                                    </>
+                                }
                                 secondary={
                                     <>
                                         <Typography
