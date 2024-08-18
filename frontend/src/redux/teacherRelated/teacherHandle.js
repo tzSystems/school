@@ -16,7 +16,9 @@ export const getAllTeachers = (id) => async (dispatch) => {
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
+            console.log('teachers', result.data);
             dispatch(getSuccess(result.data));
+            return result.data
         }
     } catch (error) {
         dispatch(getError(error));

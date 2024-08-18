@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { sendMessage, fetchMessagesBySenderAndRecipient } from '../../redux/messageRelated/messageHandle';
 import { createChatList } from '../../redux/chatlistRelated/chatlistHandle';
 import { useParams } from 'react-router-dom';
+import { getAllParents } from '../../redux/parentRelated/parentHandle';
 
 const ChatViewerPage = () => {
     const [showSearch, setShowSearch] = useState(false);

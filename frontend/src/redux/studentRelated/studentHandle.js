@@ -17,7 +17,9 @@ export const getAllStudents = (id) => async (dispatch) => {
         if (result.data.message) {
             dispatch(getFailed(result.data.message));
         } else {
+            console.log('students', result.data);
             dispatch(getSuccess(result.data));
+            return result.data
         }
     } catch (error) {
         dispatch(getError(error));
