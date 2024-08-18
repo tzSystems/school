@@ -162,7 +162,7 @@ const ChatListViewer = () => {
                     {chatLists.map(chat => {
                         const recipient = chat?.participants?.find(participant => participant.userId !== currentUser._id);
                         const lastMessageSender = chat?.lastMessage?.sender?.userId === currentUser._id ? 'You' : recipient?.name;
-
+                        console.log('lastMessageSender', lastMessageSender)
                         return (
                             <ListItem
                                 key={chat._id}
@@ -176,7 +176,7 @@ const ChatListViewer = () => {
                                 <ListItemText
                                     primary={
                                         <>
-                                            {recipient?.name || 'Anonymous'}
+                                            {lastMessageSender || 'Anonymous'}
                                             <Chip
                                                 label={recipient?.role || 'Unknown'}
                                                 size="small"

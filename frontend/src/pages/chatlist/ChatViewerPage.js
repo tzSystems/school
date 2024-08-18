@@ -124,6 +124,10 @@ const ChatViewerPage = () => {
                                         boxShadow: 1,
                                     }}
                                 >
+                                    {/* Display the sender's name */}
+                                    <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
+                                        {msg.senderId === senderId ? 'You' : recipientName}
+                                    </Typography>
                                     <Typography variant="body2">
                                         {msg.content}
                                     </Typography>
