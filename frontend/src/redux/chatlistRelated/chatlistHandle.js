@@ -41,6 +41,7 @@ export const updateLastMessage = createAsyncThunk(
     'chatList/updateLastMessage',
     async ({ chatListId, senderId, senderRole, content, timestamp }, { rejectWithValue }) => {
         try {
+            console.log('Updating last message', senderId, senderRole, content, timestamp)
             const response = await axios.put(`${process.env.REACT_APP_BASE_URL}/chatlists/${chatListId}`, {
                 senderId,
                 senderRole,
