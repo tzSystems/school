@@ -183,7 +183,7 @@ const ChatListViewer = () => {
                                 <Avatar alt={chat.recipient?.name || 'Anonymous'} src={chat.recipient?.avatarUrl || ''} />
                             </ListItemAvatar>
                             <ListItemText
-                                primary={chat.recipient?.name || 'Anonymous'}
+                                primary={chat.participants[1]?.name || 'Anonymous'}
                                 secondary={
                                     <>
                                         <Typography
