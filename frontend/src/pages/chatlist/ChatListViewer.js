@@ -1,18 +1,24 @@
-import React, { useEffect } from 'react';
-import { Box, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, List, ListItem, ListItemText, ListItemAvatar, Avatar, Typography, Paper, IconButton, TextField, Tooltip, FormControl, InputLabel, Select, MenuItem } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { fetchChatListsForUser } from '../../redux/chatlistRelated/chatlistHandle'; // Import the action to fetch chat lists
+import { fetchChatListsForUser } from '../../redux/chatlistRelated/chatlistHandle';
+import SearchIcon from '@mui/icons-material/Search';
+import SortIcon from '@mui/icons-material/Sort';
+import AddIcon from '@mui/icons-material/Add';
 
 const ChatListViewer = () => {
     const dispatch = useDispatch();
-    const navigate = useNavigate(); // Use useNavigate for programmatic navigation
-    const { chatLists, loading, error } = useSelector(state => state.chatList); // Access chat lists from the Redux state
-    const { currentUser } = useSelector(state => state.user); // Access current user from the Redux state
+    const navigate = useNavigate();
+    const { chatLists, loading, error } = useSelector(state => state.chatList);
+    const { currentUser } = useSelector(state => state.user);
 
     const userId = currentUser._id;
     const role = currentUser.role;
-   
+
+    const [showSearch, setShowSearch] = useState(false);
+    const [selectedRole, setSelectedRole] = useState('');
+
     useEffect(() => {
         if (userId && role) {
             dispatch(fetchChatListsForUser({ userId, role }))
@@ -26,19 +32,66 @@ const ChatListViewer = () => {
     }, [dispatch, userId, role]);
 
     const handleChatClick = (chat) => {
-        // Extract recipient details, assuming the recipient is the other participant
         const recipient = chat.participants.find(participant => participant.userId !== currentUser._id);
-
-        // Navigate to the ChatViewerPage with recipient details in the URL
         navigate(`/chatlist/${recipient.userId}/${recipient.name}/${recipient.role}`);
     };
 
     return (
         <Box sx={{ width: '100%', height: '100%', bgcolor: 'background.paper' }}>
-            {/* Header for the chat list */}
-            <Typography variant="h5" sx={{ padding: 2, borderBottom: '1px solid #e0e0e0' }}>
-                Chats
-            </Typography>
+            {/* Header with Role Dropdown, Search, and Sort */}
+            <Paper elevation={3} sx={{ padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', bgcolor: 'grey.100' }}>
+                <Typography variant="h5" sx={{ fontWeight: 600 }}>
+                    Chats
+                </Typography>
+                <Box sx={{ display: 'flex', alignItems: 'center', gap: 1 }}>
+                    {/* Dropdown for role selection */}
+                    <FormControl sx={{ minWidth: 120 }}>
+                        <InputLabel id="role-select-label">Role</InputLabel>
+                        <Select
+                            labelId="role-select-label"
+                            value={selectedRole}
+                            label="Role"
+                            onChange={(e) => setSelectedRole(e.target.value)}
+                        >
+                            <MenuItem value="Parents">Parents</MenuItem>
+                            <MenuItem value="Teachers">Teachers</MenuItem>
+                            <MenuItem value="Students">Students</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    {/* Search button and input field */}
+                    <Tooltip title="Search">
+                        <IconButton
+                            onClick={() => setShowSearch(!showSearch)}
+                            sx={{ bgcolor: 'primary.main', color: 'primary.contrastText', '&:hover': { bgcolor: 'primary.dark' } }}
+                        >
+                            <SearchIcon />
+                        </IconButton>
+                    </Tooltip>
+                    {showSearch && (
+                        <TextField
+                            variant="outlined"
+                            size="small"
+                            placeholder="Search..."
+                            sx={{ marginLeft: 1, bgcolor: 'background.paper', borderRadius: 1 }}
+                        />
+                    )}
+
+                    {/* Sort button */}
+                    <Tooltip title="Sort">
+                        <IconButton sx={{ bgcolor: 'secondary.main', color: 'secondary.contrastText', '&:hover': { bgcolor: 'secondary.dark' } }}>
+                            <SortIcon />
+                        </IconButton>
+                    </Tooltip>
+
+                    {/* Add button */}
+                    <Tooltip title="Add New Chat">
+                        <IconButton sx={{ bgcolor: 'success.main', color: 'success.contrastText', '&:hover': { bgcolor: 'success.dark' } }}>
+                            <AddIcon />
+                        </IconButton>
+                    </Tooltip>
+                </Box>
+            </Paper>
 
             {/* Conditionally render based on loading and error states */}
             {loading ? (
@@ -52,7 +105,7 @@ const ChatListViewer = () => {
                             key={chat._id}
                             button
                             alignItems="flex-start"
-                            onClick={() => handleChatClick(chat)} // Add onClick handler
+                            onClick={() => handleChatClick(chat)}
                         >
                             <ListItemAvatar>
                                 <Avatar alt={chat.recipient?.name || 'Anonymous'} src={chat.recipient?.avatarUrl || ''} />
