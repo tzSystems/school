@@ -6,7 +6,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import InsertDriveFileIcon from '@mui/icons-material/InsertDriveFile';
 import CloseIcon from '@mui/icons-material/Close';
 
-const AttachmentOptionsModal = ({ open, onClose, onSelect }) => {
+const AttachmentOptionsModal = ({ open, onClose, onSelect}) => {
     const handleSelect = (type) => {
         onSelect(type);
         onClose();

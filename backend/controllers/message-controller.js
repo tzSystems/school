@@ -69,8 +69,12 @@ const deleteAttachment = async (publicId) => {
 
 const sendMessage = async (req, res) => {
     try {
-        const { senderId, recipientId, content, role, name } = req.body;
+        const { senderId, recipientId, content, role, name, attachment } = req.body;
         let attachmentUrl = null;
+        
+
+        console.log('body', req.body);
+
 
         // Handle file upload if present
         if (req.file) {
@@ -79,6 +83,8 @@ const sendMessage = async (req, res) => {
             attachmentUrl = req.file.path; // Adjust based on how you handle file uploads
         }
 
+        console.log('attachment url: ' + attachmentUrl)
+
         // Create a new message with or without attachment
         const message = new Message({
             senderId,
@@ -86,7 +92,7 @@ const sendMessage = async (req, res) => {
             content,
             role,
             name,
-            attachment: attachmentUrl ? { url: attachmentUrl, type: req.file.mimetype } : null
+            attachment:attachment.url !== null ? { url: attachment.url, type: attachment.type } : null
         });
 
         // Save the message to the database
