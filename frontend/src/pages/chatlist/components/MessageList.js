@@ -11,7 +11,7 @@ const MessageList = ({ messages, senderId, recipientName }) => {
           {message.senderId === senderId ? (
             <SenderMessage message={message.content} attachment={message.attachment} />
           ) : (
-            <RecipientMessage message={message.content} attachment={message.attachment} />
+            <RecipientMessage message={message.content} attachment={message.attachment} recipientName={recipientName} />
           )}
         </React.Fragment>
       ))}
