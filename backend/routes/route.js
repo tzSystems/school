@@ -170,7 +170,6 @@ router.get('/Messages/:senderId/:recipientId', getMessagesBySenderAndRecipient);
 // Route to get all messages associated with a specific user ID (sender or recipient)
 router.get('/user/:userId', getMessagesByUserId);
 
-// Route to delete a message
 router.delete('/delete/:messageId', deleteMessage);
 
 module.exports = router;

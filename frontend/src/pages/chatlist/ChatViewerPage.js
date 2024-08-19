@@ -1,18 +1,20 @@
 import React, { useState, useRef, useEffect } from 'react';
-import { Box, Typography, IconButton, TextField, InputAdornment, Paper, Avatar } from '@mui/material';
-import SendIcon from '@mui/icons-material/Send';
-import AttachFileIcon from '@mui/icons-material/AttachFile';
-import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useDispatch, useSelector } from 'react-redux';
+import { Box } from '@mui/material';
+import ChatHeader from './components/Header';
+import MessageList from './components/MessageList';
+import MessageInput from './components/MessageInput';
+import AttachmentPreview from './components/AttachmentPreview';
+import FullScreenPreviewModal from './components/FullScreenPreviewModal';
 import { sendMessage, fetchMessagesBySenderAndRecipient } from '../../redux/messageRelated/messageHandle';
 import { createChatList } from '../../redux/chatlistRelated/chatlistHandle';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 const ChatViewerPage = () => {
     const messageRef = useRef(null);
-    const chatEndRef = useRef(null); // Ref for the end of the chat
+    const chatEndRef = useRef(null);
+    const fileInputRef = useRef(null);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const { recipientId, recipientName, recipientRole } = useParams();
     const messages = useSelector((state) => state.messages.messages);
     const loading = useSelector((state) => state.messages.loading);
@@ -20,152 +22,80 @@ const ChatViewerPage = () => {
     const { currentUser } = useSelector((state) => state.user);
     const senderId = currentUser._id;
     const senderRole = currentUser.role;
+    const [attachment, setAttachment] = useState(null);
+    const [previewUrl, setPreviewUrl] = useState(null);
+    const [fullScreenPreview, setFullScreenPreview] = useState(null);
+    const [showModal, setShowModal] = useState(false);
 
     useEffect(() => {
-        if (recipientId) {
-            dispatch(fetchMessagesBySenderAndRecipient({ recipientId, senderId, senderRole }));
+        dispatch(fetchMessagesBySenderAndRecipient({ senderId, recipientId , senderRole}));
+        dispatch(createChatList({ senderId, recipientId, recipientName, recipientRole }));
+    }, [dispatch, senderId, recipientId, recipientName, recipientRole]);
+
+    useEffect(() => {
+        if (chatEndRef.current) {
+            chatEndRef.current.scrollIntoView({ behavior: 'smooth' });
         }
-    }, [dispatch, recipientId, senderId, senderRole]);
-
-    useEffect(() => {
-        // Scroll to the bottom when messages are updated
-        chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
     }, [messages]);
 
     const handleSend = () => {
-        const message = messageRef.current.value.trim();
-        if (message && recipientId) {
-            dispatch(sendMessage({ recipientId, content: message, senderId, recipientRole, role: senderRole, name: recipientName }))
-                .then((result) => {
-                    if (result && result.data) {
-                        dispatch(createChatList({
-                            participants: [
-                                { userId: senderId, role: senderRole, name: currentUser.name },
-                                { userId: recipientId, role: recipientRole, name: recipientName }
-                            ],
-                            firstMessage: { content: message, senderId: senderId, senderRole: senderRole }
-                        }));
-                        messageRef.current.value = '';
-                    } else {
-                        console.error('Failed to send message:', result);
-                    }
-                })
-                .catch((error) => {
-                    console.error('Error sending message or creating chat list:', error);
-                });
+        const content = messageRef.current.value;
+        if (content.trim() || attachment) {
+            dispatch(sendMessage({ senderId, recipientId, content, attachment, role:senderRole }));
+            messageRef.current.value = '';
+            setAttachment(null);
+            setPreviewUrl(null);
         }
     };
 
+    const handleFileChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            setAttachment(file);
+            setPreviewUrl(URL.createObjectURL(file));
+        }
+    };
+
+    const handleRemoveAttachment = () => {
+        setAttachment(null);
+        setPreviewUrl(null);
+    };
+
+    const handleExpandPreview = (url) => {
+        setFullScreenPreview(url);
+        setShowModal(true);
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setFullScreenPreview(null);
+    };
+
     return (
-        <Box sx={{ width: '100%', height: '100%', display: 'flex', flexDirection: 'column', bgcolor: 'background.default' }}>
-            {/* Header with Back Button, Avatar, and Name */}
-            <Paper elevation={3} sx={{ padding: 2, display: 'flex', alignItems: 'center', justifyContent: 'space-between', bgcolor: 'grey.100', position: 'sticky', top: 0, zIndex: 1000 }}>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <IconButton onClick={() => navigate(-1)} sx={{ marginRight: 2 }}>
-                        <ArrowBackIcon />
-                    </IconButton>
-                </Box>
-                <Box sx={{ display: 'flex', alignItems: 'center' }}>
-                    <Typography variant="h6" sx={{ fontWeight: 600, marginRight: 2 }}>
-                        {recipientName}
-                    </Typography>
-                    <Avatar alt={recipientName} src="/static/images/avatar/1.jpg" />
-                </Box>
-            </Paper>
-
-            {/* Chat Area */}
-            <Box
-                sx={{
-                    flexGrow: 1,
-                    padding: 2,
-                    overflowY: 'auto',
-                    display: 'flex',
-                    flexDirection: 'column',
-                    bgcolor: 'background.paper',
-                    gap: 1,
-                }}
-            >
-                {loading ? (
-                    <Typography variant="body2">Loading...</Typography>
-                ) : error ? (
-                    <Typography variant="body2" color="error">
-                        {typeof error === 'string' ? error : JSON.stringify(error, null, 2)}
-                    </Typography>
-                ) : (
-                    <>
-                        {messages.map((msg, index) => (
-                            <Box
-                                key={index}
-                                sx={{
-                                    display: 'flex',
-                                    alignItems: 'flex-end',
-                                    flexDirection: msg.senderId === senderId ? 'row-reverse' : 'row',
-                                    gap: 1,
-                                    mb: 1,
-                                }}
-                            >
-                                {/* Avatar for the recipient */}
-                                {msg.senderId !== senderId && (
-                                    <Avatar alt={recipientName} src="/static/images/avatar/2.jpg" sx={{ alignSelf: 'flex-start' }} />
-                                )}
-
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: msg.senderId === senderId ? 'flex-end' : 'flex-start',
-                                        maxWidth: '70%',
-                                        bgcolor: msg.senderId === senderId ? 'primary.main' : 'grey.300',
-                                        color: msg.senderId === senderId ? 'primary.contrastText' : 'text.primary',
-                                        padding: 1.5,
-                                        borderRadius: 2,
-                                        borderTopLeftRadius: msg.senderId === senderId ? 2 : 0,
-                                        borderTopRightRadius: msg.senderId === senderId ? 0 : 2,
-                                        boxShadow: 1,
-                                    }}
-                                >
-                                    {/* Display the sender's name */}
-                                    <Typography variant="subtitle2" sx={{ fontWeight: 'bold', mb: 0.5 }}>
-                                        {msg.senderId === senderId ? 'You' : recipientName}
-                                    </Typography>
-                                    <Typography variant="body2">
-                                        {msg.content}
-                                    </Typography>
-                                    <Typography variant="caption" sx={{ display: 'block', textAlign: 'right', marginTop: 0.5 }}>
-                                        {new Date(msg.timestamp).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                                    </Typography>
-                                </Box>
-                            </Box>
-                        ))}
-                        {/* Reference element to scroll to the bottom */}
-                        <div ref={chatEndRef} />
-                    </>
-                )}
-            </Box>
-
-            {/* Input Bar */}
-            <Box sx={{ padding: 2, display: 'flex', alignItems: 'center', borderTop: '1px solid #e0e0e0', bgcolor: 'background.default', position: 'sticky', bottom: 0, zIndex: 1000 }}>
-                <TextField
-                    variant="outlined"
-                    fullWidth
-                    placeholder="Type a message..."
-                    inputRef={messageRef}
-                    onKeyPress={(e) => e.key === 'Enter' && handleSend()}
-                    InputProps={{
-                        endAdornment: (
-                            <InputAdornment position="end">
-                                <IconButton component="label">
-                                    <AttachFileIcon />
-                                    <input type="file" hidden />
-                                </IconButton>
-                                <IconButton onClick={handleSend}>
-                                    <SendIcon />
-                                </IconButton>
-                            </InputAdornment>
-                        ),
-                    }}
+        <Box sx={{ display: 'flex', flexDirection: 'column', height: '100vh' }}>
+            <ChatHeader recipientName={recipientName} />
+            <MessageList messages={messages} senderId={senderId} recipientName={recipientName} />
+            <Box ref={chatEndRef} />
+            <MessageInput
+                onSend={handleSend}
+                onFileChange={handleFileChange}
+                fileInputRef={fileInputRef}
+                messageRef={messageRef}
+            />
+            {previewUrl && (
+                <AttachmentPreview
+                    previewUrl={previewUrl}
+                    onRemove={handleRemoveAttachment}
+                    onExpand={handleExpandPreview}
                 />
-            </Box>
+            )}
+            {fullScreenPreview && (
+                <FullScreenPreviewModal
+                    open={showModal}
+                    onClose={handleCloseModal}
+                    url={fullScreenPreview}
+                />
+            )}
         </Box>
     );
 };

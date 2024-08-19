@@ -9,7 +9,7 @@ import {
 } from './messageSlice';
 
 // Function to send a message
-export const sendMessage = ({ recipientId, content, senderId, role, name }) => async (dispatch) => {
+export const sendMessage = ({ recipientId, content, senderId, role, name, attachmentUrl }) => async (dispatch) => {
     dispatch(sendMessageRequest());
 
     try {
@@ -18,11 +18,13 @@ export const sendMessage = ({ recipientId, content, senderId, role, name }) => a
             content,
             senderId,
             name,
-            role  // Include role in the request body
+            role,  // Include role in the request body
+            attachmentUrl  // Include the attachment URL if present
         });
+
         if (result.data) {
             dispatch(sendMessageSuccess(result.data));
-            return result
+            return result;
         }
     } catch (error) {
         dispatch(sendMessageFailed(error.message || 'An error occurred while sending the message'));
