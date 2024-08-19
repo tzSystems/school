@@ -23,6 +23,10 @@ const messageSchema = new mongoose.Schema({
         type: {
             type: String, // e.g., 'image/jpeg', 'video/mp4', etc.
             default: null // Optional, in case there's no attachment
+        },
+        publicId: {
+            type: String, // e.g., 'image/jpeg', 'video/mp4', etc.
+            default: null // Optional, in case there's no attachment
         }
     },
     role: {

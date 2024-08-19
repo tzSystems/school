@@ -29,7 +29,6 @@ const ChatViewerPage = () => {
   const [fullScreenPreview, setFullScreenPreview] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
-  const [uploadPre, setUploadPre] = useState('')
 
   useEffect(() => {
     dispatch(fetchMessagesBySenderAndRecipient({ senderId, recipientId, senderRole }));
@@ -48,22 +47,18 @@ const ChatViewerPage = () => {
       let attachmentData = null;
       if (attachment) {
         try {
-          const uploadResult = await uploadToCloudinary(attachment,"image_preset", setUploadProgress);
-          attachmentData = { url: uploadResult.secureUrl, type: uploadResult.mimeType };
-          console.log('attachmentData', attachmentData);
-         
-          dispatch(sendMessage({ senderId, recipientId, content, attachment: attachmentData, role: senderRole }));
+          const uploadResult = await uploadToCloudinary(attachment, "image_preset", setUploadProgress);
+          attachmentData = { url: uploadResult.secureUrl, type: uploadResult.mimeType, publicId: uploadResult.publicId };
         } catch (error) {
           console.error('Upload failed:', error);
-          return; // Exit if upload fails
+          return;
         }
       }
-
-      
+      dispatch(sendMessage({ senderId, recipientId, content, attachment: attachmentData, role: senderRole }));
       messageRef.current.value = '';
       setAttachment(null);
       setPreviewUrl(null);
-      setUploadProgress(0); // Reset progress after sending
+      setUploadProgress(0);
     }
   };
 

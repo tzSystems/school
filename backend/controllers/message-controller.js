@@ -43,8 +43,8 @@ const getMessagesBySenderAndRecipient = async (req, res) => {
         const sender = await getUserDetailsByRole(senderId, role);
         const recipient = await getUserDetailsByRole(recipientId, role);
 
-        console.log('sender',sender)
-        console.log('recipient',recipient)
+       // console.log('sender',sender)
+       // console.log('recipient',recipient)
         // Optionally, attach user details to each message if needed
         messages.forEach(msg => {
             msg.sender = sender;
@@ -70,20 +70,12 @@ const deleteAttachment = async (publicId) => {
 const sendMessage = async (req, res) => {
     try {
         const { senderId, recipientId, content, role, name, attachment } = req.body;
-        let attachmentUrl = null;
+    
         
 
         console.log('body', req.body);
 
-
-        // Handle file upload if present
-        if (req.file) {
-            // Assume the file is uploaded to a service like S3 or Cloudinary
-            // and req.file.location contains the URL of the uploaded file
-            attachmentUrl = req.file.path; // Adjust based on how you handle file uploads
-        }
-
-        console.log('attachment url: ' + attachmentUrl)
+        
 
         // Create a new message with or without attachment
         const message = new Message({
@@ -92,13 +84,15 @@ const sendMessage = async (req, res) => {
             content,
             role,
             name,
-            attachment:attachment.url !== null ? { url: attachment.url, type: attachment.type } : null
+            attachment:(attachment !== null && attachment.url !== null) ? { url: attachment.url, type: attachment.type, publicId:attachment.publicId } : null
         });
 
         // Save the message to the database
         const savedMessage = await message.save();
+        console.log('message saved', savedMessage);
         res.status(200).json(savedMessage);
     } catch (error) {
+        console.log('error', error);
         res.status(500).json({ error: error.message });
     }
 };

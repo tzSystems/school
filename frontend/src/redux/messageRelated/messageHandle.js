@@ -27,6 +27,7 @@ export const sendMessage = ({ recipientId, content, senderId, role, name, attach
             return result;
         }
     } catch (error) {
+        console.log('error', error);
         dispatch(sendMessageFailed(error.message || 'An error occurred while sending the message'));
     }
 };

@@ -1,4 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
+import reduxImmutableStateInvariant from 'redux-immutable-state-invariant';
+
 import { userReducer } from './userRelated/userSlice';
 import { studentReducer } from './studentRelated/studentSlice';
 import { noticeReducer } from './noticeRelated/noticeSlice';
@@ -24,6 +26,19 @@ const store = configureStore({
         language: langReducer,
         messages: messageReducer,
         chatList: chatListReducer,
+    },
+    middleware: (getDefaultMiddleware) => {
+        const middlewares = getDefaultMiddleware();
+
+        if (process.env.NODE_ENV !== 'production') {
+            middlewares.push(
+                reduxImmutableStateInvariant({
+                    ignore: ['some.large.state'], // Replace with actual state paths to ignore if needed
+                })
+            );
+        }
+
+        return middlewares;
     },
 });
 
