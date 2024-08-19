@@ -58,43 +58,45 @@ const getMessagesBySenderAndRecipient = async (req, res) => {
     }
 };
 
+const deleteAttachment = async (publicId) => {
+    try {
+        await cloudinary.uploader.destroy(publicId);
+    } catch (error) {
+        console.error('Error deleting attachment from Cloudinary:', error);
+    }
+};
+
+
 const sendMessage = async (req, res) => {
     try {
-        const { senderId, recipientId, content, role,name } = req.body;
+        const { senderId, recipientId, content, role, name } = req.body;
+        let attachmentUrl = null;
 
-        // Log the received data
-        console.log('Received request to send message');
-        console.log('Sender ID:', senderId);
-        console.log('Recipient ID:', recipientId);
-        console.log('Content:', content);
-        console.log('Role:', role);
-
-        // Validate ObjectIds
-        if (!mongoose.Types.ObjectId.isValid(senderId) || !mongoose.Types.ObjectId.isValid(recipientId)) {
-            console.error('Invalid sender or recipient ID');
-            return res.status(400).json({ error: 'Invalid sender or recipient ID' });
+        // Handle file upload if present
+        if (req.file) {
+            // Assume the file is uploaded to a service like S3 or Cloudinary
+            // and req.file.location contains the URL of the uploaded file
+            attachmentUrl = req.file.path; // Adjust based on how you handle file uploads
         }
 
-        // Create and save the message
+        // Create a new message with or without attachment
         const message = new Message({
             senderId,
             recipientId,
             content,
             role,
-            name
+            name,
+            attachment: attachmentUrl ? { url: attachmentUrl, type: req.file.mimetype } : null
         });
 
-        console.log('Message object created:', message);
-
+        // Save the message to the database
         const savedMessage = await message.save();
-        console.log('Message saved successfully:', savedMessage);
-
         res.status(200).json(savedMessage);
-    } catch (err) {
-        console.error('Error occurred while saving message:', err);
-        res.status(500).json({ error: 'Failed to send message', details: err.message || err });
+    } catch (error) {
+        res.status(500).json({ error: error.message });
     }
 };
+
 
 
 // Get all messages associated with a specific user ID (sender or recipient)

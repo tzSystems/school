@@ -42,7 +42,7 @@ const MessageList = ({ messages, senderId, recipientName }) => {
                         <Typography variant="body2">
                             {msg.content}
                         </Typography>
-                        {msg.attachment.url && (
+                        {msg.attachment?.url && (
                             <img
                                 src={msg.attachment.url}
                                 alt="attachment"
