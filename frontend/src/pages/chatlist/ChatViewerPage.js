@@ -26,6 +26,7 @@ const ChatViewerPage = () => {
   const senderRole = currentUser.role;
   const [attachment, setAttachment] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(null);
+  const [fileType, setFileType] = useState(null); // Track file type
   const [fullScreenPreview, setFullScreenPreview] = useState(null);
   const [showModal, setShowModal] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
@@ -46,9 +47,12 @@ const ChatViewerPage = () => {
     if (content.trim() || attachment) {
       let attachmentData = null;
       if (attachment) {
+        const preset = fileType.startsWith('image/') ? 'image_preset' : 'document_preset';
         try {
-          const uploadResult = await uploadToCloudinary(attachment, "image_preset", setUploadProgress);
-          attachmentData = { url: uploadResult.secureUrl, type: uploadResult.mimeType, publicId: uploadResult.publicId };
+          const uploadResult = await uploadToCloudinary(attachment, preset, setUploadProgress);
+          attachmentData = { url: uploadResult.secureUrl,name:uploadResult.display_name, type: uploadResult.mimeType, publicId: uploadResult.publicId };
+          console.log('attachments', attachmentData);
+          console.log('uploadResult', uploadResult);
         } catch (error) {
           console.error('Upload failed:', error);
           return;
@@ -58,6 +62,7 @@ const ChatViewerPage = () => {
       messageRef.current.value = '';
       setAttachment(null);
       setPreviewUrl(null);
+      setFileType(null); // Reset fileType
       setUploadProgress(0);
     }
   };
@@ -67,12 +72,14 @@ const ChatViewerPage = () => {
     if (file) {
       setAttachment(file);
       setPreviewUrl(URL.createObjectURL(file));
+      setFileType(file.type); // Set file type
     }
   };
 
   const handleRemoveAttachment = () => {
     setAttachment(null);
     setPreviewUrl(null);
+    setFileType(null); // Reset fileType
   };
 
   const handleExpandPreview = (url) => {
@@ -92,6 +99,7 @@ const ChatViewerPage = () => {
       {previewUrl && uploadProgress === 0 && (
         <AttachmentPreview
           previewUrl={previewUrl}
+          fileType={fileType} // Pass file type to AttachmentPreview
           onRemove={handleRemoveAttachment}
           onExpand={handleExpandPreview}
         />
