@@ -1,13 +1,10 @@
-
-
-
 import React from 'react';
 import { Box, Typography } from '@mui/material';
 import ImageViewerComponent from './ImageViewerComponent';
 import PDFViewerComponent from './PDFViewerComponent';
-import DownloadButton from './DownloadButton'; // Import the DownloadButton
+import DownloadButton from './DownloadButton';
 
-const RecipientMessage = ({ message, attachment, recipientName }) => {
+const RecipientMessage = ({ message, attachment, recipientName, name }) => {
   return (
     <Box 
       sx={{ 
@@ -16,7 +13,7 @@ const RecipientMessage = ({ message, attachment, recipientName }) => {
         borderRadius: '10px', 
         margin: '5px 0', 
         padding: '10px',
-        minWidth: '4o%',
+        minWidth: '40%',
         maxWidth: '60%', 
         position: 'relative',
         border: '1px solid #E6E6E6',
@@ -63,10 +60,28 @@ const RecipientMessage = ({ message, attachment, recipientName }) => {
                 borderRadius: '4px',
                 position: 'relative',
                 bgcolor: '#f9f9f9',
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                justifyContent: 'center',
               }}
             >
               <PDFViewerComponent url={attachment.url} />
-              <DownloadButton url={attachment.url} /> {/* Add the DownloadButton here */}
+              <DownloadButton url={attachment.url} />
+              <Typography 
+                variant="subtitle2" 
+                sx={{ 
+                  position: 'absolute',
+                  bottom: '40px',
+                  textAlign: 'center',
+                  width: '100%',
+                  overflow: 'hidden',
+                  textOverflow: 'ellipsis',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {name || 'Document'}
+              </Typography>
             </Box>
           )}
         </Box>

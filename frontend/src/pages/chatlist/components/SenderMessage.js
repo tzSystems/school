@@ -55,7 +55,7 @@ const SenderMessage = ({ message, attachment }) => {
                     {attachment.type === 'application/pdf' && (
                         <Box
                             sx={{
-                                height: '200px', // Adjust height as needed
+                                height: '100px', // Adjust height as needed
                                 width: '100%',
                                 maxWidth: '300px', // Adjust width as needed
                                 overflow: 'hidden',
@@ -63,24 +63,32 @@ const SenderMessage = ({ message, attachment }) => {
                                 borderRadius: '4px',
                                 position: 'relative',
                                 bgcolor: '#f9f9f9',
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                justifyContent: 'center',
                             }}
                         >
+                            <DownloadButton url={attachment.url} />
                             <Typography
-                                variant="body2"
+                                variant="subtitle2"
                                 sx={{
                                     position: 'absolute',
-                                    top: '10px',
-                                    left: '10px',
-                                    backgroundColor: 'rgba(255, 255, 255, 0.8)',
+                                    bottom: '40px',
+                                    textAlign: 'center',
+                                    width: '100%',
+                                    overflow: 'hidden',
+                                    textOverflow: 'ellipsis',
+                                    whiteSpace: 'nowrap',
+                                    fontSize: '14px',
+                                    color: '#333',
+                                    backgroundColor: '#f9f9f9',
                                     padding: '2px 4px',
                                     borderRadius: '4px',
-                                    fontSize: '12px',
-                                    color: '#333',
                                 }}
                             >
-                                PDF Document
+                                {attachment.name || "Documemt"}
                             </Typography>
-                            <DownloadButton url={attachment.url} />
                         </Box>
                     )}
                 </Box>
